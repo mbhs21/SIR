@@ -19,7 +19,7 @@ import nf.Patient;
  *
  * @author em
  */
-public class ConsulterCR extends javax.swing.JFrame {
+public class AffichageExamen extends javax.swing.JFrame {
     Patient pat;
     Connection conn;
     Login login;
@@ -31,7 +31,7 @@ public class ConsulterCR extends javax.swing.JFrame {
      * @param login
      * @param conn
      */
-    public ConsulterCR(Examen examen, Patient pat,Login login, Connection conn) {
+    public AffichageExamen(Examen examen, Patient pat,Login login, Connection conn) {
         this.pat=pat;
         this.conn=conn;
         this.login=login;
@@ -171,7 +171,7 @@ public class ConsulterCR extends javax.swing.JFrame {
         consulterCRButton.setBackground(new java.awt.Color(255, 255, 255));
         consulterCRButton.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         consulterCRButton.setForeground(new java.awt.Color(51, 51, 51));
-        consulterCRButton.setText("Consulter CR");
+        consulterCRButton.setText("Edition CR");
         consulterCRButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 consulterCRButtonActionPerformed(evt);
@@ -182,9 +182,7 @@ public class ConsulterCR extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 204)));
 
         jTextField1.setEditable(false);
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
         jTextField1.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(0, 0, 0));
         jTextField1.setText("PH01 - DURAND Bastien");
         jTextField1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, java.awt.Color.blue, null, java.awt.Color.white));
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -256,7 +254,7 @@ public class ConsulterCR extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(logoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 313, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(213, 213, 213)
                 .addComponent(userPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -305,7 +303,6 @@ public class ConsulterCR extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jList1.setBackground(new java.awt.Color(255, 255, 255));
         jList1.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         jList1.setForeground(new java.awt.Color(0, 153, 255));
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
@@ -321,7 +318,6 @@ public class ConsulterCR extends javax.swing.JFrame {
         jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 204, 204), new java.awt.Color(0, 204, 204)));
 
         jTextField5.setEditable(false);
-        jTextField5.setBackground(new java.awt.Color(255, 255, 255));
         jTextField5.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
         jTextField5.setForeground(new java.awt.Color(102, 102, 102));
         jTextField5.setText("Identifiant :");
@@ -333,14 +329,12 @@ public class ConsulterCR extends javax.swing.JFrame {
         });
 
         jTextField6.setEditable(false);
-        jTextField6.setBackground(new java.awt.Color(255, 255, 255));
         jTextField6.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
         jTextField6.setForeground(new java.awt.Color(102, 102, 102));
         jTextField6.setText("Nom :");
         jTextField6.setBorder(null);
 
         jTextField7.setEditable(false);
-        jTextField7.setBackground(new java.awt.Color(255, 255, 255));
         jTextField7.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
         jTextField7.setForeground(new java.awt.Color(102, 102, 102));
         jTextField7.setText("Date d'examen :");
@@ -364,7 +358,6 @@ public class ConsulterCR extends javax.swing.JFrame {
             .addComponent(patientIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        patientIdField.setBackground(new java.awt.Color(255, 255, 255));
         patientIdField.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         patientIdField.setForeground(new java.awt.Color(51, 51, 51));
         patientIdField.setText("PAT01");
@@ -375,7 +368,6 @@ public class ConsulterCR extends javax.swing.JFrame {
             }
         });
 
-        lastNamePField.setBackground(new java.awt.Color(255, 255, 255));
         lastNamePField.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         lastNamePField.setForeground(new java.awt.Color(51, 51, 51));
         lastNamePField.setText("BROUILLARD");
@@ -386,13 +378,11 @@ public class ConsulterCR extends javax.swing.JFrame {
             }
         });
 
-        firstNamePField.setBackground(new java.awt.Color(255, 255, 255));
         firstNamePField.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         firstNamePField.setForeground(new java.awt.Color(51, 51, 51));
         firstNamePField.setText("Jean");
         firstNamePField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        examDateField.setBackground(new java.awt.Color(255, 255, 255));
         examDateField.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         examDateField.setForeground(new java.awt.Color(51, 51, 51));
         examDateField.setText("2016-06-11 20:05:58.0");
@@ -407,7 +397,6 @@ public class ConsulterCR extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(102, 102, 102));
         jLabel5.setText("Date de naissance :");
 
-        birthDateField.setBackground(new java.awt.Color(255, 255, 255));
         birthDateField.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         birthDateField.setForeground(new java.awt.Color(51, 51, 51));
 
@@ -437,10 +426,6 @@ public class ConsulterCR extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(firstNamePField, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
                             .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -450,6 +435,10 @@ public class ConsulterCR extends javax.swing.JFrame {
                             .addComponent(birthDateField)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(firstNamePField, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -564,7 +553,7 @@ public class ConsulterCR extends javax.swing.JFrame {
                                         .addGap(132, 132, 132)
                                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(339, 339, 339)
@@ -595,7 +584,7 @@ public class ConsulterCR extends javax.swing.JFrame {
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addGap(0, 42, Short.MAX_VALUE)
                                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(28, 28, 28)
                                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -698,13 +687,13 @@ public class ConsulterCR extends javax.swing.JFrame {
 //                }
 //            }
 //        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(ConsulterCR.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(AffichageExamen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(ConsulterCR.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(AffichageExamen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(ConsulterCR.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(AffichageExamen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(ConsulterCR.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(AffichageExamen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        }
 //        //</editor-fold>
 //        //</editor-fold>
@@ -712,7 +701,7 @@ public class ConsulterCR extends javax.swing.JFrame {
 //        /* Create and display the form */
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {
-//                new ConsulterCR().setVisible(true);
+//                new AffichageExamen().setVisible(true);
 //            }
 //        });
 //    }
