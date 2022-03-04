@@ -19,6 +19,7 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 import nf.Login;
 import nf.Patient;
+import nf.RequetesBDLogin;
 import nf.RequetesBDPatient;
 
 /**
@@ -128,6 +129,33 @@ public class PageAccueil extends javax.swing.JFrame {
         modeSearchComboBox.setEditable(false);
         modeSearchComboBox.setEnabled(false);
         modeSearchLabel.setForeground(new Color(225, 201, 176));
+        
+        try {
+            // TODO add your handling code here:
+            if (RequetesBDLogin.idSE(login.getLogin(), conn)){
+                ResearchButton.setVisible(false);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccesListeExamen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            // TODO add your handling code here:
+            if (RequetesBDLogin.idPH(login.getLogin(), conn)){
+                AddPatientButton.setVisible(false);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccesListeExamen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            // TODO add your handling code here:
+            if (RequetesBDLogin.idPR(login.getLogin(), conn)){
+                AddPatientButton.setVisible(false);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccesListeExamen.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
@@ -829,6 +857,7 @@ public class PageAccueil extends javax.swing.JFrame {
 
     private void AddPatientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddPatientButtonActionPerformed
         // TODO add your handling code here:
+         
         CreationDMR dmr = null;
         dmr = new CreationDMR(login, this.conn);
         this.setVisible(false);

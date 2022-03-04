@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import nf.Examen;
 import nf.Login;
 import nf.Patient;
+import nf.RequetesBDLogin;
 
 /**
  *
@@ -78,6 +79,15 @@ public class AffichageExamen extends javax.swing.JFrame {
         examDateField.setText(examen.getDateExam().toString().substring(0,16));
         typeExamField.setText(examen.getTypeExamen());
         CRTextArea.setText("");
+        
+        try {
+            // TODO add your handling code here:
+            if (RequetesBDLogin.idPH(login.getLogin(), conn)){
+                consulterCRButton.setVisible(false);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccesListeExamen.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
 

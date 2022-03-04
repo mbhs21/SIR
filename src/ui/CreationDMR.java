@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import nf.Login;
 import nf.Patient;
+import nf.RequetesBDLogin;
 import nf.RequetesBDPatient;
 
 /**
@@ -74,6 +75,15 @@ public class CreationDMR extends javax.swing.JFrame {
         java.awt.Image newImgLogo = imgLogo.getScaledInstance(logoIcon.getWidth(), logoIcon.getHeight(), java.awt.Image.SCALE_SMOOTH);
         iconeLogo = new ImageIcon(newImgLogo);
         logoIcon.setIcon(iconeLogo);
+        
+         try {
+            // TODO add your handling code here:
+            if (RequetesBDLogin.idSE(login.getLogin(), conn)){
+                addExamenButton.setVisible(false);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccesListeExamen.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

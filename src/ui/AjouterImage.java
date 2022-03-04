@@ -5,7 +5,9 @@
  */
 package ui;
 
+import java.sql.Connection;
 import javax.swing.ImageIcon;
+import nf.Login;
 
 /**
  *
@@ -48,6 +50,10 @@ public class AjouterImage extends javax.swing.JFrame {
         java.awt.Image newImgAbdoTest = imgAbdoTest.getScaledInstance(radioImg.getHeight(), radioImg.getHeight(), java.awt.Image.SCALE_SMOOTH);
         iconeAbdoTest = new ImageIcon(newImgAbdoTest);
         radioImg.setIcon(iconeAbdoTest);
+    }
+
+    AjouterImage(Login login, Connection conn) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**

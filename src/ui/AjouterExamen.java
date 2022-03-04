@@ -118,6 +118,11 @@ public class AjouterExamen extends javax.swing.JFrame {
         addImgButton.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         addImgButton.setForeground(new java.awt.Color(51, 51, 51));
         addImgButton.setText("Ajouter Image");
+        addImgButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addImgButtonActionPerformed(evt);
+            }
+        });
 
         addExamenButton.setBackground(new java.awt.Color(255, 255, 255));
         addExamenButton.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
@@ -130,9 +135,7 @@ public class AjouterExamen extends javax.swing.JFrame {
         });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setForeground(new java.awt.Color(0, 0, 0));
 
-        jTextField5.setBackground(new java.awt.Color(255, 255, 255));
         jTextField5.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
         jTextField5.setForeground(new java.awt.Color(102, 102, 102));
         jTextField5.setText("Date de l'examen :");
@@ -143,9 +146,7 @@ public class AjouterExamen extends javax.swing.JFrame {
             }
         });
 
-        jTextField12.setBackground(new java.awt.Color(255, 255, 255));
         jTextField12.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
-        jTextField12.setForeground(new java.awt.Color(0, 0, 0));
         jTextField12.setText("/");
         jTextField12.setBorder(null);
         jTextField12.addActionListener(new java.awt.event.ActionListener() {
@@ -154,13 +155,10 @@ public class AjouterExamen extends javax.swing.JFrame {
             }
         });
 
-        jTextField16.setBackground(new java.awt.Color(255, 255, 255));
         jTextField16.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
-        jTextField16.setForeground(new java.awt.Color(0, 0, 0));
         jTextField16.setText("/");
         jTextField16.setBorder(null);
 
-        jTextField6.setBackground(new java.awt.Color(255, 255, 255));
         jTextField6.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
         jTextField6.setForeground(new java.awt.Color(102, 102, 102));
         jTextField6.setText("Type de l'examen :");
@@ -171,18 +169,15 @@ public class AjouterExamen extends javax.swing.JFrame {
         typeExamCombo.setForeground(new java.awt.Color(51, 51, 51));
         typeExamCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Radio", "Scan", "IRM", "Echo" }));
 
-        jTextField4.setBackground(new java.awt.Color(255, 255, 255));
         jTextField4.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
         jTextField4.setForeground(new java.awt.Color(102, 102, 102));
         jTextField4.setText("Identifiant du PH responsable : ");
         jTextField4.setBorder(null);
 
-        phField.setBackground(new java.awt.Color(255, 255, 255));
         phField.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         phField.setForeground(new java.awt.Color(51, 51, 51));
         phField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        hourField.setBackground(new java.awt.Color(255, 255, 255));
         hourField.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         hourField.setForeground(new java.awt.Color(51, 51, 51));
         hourField.addActionListener(new java.awt.event.ActionListener() {
@@ -191,17 +186,13 @@ public class AjouterExamen extends javax.swing.JFrame {
             }
         });
 
-        minField.setBackground(new java.awt.Color(255, 255, 255));
         minField.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         minField.setForeground(new java.awt.Color(51, 51, 51));
 
-        jTextField7.setBackground(new java.awt.Color(255, 255, 255));
         jTextField7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jTextField7.setForeground(new java.awt.Color(0, 0, 0));
         jTextField7.setText("-");
         jTextField7.setBorder(null);
 
-        dayField.setBackground(new java.awt.Color(255, 255, 255));
         dayField.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         dayField.setForeground(new java.awt.Color(51, 51, 51));
         dayField.addActionListener(new java.awt.event.ActionListener() {
@@ -210,11 +201,9 @@ public class AjouterExamen extends javax.swing.JFrame {
             }
         });
 
-        monthField.setBackground(new java.awt.Color(255, 255, 255));
         monthField.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         monthField.setForeground(new java.awt.Color(51, 51, 51));
 
-        yearField.setBackground(new java.awt.Color(255, 255, 255));
         yearField.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         yearField.setForeground(new java.awt.Color(51, 51, 51));
         yearField.addActionListener(new java.awt.event.ActionListener() {
@@ -223,7 +212,6 @@ public class AjouterExamen extends javax.swing.JFrame {
             }
         });
 
-        formatDate.setBackground(new java.awt.Color(255, 255, 255));
         formatDate.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         formatDate.setForeground(new java.awt.Color(0, 153, 153));
         formatDate.setText("Format : DD/MM/YYYY   HH-mm");
@@ -304,7 +292,6 @@ public class AjouterExamen extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(242, 236, 234));
 
-        proDetails.setBackground(java.awt.Color.white);
         proDetails.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         proDetails.setForeground(new java.awt.Color(51, 51, 51));
         proDetails.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, java.awt.Color.blue, null, null));
@@ -523,11 +510,11 @@ public class AjouterExamen extends javax.swing.JFrame {
             System.out.println("RENTRERcheckField");
             System.out.println(checkDateNumeric(yearField.getText()) + " " + checkDateNumeric(monthField.getText()) + " " + checkDateNumeric(dayField.getText()) + " " + checkDateNumeric(hourField.getText()) + " " + checkDateNumeric(minField.getText()));
             System.out.println();
-           
+
             try {
-                System.out.println("PH entre: "+phField.getText());
-                System.out.println("ph EXist ?"+checkExistPH(phField.getText()));
-                if (checkExistPH(phField.getText())==true) {
+                System.out.println("PH entre: " + phField.getText());
+                System.out.println("ph EXist ?" + checkExistPH(phField.getText()));
+                if (checkExistPH(phField.getText()) == true) {
                     if (checkDateNumeric(yearField.getText()) && checkDateNumeric(monthField.getText()) && checkDateNumeric(dayField.getText()) && checkDateNumeric(hourField.getText()) && checkDateNumeric(minField.getText())) {
                         if (checkYearValid(yearField.getText()) && checkMonthValid(monthField.getText()) && checkDayValid(monthField.getText(), dayField.getText()) && checkHourValid(hourField.getText()) && checkMinValid(minField.getText())) {
                             System.out.println("RENTRERcheckDate");
@@ -564,7 +551,7 @@ public class AjouterExamen extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(AjouterExamen.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
         } else {
             JOptionPane.showMessageDialog(null, "Tous les champs doivent être complétés", "", JOptionPane.PLAIN_MESSAGE);
         }
@@ -683,6 +670,55 @@ public class AjouterExamen extends javax.swing.JFrame {
     private void yearFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_yearFieldActionPerformed
+
+    private void addImgButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addImgButtonActionPerformed
+        if (checkAllFieldCompleted()) {
+            System.out.println();
+            System.out.println("RENTRERcheckField");
+            System.out.println(checkDateNumeric(yearField.getText()) + " " + checkDateNumeric(monthField.getText()) + " " + checkDateNumeric(dayField.getText()) + " " + checkDateNumeric(hourField.getText()) + " " + checkDateNumeric(minField.getText()));
+            System.out.println();
+
+            try {
+                System.out.println("PH entre: " + phField.getText());
+                System.out.println("ph EXist ?" + checkExistPH(phField.getText()));
+                if (checkExistPH(phField.getText()) == true) {
+                    if (checkDateNumeric(yearField.getText()) && checkDateNumeric(monthField.getText()) && checkDateNumeric(dayField.getText()) && checkDateNumeric(hourField.getText()) && checkDateNumeric(minField.getText())) {
+                        if (checkYearValid(yearField.getText()) && checkMonthValid(monthField.getText()) && checkDayValid(monthField.getText(), dayField.getText()) && checkHourValid(hourField.getText()) && checkMinValid(minField.getText())) {
+                            System.out.println("RENTRERcheckDate");
+                            String dateExam = yearField.getText() + "-" + monthField.getText() + "-" + dayField.getText() + " " + hourField.getText() + ":" + minField.getText() + ":00";
+                            Timestamp timestampDateExam = Timestamp.valueOf(dateExam);
+                            System.out.println("dateExam to add: " + timestampDateExam);
+                            Examen examen = new Examen(pat.getPatientId(), phField.getText(), typeExamCombo.getSelectedItem().toString(), timestampDateExam);
+
+                            try {
+                                RequetesBDExamen.addExamBD(examen, conn);
+                            } catch (SQLException ex) {
+                                Logger.getLogger(AjouterExamen.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                            // TODO add your handling code here:
+                            AjouterImage ajimage = new AjouterImage(login, conn);
+                            this.setVisible(false);
+                            ajimage.setVisible(true);
+                            ajimage.setLocationRelativeTo(null);
+                        } 
+                        else {
+                            JOptionPane.showMessageDialog(null, "La date rentrée n'est pas valide", "", JOptionPane.PLAIN_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "La date n'est pas en format numérique", "", JOptionPane.PLAIN_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ce praticien hospitalier n'exite pas", "", JOptionPane.PLAIN_MESSAGE);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AjouterExamen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Tous les champs doivent être complétés", "", JOptionPane.PLAIN_MESSAGE);
+        }
+    }//GEN-LAST:event_addImgButtonActionPerformed
 
 //    /**
 //     * @param args the command line arguments

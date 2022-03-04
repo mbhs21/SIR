@@ -107,6 +107,62 @@ public class RequetesBDLogin {
         return listProId;
     }
 
+    
+     public static boolean idMR (String proId, Connection conn) throws
+            SQLException {
+        // Get a statement from the connection
+        Statement stmt = conn.createStatement();
+        boolean mr = false;
+        // Execute the 
+        ResultSet rs = stmt.executeQuery("SELECT proId FROM login WHERE SUBSTR (proId, 1, 2)='MR' and proId = '"+proId+"'");
+        while (rs.next()) {
+            mr=true;
+        }
+        return mr;
+        
+    }
+     
+     public static boolean idPH (String proId, Connection conn) throws
+            SQLException {
+        // Get a statement from the connection
+        Statement stmt = conn.createStatement();
+        boolean ph = false;
+        // Execute the 
+        ResultSet rs = stmt.executeQuery("SELECT proId FROM login WHERE SUBSTR (proId, 1, 2)='PH' and proId = '"+proId+"'");
+        while (rs.next()) {
+            ph=true;
+        }
+        return ph;
+        
+    }
+     
+    public static boolean idPR (String proId, Connection conn) throws
+            SQLException {
+        // Get a statement from the connection
+        Statement stmt = conn.createStatement();
+        boolean pr = false;
+        // Execute the 
+        ResultSet rs = stmt.executeQuery("SELECT proId FROM login WHERE SUBSTR (proId, 1, 2)='PR' and proId = '"+proId+"'");
+        while (rs.next()) {
+            pr=true;
+        }
+        return pr;
+        
+    } 
+    
+    public static boolean idSE (String proId, Connection conn) throws
+            SQLException {
+        // Get a statement from the connection
+        Statement stmt = conn.createStatement();
+        boolean se = false;
+        // Execute the 
+        ResultSet rs = stmt.executeQuery("SELECT proId FROM login WHERE SUBSTR (proId, 1, 2)='SE' and proId = '"+proId+"'");
+        while (rs.next()) {
+            se=true;
+        }
+        return se;
+        
+    }
     /**
      * stocke les mots de passe des professionnels dans une liste.
      *

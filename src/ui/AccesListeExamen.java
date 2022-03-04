@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import nf.Examen;
 import nf.RequetesBDExamen;
+import nf.RequetesBDLogin;
 
 /**
  *
@@ -85,6 +86,31 @@ public class AccesListeExamen extends javax.swing.JFrame {
         genderField.setText(pat.getGender());
         birthDateField.setText(pat.getBirthDate().toString());
 
+        try {
+            // TODO add your handling code here:
+            if (RequetesBDLogin.idMR(login.getLogin(), conn)) {
+                accesExamenButton.setVisible(false);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccesListeExamen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            // TODO add your handling code here:
+            if (RequetesBDLogin.idPR(login.getLogin(), conn)) {
+                addExamenButton.setVisible(false);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccesListeExamen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            // TODO add your handling code here:
+            if (RequetesBDLogin.idPH(login.getLogin(), conn)) {
+                addExamenButton.setVisible(false);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccesListeExamen.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public DefaultTableModel setModelJTable(Patient pat) throws SQLException {
@@ -651,11 +677,11 @@ public class AccesListeExamen extends javax.swing.JFrame {
     }//GEN-LAST:event_deconnexionButtonActionPerformed
 
     private void accesExamenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accesExamenButtonActionPerformed
-        // TODO add your handling code here:
+
         try {
             // TODO add your handling code here:
             Examen exam = selectExamTable();
-            ConsulterCR consulterCR = new ConsulterCR(exam, pat, login, conn);
+            AffichageExamen consulterCR = new AffichageExamen(exam, pat, login, conn);
             this.setVisible(false);
             consulterCR.setVisible(true);
             consulterCR.setLocationRelativeTo(null);
@@ -677,20 +703,20 @@ public class AccesListeExamen extends javax.swing.JFrame {
 
     public Examen selectExamTable() throws SQLException {
         Object ob = examOnePatientTable.getValueAt(examOnePatientTable.getSelectedRow(), examOnePatientTable.getSelectedColumn());
-        System.out.println("examOnePatientTable.getSelectedColumn()= "+examOnePatientTable.getSelectedColumn());
+        System.out.println("examOnePatientTable.getSelectedColumn()= " + examOnePatientTable.getSelectedColumn());
         Examen exam = null;
         //for (int i = 0; i < examOnePatientTable.getColumnCount(); i++) {
-            System.out.println("YEP");
-            String dExam = examOnePatientTable.getValueAt(examOnePatientTable.getSelectedRow(), 0).toString().substring(2, 16);
-            System.out.println("dexam= "+dExam);
-            String[] dExamSplit = dExam.split(" ");
-            String dateExamen = dExamSplit[0];
-            String[] date = dateExamen.split("-");
-            String dselect = date[2] + "-" + date[1] + "-" + date[0] + " " + dExamSplit[1];
-            System.out.println("dselect= "+dselect);
-            System.out.println("");
-            exam = RequetesBDExamen.storeOneExamInfo(dselect, conn);
-            
+        System.out.println("YEP");
+        String dExam = examOnePatientTable.getValueAt(examOnePatientTable.getSelectedRow(), 0).toString().substring(2, 16);
+        System.out.println("dexam= " + dExam);
+        String[] dExamSplit = dExam.split(" ");
+        String dateExamen = dExamSplit[0];
+        String[] date = dateExamen.split("-");
+        String dselect = date[2] + "-" + date[1] + "-" + date[0] + " " + dExamSplit[1];
+        System.out.println("dselect= " + dselect);
+        System.out.println("");
+        exam = RequetesBDExamen.storeOneExamInfo(dselect, conn);
+
         //}
         //System.out.println(exam.toString());
         return exam;
