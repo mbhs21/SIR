@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import nf.DatabaseAccessProperties;
 import nf.Encryption;
@@ -55,20 +56,24 @@ public class Connexion extends javax.swing.JFrame {
         this.conn = DriverManager.getConnection(dbUrl, username, password);
         this.proIdList = new ArrayList<>();
         this.proIdList = RequetesBDLogin.storeProId(conn);
-
-        initComponents();
         
-            
+                
+        this.setResizable(false);
+
+        System.out.println("Co="+JFrame.MAXIMIZED_BOTH);
+        
+        initComponents();
+
         ImageIcon icone = new ImageIcon("src/img_icon/logo.png");
         java.awt.Image img = icone.getImage();
         java.awt.Image newImg = img.getScaledInstance(jLabel4.getWidth(), jLabel4.getHeight(), java.awt.Image.SCALE_SMOOTH);
         icone = new ImageIcon(newImg);
         jLabel4.setIcon(icone);
 
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.pack();
-        this.setSize(screenSize.width, screenSize.height-50);
-        this.setResizable(false);
+        //this.setSize(screenSize.width, screenSize.height - 50);
+        
 
     }
 
@@ -95,13 +100,16 @@ public class Connexion extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Authentification");
-        setMinimumSize(new java.awt.Dimension(1200, 650));
+        setMaximumSize(new java.awt.Dimension(1490, 794));
+        setMinimumSize(new java.awt.Dimension(1490, 794));
+        setPreferredSize(new java.awt.Dimension(1490, 794));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(10, 10, 10, 10, new java.awt.Color(0, 204, 204)));
+        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 204, 204), 5, true));
         jPanel1.setForeground(new java.awt.Color(102, 153, 255));
         jPanel1.setToolTipText("");
+        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel1.setMaximumSize(new java.awt.Dimension(1490, 794));
         jPanel1.setMinimumSize(new java.awt.Dimension(1490, 794));
         jPanel1.setPreferredSize(new java.awt.Dimension(1490, 794));
@@ -126,7 +134,7 @@ public class Connexion extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(102, 102, 102));
         jLabel1.setText("Identifiant : ");
 
-        jTextField1.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jTextField1.setForeground(new java.awt.Color(0, 153, 153));
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -219,18 +227,18 @@ public class Connexion extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(1001, 1001, 1001)
                 .addComponent(jLabel5)
-                .addContainerGap(478, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(421, 421, 421)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(427, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 213, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 219, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
                 .addComponent(connectionButton)
@@ -241,11 +249,11 @@ public class Connexion extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1499, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -257,6 +265,7 @@ public class Connexion extends javax.swing.JFrame {
 
     private void connectionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectionButtonActionPerformed
         // TODO add your handling code here:
+       
         String id = null;
         String writtenId = this.jTextField1.getText();
         String writtenPW = this.jPasswordField1.getText();

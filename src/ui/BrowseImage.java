@@ -14,7 +14,11 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -24,6 +28,7 @@ import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import nf.DatabaseAccessProperties;
+import static java.nio.file.StandardCopyOption.*;
 
 public class BrowseImage extends JFrame {
 
@@ -43,7 +48,8 @@ public class BrowseImage extends JFrame {
         btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser file = new JFileChooser();
-                file.setCurrentDirectory(new File(System.getProperty("user.home")));
+                //file.setCurrentDirectory(new File(System.getProperty("user.home")));
+                file.setCurrentDirectory(new java.io.File("./src/img_numerisees_jpg"));
                 //filtrer les fichiers
                 FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images", "jpg", "png");
                 file.addChoosableFileFilter(filter);
@@ -60,48 +66,67 @@ public class BrowseImage extends JFrame {
 
                     }
 
-                    PreparedStatement ps = null;
-                    try {
-                        ps = conn.prepareStatement("insert into PACS values(?,?,?)");
-                    } catch (SQLException ex) {
-                        Logger.getLogger(BrowseImage.class.getName()).log(Level.SEVERE, null, ex);
+//                    PreparedStatement ps = null;
+//                    try {
+//                        ps = conn.prepareStatement("insert into PACS values(?,?,?,?)");
+//                    } catch (SQLException ex) {
+//                        Logger.getLogger(BrowseImage.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+//
+//                    try {
+//                        //id
+//
+//                        ps.setInt(1, 2);
+//                        ps.setString(2, "EX02");
+//                        ps.setBinaryStream(3, (InputStream) input, (int) selFile.length());
+//                        ps.setString(4,"Rien a signaler sur cette image");
+//                       
+//
+//                    } catch (SQLException ex) {
+//                        Logger.getLogger(BrowseImage.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+//
+//                    try {
+//                        //exécution de la requête
+//                        ps.executeUpdate();
+//                    } catch (SQLException ex) {
+//                        Logger.getLogger(BrowseImage.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+//                    System.out.println("Image insérée avec succès!");
+//                    try {
+//                        //fermer le preparedStatement
+//                        ps.close();
+//                    } catch (SQLException ex) {
+//                        Logger.getLogger(BrowseImage.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+//                    try {
+//                        //fermer la connexion
+//                        conn.close();
+//                    } catch (SQLException ex) {
+//                        Logger.getLogger(BrowseImage.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+//                    Path path = Paths.get("./src/img_numerisees_jpg/abdomen/" + selFile.getName());
+//                    System.out.println("path= " + path.toString());
+//                    //l.setIcon(resize(path));
+//
+//                    try {
+//                        Files.move(path, Paths.get("./src/corbeille/"), REPLACE_EXISTING);
+//                    } catch (IOException ex) {
+//                        Logger.getLogger(BrowseImage.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+
+                    
+                    // renaming the file and moving it to a new location
+                    if (selFile.renameTo(new File("./src/corbeille/newFile.txt"))) {
+                        // if file copied successfully then delete the original file
+                        selFile.delete();
+                        System.out.println("File moved successfully");
+                    } else {
+                        System.out.println("Failed to move the file");
                     }
 
-                    try {
-                        //id
-
-                        ps.setInt(1, 1);
-                        ps.setString(2, "EX01");
-                        ps.setBinaryStream(3, (InputStream) input, (int) selFile.length());
-                       
-
-                    } catch (SQLException ex) {
-                        Logger.getLogger(BrowseImage.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                    try {
-                        //exécution de la requête
-                        ps.executeUpdate();
-                    } catch (SQLException ex) {
-                        Logger.getLogger(BrowseImage.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    System.out.println("Image insérée avec succès!");
-                    try {
-                        //fermer le preparedStatement
-                        ps.close();
-                    } catch (SQLException ex) {
-                        Logger.getLogger(BrowseImage.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    try {
-                        //fermer la connexion
-                        conn.close();
-                    } catch (SQLException ex) {
-                        Logger.getLogger(BrowseImage.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                    String path = selFile.getAbsolutePath();
-                    l.setIcon(resize(path));
                 }
+
             }
         }
         );
@@ -129,7 +154,7 @@ public class BrowseImage extends JFrame {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         String jdbcDriver, dbUrl, username, password;
         String configurationFile
-            = "MaBD.properties.txt";
+                = "MaBD.properties.txt";
         DatabaseAccessProperties dap = new DatabaseAccessProperties(configurationFile);
         jdbcDriver = dap.getJdbcDriver();
         dbUrl = dap.getDatabaseUrl();

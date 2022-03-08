@@ -29,6 +29,14 @@ public class Login {
         this.function=function;
     }
     
+    public Login(String login,String lastName,String firstName, String function){
+        this.login=login;
+        this.passeword=null;
+        this.lastName=lastName;
+        this.firstName=firstName;
+        this.function=function;
+    }
+    
     public Login(String login,String lastName,String function){
         this.login=login;
         this.passeword=null;
@@ -46,7 +54,16 @@ public class Login {
         
         return i!=proIdList.size();
     }
-   
+
+    public String infoMedPrescripteur(){
+        String str="Médecin prescripteur : "+this.login+"-"+this.lastName.toUpperCase()+" "+this.firstName;
+        return str;
+    } 
+    
+    public String infoManipulateurRadio(){
+        String str="Examen réalisé par : "+this.login+"-"+this.lastName.toUpperCase()+" "+this.firstName;
+        return str;
+    } 
          
     /**
      * if id already exists return false else true

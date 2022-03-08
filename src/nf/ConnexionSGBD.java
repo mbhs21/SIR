@@ -8,13 +8,8 @@ package nf;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  *
@@ -119,14 +114,16 @@ public class ConnexionSGBD {
 //                
 //                Date d=new Date(year-1900,month-1,day);
 //                System.out.println(d.toString());
-            String dExam="15-10-21 08:35";
-            String[] dExamSplit=dExam.split(" ");
-            String dateExamen = dExamSplit[0];
-            String[] date=dateExamen.split("-");
-            String d=date[2]+"-"+date[1]+"-"+date[0]+" "+dExamSplit[1];
-            System.out.println("d= "+d);
-            Examen exam = RequetesBDExamen.storeOneExamInfo(d, conn);
-            System.out.println("examen: " + exam.toString());
+//            String dExam="15-10-21 08:35";
+//            String[] dExamSplit=dExam.split(" ");
+//            String dateExamen = dExamSplit[0];
+//            String[] date=dateExamen.split("-");
+//            String d=date[2]+"-"+date[1]+"-"+date[0]+" "+dExamSplit[1];
+//            System.out.println("d= "+d);
+//            Examen exam = RequetesBDExamen.storeOneExamInfo(d, conn);
+//            System.out.println("examen: " + exam.toString());
+//            RequetesBDPACS.returnPACSoneExam("EX01", conn);
+
 //            
 //            String dateTime = "2022-12-12 23:28:00";
 //

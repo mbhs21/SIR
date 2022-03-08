@@ -38,13 +38,13 @@ public class RequetesBDPatient {
         while (rs.next()) {
             Object[] infoOnePatient = new Object[4];
             infoOnePatient[0] = rs.getString(1).trim();
-            System.out.println(rs.getString(1));
+            //System.out.println(rs.getString(1));
             infoOnePatient[1] = rs.getString(2).trim();
-            System.out.println(rs.getString(2));
+            //System.out.println(rs.getString(2).toUpperCase());
             infoOnePatient[2] = rs.getString(3).trim();
-            System.out.println(rs.getString(3));
+            //System.out.println(rs.getString(3));
             infoOnePatient[3] = rs.getDate(4).toString().trim();
-            System.out.println(rs.getDate(4).toString());
+            //System.out.println(rs.getDate(4).toString());
             infoPatients.add(infoOnePatient);
         }
         // Close the result set, statement and the connection 

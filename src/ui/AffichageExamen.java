@@ -5,90 +5,101 @@
  */
 package ui;
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.IOException;
 import javax.swing.ImageIcon;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 import nf.Examen;
 import nf.Login;
 import nf.Patient;
 import nf.RequetesBDLogin;
+import nf.RequetesBDPACS;
+import nf.RequetesBDPatient;
 
 /**
  *
  * @author em
  */
 public class AffichageExamen extends javax.swing.JFrame {
+
     Patient pat;
     Connection conn;
     Login login;
+    Login medPrescripteur;
     Examen examen;
+
     /**
      * Creates new form CompteRendu
+     *
      * @param examen
      * @param pat
      * @param login
      * @param conn
      */
-    public AffichageExamen(Examen examen, Patient pat,Login login, Connection conn) {
-        this.pat=pat;
-        this.conn=conn;
-        this.login=login;
-        this.examen=examen;
-        
+    public AffichageExamen(Examen examen, Patient pat, Login login, Login medPrescripteur, Connection conn) throws SQLException {
+        this.pat = pat;
+        this.conn = conn;
+        this.login = login;
+        this.examen = examen;
+
         initComponents();
-        
+
         ImageIcon icone = new ImageIcon("src/img_icon/user_1.png");
         java.awt.Image img = icone.getImage();
         java.awt.Image newImg = img.getScaledInstance(userIcon.getWidth(), userIcon.getHeight(), java.awt.Image.SCALE_SMOOTH);
         icone = new ImageIcon(newImg);
         userIcon.setIcon(icone);
-        
+
         ImageIcon iconeLogo = new ImageIcon("src/img_icon/logo.png");
         java.awt.Image imgLogo = iconeLogo.getImage();
         java.awt.Image newImgLogo = imgLogo.getScaledInstance(logoIcon.getWidth(), logoIcon.getHeight(), java.awt.Image.SCALE_SMOOTH);
         iconeLogo = new ImageIcon(newImgLogo);
         logoIcon.setIcon(iconeLogo);
-        
+
         ImageIcon iconeDeconnection = new ImageIcon("src/img_icon/deconnexion.png");
         java.awt.Image imgDeconnection = iconeDeconnection.getImage();
         java.awt.Image newImgDeconnection = imgDeconnection.getScaledInstance(deconnexionButton.getHeight(), deconnexionButton.getHeight(), java.awt.Image.SCALE_SMOOTH);
         iconeDeconnection = new ImageIcon(newImgDeconnection);
         deconnexionButton.setIcon(iconeDeconnection);
-        
+
         ImageIcon iconeRetour = new ImageIcon("src/img_icon/retour.png");
         java.awt.Image imgRetour = iconeRetour.getImage();
         java.awt.Image newImgRetour = imgRetour.getScaledInstance(retourButton.getHeight(), retourButton.getHeight(), java.awt.Image.SCALE_SMOOTH);
         iconeRetour = new ImageIcon(newImgRetour);
         retourButton.setIcon(iconeRetour);
-        
+
         ImageIcon iconePatient = new ImageIcon("src/img_icon/health-report.png");
         java.awt.Image imgPatient = iconePatient.getImage();
         java.awt.Image newImgPatient = imgPatient.getScaledInstance(patientIcon.getHeight(), patientIcon.getHeight(), java.awt.Image.SCALE_SMOOTH);
         iconePatient = new ImageIcon(newImgPatient);
         patientIcon.setIcon(iconePatient);
-        
+
         patientIdField.setText(pat.getPatientId());
         lastNamePField.setText(pat.getLastNameP());
-        firstNamePField.setText(pat.getFirstNameP());       
+        firstNamePField.setText(pat.getFirstNameP());
         birthDateField.setText(pat.getBirthDate().toString());
         genderCheckBox.setSelected(true);
         genderCheckBox.setText(pat.getGender());
-        examDateField.setText(examen.getDateExam().toString().substring(0,16));
+        examDateField.setText(examen.getDateExam().toString().substring(0, 16));
         typeExamField.setText(examen.getTypeExamen());
         CRTextArea.setText("");
+
+        listImg.setListData(RequetesBDPACS.returnPACSoneExam("EX01", conn));
         
         try {
             // TODO add your handling code here:
             if (RequetesBDLogin.idPH(login.getLogin(), conn)){
-                consulterCRButton.setVisible(false);
+                editionCRButton.setVisible(false);
             }
         } catch (SQLException ex) {
             Logger.getLogger(AccesListeExamen.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     /**
@@ -107,7 +118,7 @@ public class AffichageExamen extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         CRTextArea = new javax.swing.JTextArea();
         jTextField3 = new javax.swing.JTextField();
-        consulterCRButton = new javax.swing.JButton();
+        editionCRButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
         retourButton = new javax.swing.JButton();
@@ -120,7 +131,7 @@ public class AffichageExamen extends javax.swing.JFrame {
         deconnexionButton = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        listImg = new javax.swing.JList<>();
         jPanel4 = new javax.swing.JPanel();
         jTextField5 = new javax.swing.JTextField();
         jTextField6 = new javax.swing.JTextField();
@@ -136,12 +147,12 @@ public class AffichageExamen extends javax.swing.JFrame {
         birthDateField = new javax.swing.JTextField();
         genderCheckBox = new javax.swing.JCheckBox();
         typeExamField = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        showImgButton = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         imgLabel = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        observationArea = new javax.swing.JTextArea();
         jTextField2 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -178,13 +189,13 @@ public class AffichageExamen extends javax.swing.JFrame {
         jTextField3.setText("Compte rendu");
         jTextField3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, java.awt.Color.cyan, null, java.awt.Color.cyan));
 
-        consulterCRButton.setBackground(new java.awt.Color(255, 255, 255));
-        consulterCRButton.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
-        consulterCRButton.setForeground(new java.awt.Color(51, 51, 51));
-        consulterCRButton.setText("Edition CR");
-        consulterCRButton.addActionListener(new java.awt.event.ActionListener() {
+        editionCRButton.setBackground(new java.awt.Color(255, 255, 255));
+        editionCRButton.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        editionCRButton.setForeground(new java.awt.Color(51, 51, 51));
+        editionCRButton.setText("Edition CR");
+        editionCRButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                consulterCRButtonActionPerformed(evt);
+                editionCRButtonActionPerformed(evt);
             }
         });
 
@@ -192,7 +203,9 @@ public class AffichageExamen extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 204)));
 
         jTextField1.setEditable(false);
+        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
         jTextField1.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(0, 0, 0));
         jTextField1.setText("PH01 - DURAND Bastien");
         jTextField1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, java.awt.Color.blue, null, java.awt.Color.white));
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -213,7 +226,7 @@ public class AffichageExamen extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Candara", 1, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel1.setText("Liste des examens");
+        jLabel1.setText("Détails examen");
 
         jLabel3.setFont(new java.awt.Font("Candara", 1, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(51, 51, 51));
@@ -265,8 +278,8 @@ public class AffichageExamen extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(logoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(213, 213, 213)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(274, 274, 274)
                 .addComponent(userPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -313,21 +326,23 @@ public class AffichageExamen extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jList1.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
-        jList1.setForeground(new java.awt.Color(0, 153, 255));
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        listImg.setBackground(new java.awt.Color(255, 255, 255));
+        listImg.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
+        listImg.setForeground(new java.awt.Color(0, 153, 255));
+        listImg.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Radio 1", "Radio 2", "Radio 3" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jList1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jList1.setSelectionBackground(new java.awt.Color(0, 204, 204));
-        jScrollPane2.setViewportView(jList1);
+        listImg.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        listImg.setSelectionBackground(new java.awt.Color(0, 204, 204));
+        jScrollPane2.setViewportView(listImg);
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 204, 204), new java.awt.Color(0, 204, 204)));
 
         jTextField5.setEditable(false);
+        jTextField5.setBackground(new java.awt.Color(255, 255, 255));
         jTextField5.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
         jTextField5.setForeground(new java.awt.Color(102, 102, 102));
         jTextField5.setText("Identifiant :");
@@ -339,12 +354,14 @@ public class AffichageExamen extends javax.swing.JFrame {
         });
 
         jTextField6.setEditable(false);
+        jTextField6.setBackground(new java.awt.Color(255, 255, 255));
         jTextField6.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
         jTextField6.setForeground(new java.awt.Color(102, 102, 102));
         jTextField6.setText("Nom :");
         jTextField6.setBorder(null);
 
         jTextField7.setEditable(false);
+        jTextField7.setBackground(new java.awt.Color(255, 255, 255));
         jTextField7.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
         jTextField7.setForeground(new java.awt.Color(102, 102, 102));
         jTextField7.setText("Date d'examen :");
@@ -368,6 +385,7 @@ public class AffichageExamen extends javax.swing.JFrame {
             .addComponent(patientIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
+        patientIdField.setBackground(new java.awt.Color(255, 255, 255));
         patientIdField.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         patientIdField.setForeground(new java.awt.Color(51, 51, 51));
         patientIdField.setText("PAT01");
@@ -378,6 +396,7 @@ public class AffichageExamen extends javax.swing.JFrame {
             }
         });
 
+        lastNamePField.setBackground(new java.awt.Color(255, 255, 255));
         lastNamePField.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         lastNamePField.setForeground(new java.awt.Color(51, 51, 51));
         lastNamePField.setText("BROUILLARD");
@@ -388,11 +407,13 @@ public class AffichageExamen extends javax.swing.JFrame {
             }
         });
 
+        firstNamePField.setBackground(new java.awt.Color(255, 255, 255));
         firstNamePField.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         firstNamePField.setForeground(new java.awt.Color(51, 51, 51));
         firstNamePField.setText("Jean");
         firstNamePField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        examDateField.setBackground(new java.awt.Color(255, 255, 255));
         examDateField.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         examDateField.setForeground(new java.awt.Color(51, 51, 51));
         examDateField.setText("2016-06-11 20:05:58.0");
@@ -407,6 +428,7 @@ public class AffichageExamen extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(102, 102, 102));
         jLabel5.setText("Date de naissance :");
 
+        birthDateField.setBackground(new java.awt.Color(255, 255, 255));
         birthDateField.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         birthDateField.setForeground(new java.awt.Color(51, 51, 51));
 
@@ -492,10 +514,15 @@ public class AffichageExamen extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(51, 51, 51));
-        jButton1.setText("Visionner image");
+        showImgButton.setBackground(new java.awt.Color(255, 255, 255));
+        showImgButton.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        showImgButton.setForeground(new java.awt.Color(51, 51, 51));
+        showImgButton.setText("Visionner image");
+        showImgButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showImgButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -508,9 +535,12 @@ public class AffichageExamen extends javax.swing.JFrame {
             .addComponent(imgLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane4.setViewportView(jTextArea2);
+        observationArea.setBackground(new java.awt.Color(255, 255, 255));
+        observationArea.setColumns(20);
+        observationArea.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        observationArea.setForeground(new java.awt.Color(51, 51, 51));
+        observationArea.setRows(5);
+        jScrollPane4.setViewportView(observationArea);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -544,14 +574,14 @@ public class AffichageExamen extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addComponent(jButton1)
+                        .addComponent(showImgButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(consulterCRButton)
+                        .addComponent(editionCRButton)
                         .addGap(27, 27, 27)))
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                        .addGap(24, 24, 24)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -563,7 +593,7 @@ public class AffichageExamen extends javax.swing.JFrame {
                                         .addGap(132, 132, 132)
                                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(339, 339, 339)
@@ -594,7 +624,7 @@ public class AffichageExamen extends javax.swing.JFrame {
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(0, 42, Short.MAX_VALUE)
+                                        .addGap(0, 0, Short.MAX_VALUE)
                                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(28, 28, 28)
                                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -602,8 +632,8 @@ public class AffichageExamen extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(48, 48, 48)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(consulterCRButton))
+                            .addComponent(showImgButton)
+                            .addComponent(editionCRButton))
                         .addGap(41, 41, 41)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 121, Short.MAX_VALUE))))
@@ -633,7 +663,7 @@ public class AffichageExamen extends javax.swing.JFrame {
 
     private void retourButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retourButtonActionPerformed
         // TODO add your handling code here:
-         PageAccueil pgAccueil = null;
+        PageAccueil pgAccueil = null;
         try {
             pgAccueil = new PageAccueil(this.login, conn);
         } catch (IOException ex) {
@@ -675,10 +705,52 @@ public class AffichageExamen extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_examDateFieldActionPerformed
 
-    private void consulterCRButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consulterCRButtonActionPerformed
+    private void editionCRButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editionCRButtonActionPerformed
         // TODO add your handling code here:
+        
+        
+        
         CRTextArea.setText(examen.getReport());
-    }//GEN-LAST:event_consulterCRButtonActionPerformed
+    }//GEN-LAST:event_editionCRButtonActionPerformed
+    
+    public String initializeReport(Patient pat,){
+        String 
+    }
+    
+    private void showImgButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showImgButtonActionPerformed
+        // TODO add your handling code here:
+        int pacsIdSelected = selectImgList();
+        try {
+            byte[] imgSelected = RequetesBDPACS.showImage(pacsIdSelected, conn);
+            Image img = Toolkit.getDefaultToolkit().createImage(imgSelected);
+            ImageIcon icone = new ImageIcon(img);
+            java.awt.Image imgIcone = icone.getImage();
+            java.awt.Image newImg = imgIcone.getScaledInstance(imgLabel.getWidth(), imgLabel.getHeight(), java.awt.Image.SCALE_SMOOTH);
+            icone = new ImageIcon(newImg);
+            imgLabel.setIcon(icone);
+
+            String comments = RequetesBDPACS.returnCommentsImg(pacsIdSelected, conn);
+            if (comments != null) {
+                observationArea.setText(comments);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AffichageExamen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+    }//GEN-LAST:event_showImgButtonActionPerformed
+
+    public int selectImgList() {
+        String selectedImg = listImg.getSelectedValue();
+        System.out.println("listImg.getSelectedValue()=" + listImg.getSelectedValue());
+        String[] selectedImgSplit = selectedImg.split(" ");
+        String idImg = selectedImgSplit[1];
+        System.out.println("pacsId selected= " + idImg);
+        int selectedId = Integer.parseInt(idImg);
+        return selectedId;
+
+    }
 
 //    /**
 //     * @param args the command line arguments
@@ -719,19 +791,17 @@ public class AffichageExamen extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea CRTextArea;
     private javax.swing.JTextField birthDateField;
-    private javax.swing.JButton consulterCRButton;
     private javax.swing.JButton deconnexionButton;
+    private javax.swing.JButton editionCRButton;
     private javax.swing.JTextField examDateField;
     private javax.swing.JTextField firstNamePField;
     private javax.swing.JCheckBox genderCheckBox;
     private javax.swing.JLabel imgLabel;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -743,7 +813,6 @@ public class AffichageExamen extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
@@ -751,12 +820,15 @@ public class AffichageExamen extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField lastNamePField;
+    private javax.swing.JList<String> listImg;
     private javax.swing.JLabel logoIcon;
     private javax.swing.JPanel logoPanel;
+    private javax.swing.JTextArea observationArea;
     private javax.swing.JLabel patientIcon;
     private javax.swing.JPanel patientIconPanel;
     private javax.swing.JTextField patientIdField;
     private javax.swing.JButton retourButton;
+    private javax.swing.JButton showImgButton;
     private javax.swing.JTextField typeExamField;
     private javax.swing.JLabel userIcon;
     private javax.swing.JPanel userPanel;

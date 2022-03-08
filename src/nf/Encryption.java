@@ -99,44 +99,44 @@ public class Encryption {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws ClassNotFoundException, SQLException {
-//        String salt = generateSalt(512).get();
-        String pw = "PH02test";
-        String key = hashPassword(pw, Salt.SALT).get();
-        System.out.println(key);
-//        System.out.println(verifyPassword("toto", key, Salt.SALT));
-//        System.out.println(verifyPassword("dqlkdkql", key, Salt.SALT));
-//        System.out.println(verifyPassword("lala", key, Salt.SALT));
-
-        String jdbcDriver, dbUrl, username, password;
-        HashMap<String, String> dicoIdMP;
-        DatabaseAccessProperties dap = new DatabaseAccessProperties("MaBD.properties.txt");
-        jdbcDriver = dap.getJdbcDriver();
-        dbUrl = dap.getDatabaseUrl();
-        username = dap.getUsername();
-        password = dap.getPassword();
-
-        // Load the database driver
-        Class.forName(jdbcDriver);
-
-        // Get a connection to the database
-        Connection conn = DriverManager.getConnection(dbUrl, username, password);
-
-        dicoIdMP = RequetesBDLogin.storeIdPassword(conn);
-        //idList = RequetesBDLogin.storeProId(conn);
-        for (HashMap.Entry<String, String> entry : dicoIdMP.entrySet()) {
-            String id = entry.getKey();
-            String mp = entry.getValue();
-            System.out.println(id + " " + mp);
-        }
-        System.out.println("");
-
-        RequetesBDLogin.updatePWproId("PH02", key, conn);
-
-        String PWencrypt = RequetesBDLogin.returnPWproId("PH02", conn);
-        System.out.println("PW encrypt =" + PWencrypt);
-        System.out.println(verifyPassword(pw, key, Salt.SALT));
-
-    }
+//    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+////        String salt = generateSalt(512).get();
+//        String pw = "PR01test";
+//        String key = hashPassword(pw, Salt.SALT).get();
+//        System.out.println(key);
+////        System.out.println(verifyPassword("toto", key, Salt.SALT));
+////        System.out.println(verifyPassword("dqlkdkql", key, Salt.SALT));
+////        System.out.println(verifyPassword("lala", key, Salt.SALT));
+//
+//        String jdbcDriver, dbUrl, username, password;
+//        HashMap<String, String> dicoIdMP;
+//        DatabaseAccessProperties dap = new DatabaseAccessProperties("MaBD.properties.txt");
+//        jdbcDriver = dap.getJdbcDriver();
+//        dbUrl = dap.getDatabaseUrl();
+//        username = dap.getUsername();
+//        password = dap.getPassword();
+//
+//        // Load the database driver
+//        Class.forName(jdbcDriver);
+//
+//        // Get a connection to the database
+//        Connection conn = DriverManager.getConnection(dbUrl, username, password);
+//
+//        dicoIdMP = RequetesBDLogin.storeIdPassword(conn);
+//        //idList = RequetesBDLogin.storeProId(conn);
+//        for (HashMap.Entry<String, String> entry : dicoIdMP.entrySet()) {
+//            String id = entry.getKey();
+//            String mp = entry.getValue();
+//            System.out.println(id + " " + mp);
+//        }
+//        System.out.println("");
+//
+//        RequetesBDLogin.updatePWproId("PR01", key, conn);
+//
+//        String PWencrypt = RequetesBDLogin.returnPWproId("PR01", conn);
+//        System.out.println("PW encrypt =" + PWencrypt);
+//        System.out.println(verifyPassword(pw, key, Salt.SALT));
+//
+//    }
 
 }

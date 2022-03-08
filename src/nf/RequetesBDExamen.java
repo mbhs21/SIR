@@ -126,7 +126,7 @@ public class RequetesBDExamen {
             ps.setString(4, examen.getTypeExamen());
             ps.setString(5, examen.getReport());
             ps.setTimestamp(6, examen.getDateExam());
-            ps.setInt(7, 1);
+            ps.setInt(7, 0);
 
         } catch (SQLException ex) {
             Logger.getLogger(BrowseImage.class.getName()).log(Level.SEVERE, null, ex);
@@ -147,20 +147,27 @@ public class RequetesBDExamen {
         }
     }
     
+    public static Login returnMedPrescripteur (Examen examen, Connection conn) throws SQLException{
+        Login medPrescripteur=null;
+        
+        // Get a statement from the connection
+        Statement stmt = conn.createStatement();
+        String id = null;
+        // Execute the query
+        ResultSet rs = stmt.executeQuery("SELECT UNIQUE Login.proId,Login.lastName,Login.firstName,Login.function FROM Exam join Login on (Exam.proId=Login.proId) WHERE Login.proId='" + examen.getProId() + "'");
+
+        while (rs.next()) {
+                      
+            medPrescripteur = new Login(rs.getString(1),rs.getString(2),rs.getString(3), rs.getString(4));
+
+        }
+
+        // Close the resultset, statement and the connection 
+        rs.close();
+        stmt.close();
+        return medPrescripteur;
+    }
    
 
 }
-//    public static void addExamenBD(Examen examen, Connection conn) throws SQLException {
-//        //Generate new patientId
-//        String newExamenId = generateExamenId(conn);
-//        // Get a statement from the connection
-//        Statement stmt = conn.createStatement();
-//        examen.setExamId(newExamenId);
-//        System.out.println("");
-//        System.out.println(examen.getDateExam().toString());
-//        // Execute the query
-//        ResultSet rs = stmt.executeQuery("insert into EXAM values ('" + newExamenId + "','" + examen.getPatientId() + "','" + examen.getProId() + "','" + examen.getTypeExamen() + "','" + examen.getReport() + "',to_TIMESTAMP('" + examen.getDateExam().getTime() + "'),'" + examen.getStatus() + "')");
-//        // Close the resultset, statement and the connection 
-//
-//        stmt.close();
-//    }
+

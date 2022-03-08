@@ -58,7 +58,7 @@ public class RequetesBDLogin {
     }
 
     /**
-     * stocke les identifiants des professionnels dans une liste.
+     * retourne l'identifiant d'un professionnel precis
      *
      * @param proId
      * @param conn connexion a la base de donnees
@@ -85,7 +85,13 @@ public class RequetesBDLogin {
         return id;
     }
 
-   
+    /**
+     * stocke les identifiants des professionnels dans une liste.
+     *
+     * @param conn connexion a la base de donnees
+     * @return
+     * @throws SQLException en cas d'erreur d'acces a la base de donnees
+     */
     public static List<String> storeProId(Connection conn) throws
             SQLException {
         List<String> listProId = new ArrayList<>();
@@ -107,62 +113,97 @@ public class RequetesBDLogin {
         return listProId;
     }
 
-    
-     public static boolean idMR (String proId, Connection conn) throws
+    /**
+     * retourne si l'identifiant en paramètre est un manipulateur Radio.
+     *
+     * @param proId
+     * @param conn connexion a la base de donnees
+     * @return true s'il s'agit bien d'un manipulateur Radio
+     * @throws SQLException en cas d'erreur d'acces a la base de donnees
+     */
+    public static boolean idMR(String proId, Connection conn) throws
             SQLException {
         // Get a statement from the connection
         Statement stmt = conn.createStatement();
         boolean mr = false;
         // Execute the 
-        ResultSet rs = stmt.executeQuery("SELECT proId FROM login WHERE SUBSTR (proId, 1, 2)='MR' and proId = '"+proId+"'");
+        ResultSet rs = stmt.executeQuery("SELECT proId FROM login WHERE SUBSTR (proId, 1, 2)='MR' and proId = '" + proId + "'");
         while (rs.next()) {
-            mr=true;
+            mr = true;
         }
         return mr;
-        
+
     }
-     
-     public static boolean idPH (String proId, Connection conn) throws
+
+    /**
+     * retourne si l'identifiant en paramètre est un praticien hospitalier
+     * lambda.
+     *
+     * @param proId
+     * @param conn connexion a la base de donnees
+     * @return true s'il s'agit bien d'un praticien hospitalier lambda
+     * @throws SQLException en cas d'erreur d'acces a la base de donnees
+     */
+    public static boolean idPH(String proId, Connection conn) throws
             SQLException {
         // Get a statement from the connection
         Statement stmt = conn.createStatement();
         boolean ph = false;
         // Execute the 
-        ResultSet rs = stmt.executeQuery("SELECT proId FROM login WHERE SUBSTR (proId, 1, 2)='PH' and proId = '"+proId+"'");
+        ResultSet rs = stmt.executeQuery("SELECT proId FROM login WHERE SUBSTR (proId, 1, 2)='PH' and proId = '" + proId.toUpperCase() + "'");
         while (rs.next()) {
-            ph=true;
+            ph = true;
         }
         return ph;
-        
+
     }
-     
-    public static boolean idPR (String proId, Connection conn) throws
+
+    /**
+     * retourne si l'identifiant en paramètre est un praticien hospitalier
+     * Radio.
+     *
+     * @param proId
+     * @param conn connexion a la base de donnees
+     * @return true s'il s'agit bien d'un praticien hospitalier Radio
+     * @throws SQLException en cas d'erreur d'acces a la base de donnees
+     */
+    public static boolean idPR(String proId, Connection conn) throws
             SQLException {
         // Get a statement from the connection
         Statement stmt = conn.createStatement();
         boolean pr = false;
         // Execute the 
-        ResultSet rs = stmt.executeQuery("SELECT proId FROM login WHERE SUBSTR (proId, 1, 2)='PR' and proId = '"+proId+"'");
+        ResultSet rs = stmt.executeQuery("SELECT proId FROM login WHERE SUBSTR (proId, 1, 2)='PR' and proId = '" + proId.toUpperCase() + "'");
         while (rs.next()) {
-            pr=true;
+            pr = true;
         }
         return pr;
-        
-    } 
-    
-    public static boolean idSE (String proId, Connection conn) throws
+
+    }
+
+    /**
+     * retourne si l'identifiant en paramètre est un(e) secrétaire
+     * Radio.
+     *
+     * @param proId
+     * @param conn connexion a la base de donnees
+     * @return true s'il s'agit bien d'un(e) secrétaire
+     * @throws SQLException en cas d'erreur d'acces a la base de donnees
+     */
+    public static boolean idSE(String proId, Connection conn) throws
             SQLException {
         // Get a statement from the connection
         Statement stmt = conn.createStatement();
         boolean se = false;
         // Execute the 
-        ResultSet rs = stmt.executeQuery("SELECT proId FROM login WHERE SUBSTR (proId, 1, 2)='SE' and proId = '"+proId+"'");
+        ResultSet rs = stmt.executeQuery("SELECT proId FROM login WHERE SUBSTR (proId, 1, 2)='SE' and proId = '" + proId.toUpperCase() + "'");
         while (rs.next()) {
-            se=true;
+            se = true;
         }
         return se;
-        
+
     }
+
     /**
      * stocke les mots de passe des professionnels dans une liste.
      *

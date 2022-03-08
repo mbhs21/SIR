@@ -85,7 +85,7 @@ public class AccesListeExamen extends javax.swing.JFrame {
         adressField.setText(pat.getAdress());
         genderField.setText(pat.getGender());
         birthDateField.setText(pat.getBirthDate().toString());
-
+        
         try {
             // TODO add your handling code here:
             if (RequetesBDLogin.idMR(login.getLogin(), conn)) {
@@ -111,6 +111,7 @@ public class AccesListeExamen extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(AccesListeExamen.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     public DefaultTableModel setModelJTable(Patient pat) throws SQLException {
@@ -174,6 +175,9 @@ public class AccesListeExamen extends javax.swing.JFrame {
         accesExamenButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1490, 794));
+        setMinimumSize(new java.awt.Dimension(1490, 794));
+        setPreferredSize(new java.awt.Dimension(1490, 794));
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 255));
         jPanel2.setForeground(new java.awt.Color(204, 204, 255));
@@ -306,7 +310,7 @@ public class AccesListeExamen extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 207, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addGap(69, 69, 69)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -564,7 +568,7 @@ public class AccesListeExamen extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -583,7 +587,7 @@ public class AccesListeExamen extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(270, 270, 270)
                                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(12, Short.MAX_VALUE))))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
@@ -593,7 +597,7 @@ public class AccesListeExamen extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(41, 41, 41)
@@ -619,11 +623,13 @@ public class AccesListeExamen extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1551, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 806, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -677,7 +683,7 @@ public class AccesListeExamen extends javax.swing.JFrame {
     }//GEN-LAST:event_deconnexionButtonActionPerformed
 
     private void accesExamenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accesExamenButtonActionPerformed
-
+        // TODO add your handling code here:
         try {
             // TODO add your handling code here:
             Examen exam = selectExamTable();
@@ -703,20 +709,20 @@ public class AccesListeExamen extends javax.swing.JFrame {
 
     public Examen selectExamTable() throws SQLException {
         Object ob = examOnePatientTable.getValueAt(examOnePatientTable.getSelectedRow(), examOnePatientTable.getSelectedColumn());
-        System.out.println("examOnePatientTable.getSelectedColumn()= " + examOnePatientTable.getSelectedColumn());
+        System.out.println("examOnePatientTable.getSelectedColumn()= "+examOnePatientTable.getSelectedColumn());
         Examen exam = null;
         //for (int i = 0; i < examOnePatientTable.getColumnCount(); i++) {
-        System.out.println("YEP");
-        String dExam = examOnePatientTable.getValueAt(examOnePatientTable.getSelectedRow(), 0).toString().substring(2, 16);
-        System.out.println("dexam= " + dExam);
-        String[] dExamSplit = dExam.split(" ");
-        String dateExamen = dExamSplit[0];
-        String[] date = dateExamen.split("-");
-        String dselect = date[2] + "-" + date[1] + "-" + date[0] + " " + dExamSplit[1];
-        System.out.println("dselect= " + dselect);
-        System.out.println("");
-        exam = RequetesBDExamen.storeOneExamInfo(dselect, conn);
-
+            System.out.println("YEP");
+            String dExam = examOnePatientTable.getValueAt(examOnePatientTable.getSelectedRow(), 0).toString().substring(2, 16);
+            System.out.println("dexam= "+dExam);
+            String[] dExamSplit = dExam.split(" ");
+            String dateExamen = dExamSplit[0];
+            String[] date = dateExamen.split("-");
+            String dselect = date[2] + "-" + date[1] + "-" + date[0] + " " + dExamSplit[1];
+            System.out.println("dselect= "+dselect);
+            System.out.println("");
+            exam = RequetesBDExamen.storeOneExamInfo(dselect, conn);
+            
         //}
         //System.out.println(exam.toString());
         return exam;

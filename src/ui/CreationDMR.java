@@ -76,7 +76,7 @@ public class CreationDMR extends javax.swing.JFrame {
         iconeLogo = new ImageIcon(newImgLogo);
         logoIcon.setIcon(iconeLogo);
         
-         try {
+        try {
             // TODO add your handling code here:
             if (RequetesBDLogin.idSE(login.getLogin(), conn)){
                 addExamenButton.setVisible(false);

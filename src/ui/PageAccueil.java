@@ -6,7 +6,9 @@
 package ui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -16,6 +18,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 import java.util.Date;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import nf.Login;
 import nf.Patient;
@@ -45,13 +48,14 @@ public class PageAccueil extends javax.swing.JFrame {
         this.login = login;
         this.conn = conn;
 
+       
         initComponents();
 
 //        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 //        this.pack();
 //        this.setSize(screenSize.width - 100, screenSize.height - 50);
 //        jPanel2.setSize(screenSize.width - 100, screenSize.height - 50);
-        this.setResizable(false);
+        //this.setResizable(false);
 
         proDetails.setText(login.getLogin().strip()
                 + " - " + login.getLastName().strip()
@@ -129,6 +133,13 @@ public class PageAccueil extends javax.swing.JFrame {
         modeSearchComboBox.setEditable(false);
         modeSearchComboBox.setEnabled(false);
         modeSearchLabel.setForeground(new Color(225, 201, 176));
+
+        //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        this.pack();
+
+        
+        //this.setSize(screenSize.width, screenSize.height - 100);
+        this.setResizable(false);
         
         try {
             // TODO add your handling code here:
@@ -240,12 +251,13 @@ public class PageAccueil extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 255));
-        setMinimumSize(new java.awt.Dimension(1600, 1080));
+        setMaximumSize(new java.awt.Dimension(1490, 794));
+        setMinimumSize(new java.awt.Dimension(1490, 794));
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 255));
         jPanel2.setForeground(new java.awt.Color(204, 204, 255));
-        jPanel2.setMaximumSize(new java.awt.Dimension(1502, 748));
-        jPanel2.setMinimumSize(new java.awt.Dimension(1502, 748));
+        jPanel2.setMaximumSize(new java.awt.Dimension(1490, 794));
+        jPanel2.setMinimumSize(new java.awt.Dimension(1490, 794));
         jPanel2.setPreferredSize(new java.awt.Dimension(1490, 794));
 
         AddPatientButton.setBackground(new java.awt.Color(255, 255, 255));
@@ -418,7 +430,7 @@ public class PageAccueil extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(73, 73, 73)
+                .addContainerGap(63, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(modeSearchLabel)
                     .addComponent(modeSearchComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -442,9 +454,9 @@ public class PageAccueil extends javax.swing.JFrame {
                     .addComponent(dayField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(monthField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(yearField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(validateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
 
         jPanel4.setBackground(new java.awt.Color(204, 204, 204));
@@ -457,7 +469,7 @@ public class PageAccueil extends javax.swing.JFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 592, Short.MAX_VALUE)
         );
 
         jPanel7.setBackground(new java.awt.Color(242, 236, 234));
@@ -629,9 +641,9 @@ public class PageAccueil extends javax.swing.JFrame {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(40, 40, 40)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
 
@@ -639,11 +651,11 @@ public class PageAccueil extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1502, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 807, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -857,7 +869,6 @@ public class PageAccueil extends javax.swing.JFrame {
 
     private void AddPatientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddPatientButtonActionPerformed
         // TODO add your handling code here:
-         
         CreationDMR dmr = null;
         dmr = new CreationDMR(login, this.conn);
         this.setVisible(false);
@@ -901,7 +912,7 @@ public class PageAccueil extends javax.swing.JFrame {
                 return false;
 
             }
-        
+
         };
 
         model.addColumn("Identifiant");
