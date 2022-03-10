@@ -27,6 +27,7 @@ import nf.RequetesBDPatient;
  */
 public class AjouterExamen extends javax.swing.JFrame {
 
+    Examen examen;
     Login login;
     Connection conn;
     Patient pat;
@@ -121,6 +122,11 @@ public class AjouterExamen extends javax.swing.JFrame {
         addImgButton.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         addImgButton.setForeground(new java.awt.Color(51, 51, 51));
         addImgButton.setText("Ajouter Image");
+        addImgButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addImgButtonActionPerformed(evt);
+            }
+        });
 
         addExamenButton.setBackground(new java.awt.Color(255, 255, 255));
         addExamenButton.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
@@ -521,18 +527,18 @@ public class AjouterExamen extends javax.swing.JFrame {
             System.out.println("RENTRERcheckField");
             System.out.println(checkDateNumeric(yearField.getText()) + " " + checkDateNumeric(monthField.getText()) + " " + checkDateNumeric(dayField.getText()) + " " + checkDateNumeric(hourField.getText()) + " " + checkDateNumeric(minField.getText()));
             System.out.println();
-           
+
             try {
-                System.out.println("PH entre: "+phField.getText());
-                System.out.println("ph EXist ?"+checkExistPH(phField.getText()));
-                if (checkExistPH(phField.getText())==true) {
+                System.out.println("PH entre: " + phField.getText());
+                System.out.println("ph EXist ?" + checkExistPH(phField.getText()));
+                if (checkExistPH(phField.getText()) == true) {
                     if (checkDateNumeric(yearField.getText()) && checkDateNumeric(monthField.getText()) && checkDateNumeric(dayField.getText()) && checkDateNumeric(hourField.getText()) && checkDateNumeric(minField.getText())) {
                         if (checkYearValid(yearField.getText()) && checkMonthValid(monthField.getText()) && checkDayValid(monthField.getText(), dayField.getText()) && checkHourValid(hourField.getText()) && checkMinValid(minField.getText())) {
                             System.out.println("RENTRERcheckDate");
                             String dateExam = yearField.getText() + "-" + monthField.getText() + "-" + dayField.getText() + " " + hourField.getText() + ":" + minField.getText() + ":00";
                             Timestamp timestampDateExam = Timestamp.valueOf(dateExam);
                             System.out.println("dateExam to add: " + timestampDateExam);
-                            Examen examen = new Examen(pat.getPatientId(), phField.getText(), typeExamCombo.getSelectedItem().toString(), timestampDateExam);
+                            this.examen = new Examen(pat.getPatientId(), phField.getText(), typeExamCombo.getSelectedItem().toString(), timestampDateExam);
 
                             try {
                                 RequetesBDExamen.addExamBD(examen, conn);
@@ -562,7 +568,7 @@ public class AjouterExamen extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(AjouterExamen.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
         } else {
             JOptionPane.showMessageDialog(null, "Tous les champs doivent être complétés", "", JOptionPane.PLAIN_MESSAGE);
         }
@@ -681,6 +687,110 @@ public class AjouterExamen extends javax.swing.JFrame {
     private void yearFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_yearFieldActionPerformed
+
+    private void addImgButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addImgButtonActionPerformed
+        // TODO add your handling code here:
+        int retour = JOptionPane.showConfirmDialog(this, "Souhaitez-vous ajouter une nouvel image à cet examen ? ", "", JOptionPane.YES_NO_OPTION);
+        if (retour == 1) {
+
+            System.out.println("RENTRER");
+
+            if (checkAllFieldCompleted()) {
+                System.out.println();
+                System.out.println("RENTRERcheckField");
+                System.out.println(checkDateNumeric(yearField.getText()) + " " + checkDateNumeric(monthField.getText()) + " " + checkDateNumeric(dayField.getText()) + " " + checkDateNumeric(hourField.getText()) + " " + checkDateNumeric(minField.getText()));
+                System.out.println();
+
+                try {
+                    System.out.println("PH entre: " + phField.getText());
+                    System.out.println("ph EXist ?" + checkExistPH(phField.getText()));
+                    if (checkExistPH(phField.getText()) == true) {
+                        if (checkDateNumeric(yearField.getText()) && checkDateNumeric(monthField.getText()) && checkDateNumeric(dayField.getText()) && checkDateNumeric(hourField.getText()) && checkDateNumeric(minField.getText())) {
+                            if (checkYearValid(yearField.getText()) && checkMonthValid(monthField.getText()) && checkDayValid(monthField.getText(), dayField.getText()) && checkHourValid(hourField.getText()) && checkMinValid(minField.getText())) {
+                                System.out.println("RENTRERcheckDate");
+                                String dateExam = yearField.getText() + "-" + monthField.getText() + "-" + dayField.getText() + " " + hourField.getText() + ":" + minField.getText() + ":00";
+                                Timestamp timestampDateExam = Timestamp.valueOf(dateExam);
+                                System.out.println("dateExam to add: " + timestampDateExam);
+                                this.examen = new Examen(pat.getPatientId(), phField.getText(), typeExamCombo.getSelectedItem().toString(), timestampDateExam);
+
+                                try {
+                                    this.examen=RequetesBDExamen.addExamBD(this.examen, conn);
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(AjouterExamen.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                                // TODO add your handling code here:
+                                AjouterImage ajouterImage = new AjouterImage(pat, this.examen, login, conn);
+                                this.setVisible(false);
+                                ajouterImage.setVisible(true);
+                                ajouterImage.setLocationRelativeTo(null);
+                            } else {
+                                JOptionPane.showMessageDialog(null, "La date rentrée n'est pas valide", "", JOptionPane.PLAIN_MESSAGE);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "La date n'est pas en format numérique", "", JOptionPane.PLAIN_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Ce praticien hospitalier n'exite pas", "", JOptionPane.PLAIN_MESSAGE);
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(AjouterExamen.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Tous les champs doivent être complétés", "", JOptionPane.PLAIN_MESSAGE);
+            }
+        } else {
+            System.out.println("RENTRER");
+
+            if (checkAllFieldCompleted()) {
+                System.out.println();
+                System.out.println("RENTRERcheckField");
+                System.out.println(checkDateNumeric(yearField.getText()) + " " + checkDateNumeric(monthField.getText()) + " " + checkDateNumeric(dayField.getText()) + " " + checkDateNumeric(hourField.getText()) + " " + checkDateNumeric(minField.getText()));
+                System.out.println();
+
+                try {
+                    System.out.println("PH entre: " + phField.getText());
+                    System.out.println("ph EXist ?" + checkExistPH(phField.getText()));
+                    if (checkExistPH(phField.getText()) == true) {
+                        if (checkDateNumeric(yearField.getText()) && checkDateNumeric(monthField.getText()) && checkDateNumeric(dayField.getText()) && checkDateNumeric(hourField.getText()) && checkDateNumeric(minField.getText())) {
+                            if (checkYearValid(yearField.getText()) && checkMonthValid(monthField.getText()) && checkDayValid(monthField.getText(), dayField.getText()) && checkHourValid(hourField.getText()) && checkMinValid(minField.getText())) {
+                                System.out.println("RENTRERcheckDate");
+                                String dateExam = yearField.getText() + "-" + monthField.getText() + "-" + dayField.getText() + " " + hourField.getText() + ":" + minField.getText() + ":00";
+                                Timestamp timestampDateExam = Timestamp.valueOf(dateExam);
+                                System.out.println("dateExam to add: " + timestampDateExam);
+                                this.examen = new Examen(pat.getPatientId(), phField.getText(), typeExamCombo.getSelectedItem().toString(), timestampDateExam);
+
+                                try {
+                                    this.examen=RequetesBDExamen.addExamBD(this.examen, conn);
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(AjouterExamen.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                                // TODO add your handling code here:
+                                AjouterImage ajouterImage = new AjouterImage(pat, this.examen, login, conn);
+                                this.setVisible(false);
+                                ajouterImage.setVisible(true);
+                                ajouterImage.setLocationRelativeTo(null);
+                            } else {
+                                JOptionPane.showMessageDialog(null, "La date rentrée n'est pas valide", "", JOptionPane.PLAIN_MESSAGE);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "La date n'est pas en format numérique", "", JOptionPane.PLAIN_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Ce praticien hospitalier n'exite pas", "", JOptionPane.PLAIN_MESSAGE);
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(AjouterExamen.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Tous les champs doivent être complétés", "", JOptionPane.PLAIN_MESSAGE);
+            }
+        }
+
+    }//GEN-LAST:event_addImgButtonActionPerformed
 
 //    /**
 //     * @param args the command line arguments

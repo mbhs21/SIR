@@ -75,10 +75,10 @@ public class CreationDMR extends javax.swing.JFrame {
         java.awt.Image newImgLogo = imgLogo.getScaledInstance(logoIcon.getWidth(), logoIcon.getHeight(), java.awt.Image.SCALE_SMOOTH);
         iconeLogo = new ImageIcon(newImgLogo);
         logoIcon.setIcon(iconeLogo);
-        
+
         try {
             // TODO add your handling code here:
-            if (RequetesBDLogin.idSE(login.getLogin(), conn)){
+            if (RequetesBDLogin.idSE(login.getLogin(), conn)) {
                 addExamenButton.setVisible(false);
             }
         } catch (SQLException ex) {
@@ -101,7 +101,6 @@ public class CreationDMR extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         validateButton = new javax.swing.JButton();
-        annulerButton = new javax.swing.JButton();
         addExamenButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         retourButton = new javax.swing.JButton();
@@ -144,11 +143,6 @@ public class CreationDMR extends javax.swing.JFrame {
                 validateButtonActionPerformed(evt);
             }
         });
-
-        annulerButton.setBackground(new java.awt.Color(255, 255, 255));
-        annulerButton.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
-        annulerButton.setForeground(new java.awt.Color(0, 0, 0));
-        annulerButton.setText("Effacer");
 
         addExamenButton.setBackground(new java.awt.Color(255, 255, 255));
         addExamenButton.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
@@ -444,20 +438,15 @@ public class CreationDMR extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(validateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(38, 38, 38)
-                                        .addComponent(annulerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(33, 33, 33)
-                                        .addComponent(addExamenButton, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(497, 497, 497))))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(validateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(40, 40, 40)
+                                .addComponent(addExamenButton, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(497, 497, 497))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel2Layout.setVerticalGroup(
@@ -471,7 +460,6 @@ public class CreationDMR extends javax.swing.JFrame {
                 .addGap(41, 41, 41)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(validateButton)
-                    .addComponent(annulerButton)
                     .addComponent(addExamenButton))
                 .addContainerGap(155, Short.MAX_VALUE))
         );
@@ -574,23 +562,26 @@ public class CreationDMR extends javax.swing.JFrame {
     }
     private void validateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validateButtonActionPerformed
         // TODO add your handling code here:
-        Patient pat = createPatient();
-        if (pat != null) {
-            try {
-                RequetesBDPatient.addPatientBD(pat, conn);
-            } catch (SQLException ex) {
-                Logger.getLogger(CreationDMR.class.getName()).log(Level.SEVERE, null, ex);
+        int retour = JOptionPane.showConfirmDialog(this, "Etes-vous sur de vouloir créer ce DMR ? ", "", JOptionPane.YES_NO_OPTION);
+        if (retour == 0) {
+            Patient pat = createPatient();
+            if (pat != null) {
+                try {
+                    RequetesBDPatient.addPatientBD(pat, conn);
+                } catch (SQLException ex) {
+                    Logger.getLogger(CreationDMR.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                try {
+                    PageAccueil pgAccueil = new PageAccueil(login, conn);
+                    this.setVisible(false);
+                    pgAccueil.setVisible(true);
+                    //pgAccueil.setLocationRelativeTo(null);
+                } catch (IOException | SQLException ex) {
+                    Logger.getLogger(CreationDMR.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Tous les champs doivent être complétés", "", JOptionPane.PLAIN_MESSAGE);
             }
-            try {
-                PageAccueil pgAccueil = new PageAccueil(login, conn);
-                this.setVisible(false);
-                pgAccueil.setVisible(true);
-                //pgAccueil.setLocationRelativeTo(null);
-            } catch (IOException | SQLException ex) {
-                Logger.getLogger(CreationDMR.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Tous les champs doivent être complétés", "", JOptionPane.PLAIN_MESSAGE);
         }
 
     }//GEN-LAST:event_validateButtonActionPerformed
@@ -604,7 +595,7 @@ public class CreationDMR extends javax.swing.JFrame {
             this.setVisible(false);
             addExamen.setVisible(true);
             addExamen.setLocationRelativeTo(null);
-            
+
         } else {
             JOptionPane.showMessageDialog(null, "Tous les champs doivent être complétés", "", JOptionPane.PLAIN_MESSAGE);
         }
@@ -664,7 +655,6 @@ public class CreationDMR extends javax.swing.JFrame {
     private javax.swing.JCheckBox HCheckBox;
     private javax.swing.JButton addExamenButton;
     private javax.swing.JTextField adressField;
-    private javax.swing.JButton annulerButton;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTextField dayField;
     private javax.swing.JButton deconnexionButton;

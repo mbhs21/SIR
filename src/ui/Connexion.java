@@ -71,7 +71,8 @@ public class Connexion extends javax.swing.JFrame {
         jLabel4.setIcon(icone);
 
         //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        this.pack();
+        //this.pack();
+        this.setLocationRelativeTo(null);
         //this.setSize(screenSize.width, screenSize.height - 50);
         
 

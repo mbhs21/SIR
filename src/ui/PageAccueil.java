@@ -48,7 +48,6 @@ public class PageAccueil extends javax.swing.JFrame {
         this.login = login;
         this.conn = conn;
 
-       
         initComponents();
 
 //        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -56,7 +55,6 @@ public class PageAccueil extends javax.swing.JFrame {
 //        this.setSize(screenSize.width - 100, screenSize.height - 50);
 //        jPanel2.setSize(screenSize.width - 100, screenSize.height - 50);
         //this.setResizable(false);
-
         proDetails.setText(login.getLogin().strip()
                 + " - " + login.getLastName().strip()
                 + " " + login.getFirstName().strip()
@@ -137,31 +135,30 @@ public class PageAccueil extends javax.swing.JFrame {
         //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.pack();
 
-        
         //this.setSize(screenSize.width, screenSize.height - 100);
         this.setResizable(false);
-        
+
         try {
             // TODO add your handling code here:
-            if (RequetesBDLogin.idSE(login.getLogin(), conn)){
+            if (RequetesBDLogin.idSE(login.getLogin(), conn)) {
                 ResearchButton.setVisible(false);
             }
         } catch (SQLException ex) {
             Logger.getLogger(AccesListeExamen.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         try {
             // TODO add your handling code here:
-            if (RequetesBDLogin.idPH(login.getLogin(), conn)){
+            if (RequetesBDLogin.idPH(login.getLogin(), conn)) {
                 AddPatientButton.setVisible(false);
             }
         } catch (SQLException ex) {
             Logger.getLogger(AccesListeExamen.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         try {
             // TODO add your handling code here:
-            if (RequetesBDLogin.idPR(login.getLogin(), conn)){
+            if (RequetesBDLogin.idPR(login.getLogin(), conn)) {
                 AddPatientButton.setVisible(false);
             }
         } catch (SQLException ex) {
@@ -669,17 +666,23 @@ public class PageAccueil extends javax.swing.JFrame {
 
     private void deconnectionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnectionButtonActionPerformed
         // TODO add your handling code here:
-        Connexion connexion = null;
-        try {
-            connexion = new Connexion();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
+        int retour = JOptionPane.showConfirmDialog(this, "Etes-vous sur de vouloir vous déconnecter ? ", "", JOptionPane.YES_NO_OPTION);
+        System.out.println("retour= " + retour);
+        if (retour == 0) {
+
+            Connexion connexion = null;
+            try {
+                connexion = new Connexion();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.setVisible(false);
+            connexion.setVisible(true);
+            connexion.setLocationRelativeTo(null);
         }
-        this.setVisible(false);
-        connexion.setVisible(true);
-        connexion.setLocationRelativeTo(null);
+
     }//GEN-LAST:event_deconnectionButtonActionPerformed
 
     private void proDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proDetailsActionPerformed

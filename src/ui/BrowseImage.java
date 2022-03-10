@@ -105,9 +105,11 @@ public class BrowseImage extends JFrame {
 //                    } catch (SQLException ex) {
 //                        Logger.getLogger(BrowseImage.class.getName()).log(Level.SEVERE, null, ex);
 //                    }
-//                    Path path = Paths.get("./src/img_numerisees_jpg/abdomen/" + selFile.getName());
-//                    System.out.println("path= " + path.toString());
-//                    //l.setIcon(resize(path));
+                    String path = selFile.getName();
+                    System.out.println("path= " + path.toString());
+                               
+                    
+                    //l.setIcon(resize(path));
 //
 //                    try {
 //                        Files.move(path, Paths.get("./src/corbeille/"), REPLACE_EXISTING);
@@ -116,14 +118,14 @@ public class BrowseImage extends JFrame {
 //                    }
 
                     
-                    // renaming the file and moving it to a new location
-                    if (selFile.renameTo(new File("./src/corbeille/newFile.txt"))) {
-                        // if file copied successfully then delete the original file
-                        selFile.delete();
-                        System.out.println("File moved successfully");
-                    } else {
-                        System.out.println("Failed to move the file");
-                    }
+//                    // renaming the file and moving it to a new location
+//                    if (selFile.renameTo(new File("./src/corbeille/newFile.txt"))) {
+//                        // if file copied successfully then delete the original file
+//                        selFile.delete();
+//                        System.out.println("File moved successfully");
+//                    } else {
+//                        System.out.println("Failed to move the file");
+//                    }
 
                 }
 

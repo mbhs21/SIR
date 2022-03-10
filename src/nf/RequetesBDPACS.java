@@ -46,7 +46,7 @@ public class RequetesBDPACS {
         return latestIdSave;
     }
 
-    public void insertImage(String examId, File file, String comments, Connection conn) {
+    public static void insertImage(Examen examen, File file, String comments, Connection conn) {
         try {
 
             int newPacsId = generatePACSId(conn);
@@ -63,7 +63,7 @@ public class RequetesBDPACS {
             //pacsId
             ps.setInt(1, newPacsId);
             //examId
-            ps.setString(2, examId);
+            ps.setString(2, examen.getExamId());
             //image
             ps.setBinaryStream(3, (InputStream) input, (int) file.length());
 
@@ -76,7 +76,7 @@ public class RequetesBDPACS {
             //fermer le preparedStatement
             ps.close();
             //fermer la connexion
-            conn.close();
+            
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -90,15 +90,15 @@ public class RequetesBDPACS {
      * @return une liste contenant les images (id) correspondant à un examen
      * @throws java.sql.SQLException
      */
-    public static String[] returnPACSoneExam(String pacsId, Connection conn) throws SQLException {
+    public static String[] returnPACSoneExam(String examId, Connection conn) throws SQLException {
 
         // Get a statement from the connection
         Statement stmt = conn.createStatement();
         Statement stmtCount = conn.createStatement();
         int sizeTab = 0;
         // Execute the query
-        ResultSet rsCount = stmtCount.executeQuery("SELECT count(*) FROM pacs WHERE examId = '" + pacsId + "' ORDER BY pacsId ");
-        ResultSet rs = stmt.executeQuery("SELECT pacsId FROM pacs WHERE examId = '" + pacsId + "' ORDER BY pacsId ");
+        ResultSet rsCount = stmtCount.executeQuery("SELECT count(*) FROM pacs WHERE examId = '" + examId + "' ORDER BY pacsId ");
+        ResultSet rs = stmt.executeQuery("SELECT pacsId FROM pacs WHERE examId = '" + examId + "' ORDER BY pacsId ");
 
         while (rsCount.next()) {
             sizeTab = rsCount.getInt(1);
@@ -153,6 +153,24 @@ public class RequetesBDPACS {
         rs.close();
         stmt.close();
         return comments;
+    }
+    
+    public static String returnNbImgOneExam(String examId, Connection conn) throws SQLException {
+        int nbImg=0;
+        Statement stmt = conn.createStatement();
+
+        // Execute the 
+        ResultSet rs = stmt.executeQuery("SELECT count(*) FROM PACS WHERE examId='" + examId+"'");
+
+        while (rs.next()) {
+            nbImg=rs.getInt(1);
+
+        }
+        // Close the result set, statement and the connection 
+
+        rs.close();
+        stmt.close();
+        return Integer.toString(nbImg);
     }
 
 }

@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import nf.Examen;
 import nf.Login;
 import nf.Patient;
+import nf.RequetesBDExamen;
 import nf.RequetesBDLogin;
 import nf.RequetesBDPACS;
 import nf.RequetesBDPatient;
@@ -31,6 +32,7 @@ public class AffichageExamen extends javax.swing.JFrame {
     Connection conn;
     Login login;
     Login medPrescripteur;
+
     Examen examen;
 
     /**
@@ -41,13 +43,18 @@ public class AffichageExamen extends javax.swing.JFrame {
      * @param login
      * @param conn
      */
-    public AffichageExamen(Examen examen, Patient pat, Login login, Login medPrescripteur, Connection conn) throws SQLException {
+    public AffichageExamen(Examen examen, Patient pat, Login login, Connection conn) throws SQLException {
         this.pat = pat;
         this.conn = conn;
         this.login = login;
         this.examen = examen;
 
         initComponents();
+
+        proDetails.setText(login.getLogin().strip()
+                + " - " + login.getLastName().strip()
+                + " " + login.getFirstName().strip()
+        );
 
         ImageIcon icone = new ImageIcon("src/img_icon/user_1.png");
         java.awt.Image img = icone.getImage();
@@ -87,13 +94,24 @@ public class AffichageExamen extends javax.swing.JFrame {
         genderCheckBox.setText(pat.getGender());
         examDateField.setText(examen.getDateExam().toString().substring(0, 16));
         typeExamField.setText(examen.getTypeExamen());
-        CRTextArea.setText("");
-
-        listImg.setListData(RequetesBDPACS.returnPACSoneExam("EX01", conn));
-        
+        this.medPrescripteur = null;
         try {
             // TODO add your handling code here:
-            if (RequetesBDLogin.idPH(login.getLogin(), conn)){
+
+            this.medPrescripteur = RequetesBDExamen.returnMedPrescripteur(examen, conn);
+        } catch (SQLException ex) {
+            Logger.getLogger(AffichageExamen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //CRTextArea.setText(this.initializeReport(this.medPrescripteur, login)+examen.getReport());
+        CRTextArea.setText("");
+        listImg.setListData(RequetesBDPACS.returnPACSoneExam(examen.getExamId(), conn));
+
+        saveCRButton.setVisible(false);
+        CRTextArea.setEditable(false);
+
+        try {
+            // TODO add your handling code here:
+            if (RequetesBDLogin.idPH(login.getLogin(), conn)) {
                 editionCRButton.setVisible(false);
             }
         } catch (SQLException ex) {
@@ -120,7 +138,7 @@ public class AffichageExamen extends javax.swing.JFrame {
         jTextField3 = new javax.swing.JTextField();
         editionCRButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        proDetails = new javax.swing.JTextField();
         retourButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -154,6 +172,7 @@ public class AffichageExamen extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         observationArea = new javax.swing.JTextArea();
         jTextField2 = new javax.swing.JTextField();
+        saveCRButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -202,15 +221,15 @@ public class AffichageExamen extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(242, 236, 234));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 204)));
 
-        jTextField1.setEditable(false);
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField1.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField1.setText("PH01 - DURAND Bastien");
-        jTextField1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, java.awt.Color.blue, null, java.awt.Color.white));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        proDetails.setEditable(false);
+        proDetails.setBackground(new java.awt.Color(255, 255, 255));
+        proDetails.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        proDetails.setForeground(new java.awt.Color(0, 0, 0));
+        proDetails.setText("PH01 - DURAND Bastien");
+        proDetails.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, java.awt.Color.blue, null, java.awt.Color.white));
+        proDetails.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                proDetailsActionPerformed(evt);
             }
         });
 
@@ -287,7 +306,7 @@ public class AffichageExamen extends javax.swing.JFrame {
                         .addComponent(deconnexionButton)
                         .addGap(18, 18, 18)
                         .addComponent(retourButton, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(proDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14))
         );
         jPanel1Layout.setVerticalGroup(
@@ -305,7 +324,7 @@ public class AffichageExamen extends javax.swing.JFrame {
                     .addComponent(userPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(proDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(retourButton)
@@ -559,6 +578,16 @@ public class AffichageExamen extends javax.swing.JFrame {
         jTextField2.setText("Observations");
         jTextField2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 204)));
 
+        saveCRButton.setBackground(new java.awt.Color(255, 255, 255));
+        saveCRButton.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        saveCRButton.setForeground(new java.awt.Color(51, 51, 51));
+        saveCRButton.setText("Enregistrer CR");
+        saveCRButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveCRButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -596,7 +625,9 @@ public class AffichageExamen extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(339, 339, 339)
+                        .addGap(178, 178, 178)
+                        .addComponent(saveCRButton)
+                        .addGap(86, 86, 86)
                         .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -617,7 +648,9 @@ public class AffichageExamen extends javax.swing.JFrame {
                                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(117, 277, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(saveCRButton))
                                 .addGap(18, 18, 18)
                                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -657,9 +690,9 @@ public class AffichageExamen extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void proDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proDetailsActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_proDetailsActionPerformed
 
     private void retourButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retourButtonActionPerformed
         // TODO add your handling code here:
@@ -706,17 +739,35 @@ public class AffichageExamen extends javax.swing.JFrame {
     }//GEN-LAST:event_examDateFieldActionPerformed
 
     private void editionCRButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editionCRButtonActionPerformed
-        // TODO add your handling code here:
-        
-        
-        
-        CRTextArea.setText(examen.getReport());
+//        Login medPrescripteur = null;
+//        try {
+//            // TODO add your handling code here:
+//
+//            medPrescripteur = RequetesBDExamen.returnMedPrescripteur(examen, conn);
+//        } catch (SQLException ex) {
+//            Logger.getLogger(AffichageExamen.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        try {
+//            CRTextArea.setText(this.initializeReport(medPrescripteur, login));
+//        } catch (SQLException ex) {
+//            Logger.getLogger(AffichageExamen.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        CRTextArea.setEditable(true);
+        saveCRButton.setVisible(true);
+        editionCRButton.setVisible(false);
+
     }//GEN-LAST:event_editionCRButtonActionPerformed
-    
-    public String initializeReport(Patient pat,){
-        String 
+
+    public String initializeReport(Login medPrescripteur, Login realisationMedecin) throws SQLException {
+        String str = pat.getPatientId() + "------------------------------------------- \n"
+                + "\t" + Login.infoMedCR(medPrescripteur)
+                + "\n\tNombre d'images enregistrees: " + RequetesBDPACS.returnNbImgOneExam(examen.getExamId(), conn)
+                + "\n------------------------------------------------------"
+                + "\n COMPTE RENDU:";
+        return str;
+
     }
-    
+
     private void showImgButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showImgButtonActionPerformed
         // TODO add your handling code here:
         int pacsIdSelected = selectImgList();
@@ -740,6 +791,25 @@ public class AffichageExamen extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_showImgButtonActionPerformed
+
+    private void saveCRButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveCRButtonActionPerformed
+        try {
+            // TODO add your handling code here:
+            this.examen.setReport(CRTextArea.getText());
+            System.out.println("report to save:  " + CRTextArea.getText());
+            RequetesBDExamen.updateCR(this.examen.getExamId(), CRTextArea.getText().trim(), conn);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AffichageExamen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            CRTextArea.setText(this.initializeReport(this.medPrescripteur, login) + examen.getReport());
+        } catch (SQLException ex) {
+            Logger.getLogger(AffichageExamen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        saveCRButton.setVisible(false);
+
+    }//GEN-LAST:event_saveCRButtonActionPerformed
 
     public int selectImgList() {
         String selectedImg = listImg.getSelectedValue();
@@ -813,7 +883,6 @@ public class AffichageExamen extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField5;
@@ -827,7 +896,9 @@ public class AffichageExamen extends javax.swing.JFrame {
     private javax.swing.JLabel patientIcon;
     private javax.swing.JPanel patientIconPanel;
     private javax.swing.JTextField patientIdField;
+    private javax.swing.JTextField proDetails;
     private javax.swing.JButton retourButton;
+    private javax.swing.JButton saveCRButton;
     private javax.swing.JButton showImgButton;
     private javax.swing.JTextField typeExamField;
     private javax.swing.JLabel userIcon;

@@ -55,32 +55,14 @@ public class Login {
         return i!=proIdList.size();
     }
 
-    public String infoMedPrescripteur(){
-        String str="Médecin prescripteur : "+this.login+"-"+this.lastName.toUpperCase()+" "+this.firstName;
+    public static String infoMedCR(Login medPrescripteur){
+        String str="Médecin prescripteur : "+medPrescripteur.login+"-"+medPrescripteur.lastName.toUpperCase()+" "+medPrescripteur.firstName;
+                
         return str;
     } 
     
-    public String infoManipulateurRadio(){
-        String str="Examen réalisé par : "+this.login+"-"+this.lastName.toUpperCase()+" "+this.firstName;
-        return str;
-    } 
-         
-    /**
-     * if id already exists return false else true
-     * @return a boolean
-     */
-    public boolean verifyId (String id){
-        return false;
-    }
-    
-    /**
-     * if passeword already exists return false else true
-     * @return a boolean
-     */
-    public boolean verifyPW (String passeword){
-        return false;
-    }
-        
+          
+          
     /**
      * @return the login
      */

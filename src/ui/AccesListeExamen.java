@@ -687,10 +687,10 @@ public class AccesListeExamen extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             Examen exam = selectExamTable();
-            AffichageExamen consulterCR = new AffichageExamen(exam, pat, login, conn);
+            AffichageExamen affichageExamen = new AffichageExamen(exam, pat, login, conn);
             this.setVisible(false);
-            consulterCR.setVisible(true);
-            consulterCR.setLocationRelativeTo(null);
+            affichageExamen.setVisible(true);
+            affichageExamen.setLocationRelativeTo(null);
         } catch (SQLException ex) {
             Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
         }

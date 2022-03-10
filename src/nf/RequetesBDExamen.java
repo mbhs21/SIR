@@ -57,14 +57,19 @@ public class RequetesBDExamen {
         Statement stmt = conn.createStatement();
         String id = null;
         // Execute the query
-        System.out.println("d= "+dateExamen);
+        System.out.println("d= " + dateExamen);
         ResultSet rs = stmt.executeQuery("SELECT * FROM Exam WHERE d=TO_TIMESTAMP('" + dateExamen + "')");
 
         while (rs.next()) {
-            System.out.println("d= "+dateExamen);
-            
-            exam = new Examen(rs.getString(1).trim(), rs.getString(2).trim(), rs.getString(3).trim(), rs.getString(4).trim(), rs.getString(5).trim(), rs.getTimestamp(6));
+            System.out.println("d= " + dateExamen);
+            if (rs.getString(5) == null) {
+                exam = new Examen(rs.getString(1).trim(), rs.getString(2).trim(), rs.getString(3).trim(), rs.getString(4).trim(), "", rs.getTimestamp(6));
+                System.out.println("OK");
+            } else {
+                exam = new Examen(rs.getString(1).trim(), rs.getString(2).trim(), rs.getString(3).trim(), rs.getString(4).trim(), rs.getString(5).trim(), rs.getTimestamp(6));
+                System.out.println("NOP");
 
+            }
         }
 
         // Close the resultset, statement and the connection 
@@ -105,10 +110,11 @@ public class RequetesBDExamen {
         }
     }
 
-    public static void addExamBD(Examen examen, Connection conn) throws SQLException {
+    public static Examen addExamBD(Examen examen, Connection conn) throws SQLException {
         //Generate new patientId
         String newExamenId = generateExamenId(conn);
-        examen.setReport(null);
+        System.out.println("new examId=" + newExamenId);
+        Examen exam = new Examen(newExamenId, examen.getPatientId(), examen.getProId(), examen.getTypeExamen(), "", examen.getDateExam());
         // Get a statement from the connection
         PreparedStatement ps = null;
         try {
@@ -145,11 +151,12 @@ public class RequetesBDExamen {
         } catch (SQLException ex) {
             Logger.getLogger(BrowseImage.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return exam;
     }
-    
-    public static Login returnMedPrescripteur (Examen examen, Connection conn) throws SQLException{
-        Login medPrescripteur=null;
-        
+
+    public static Login returnMedPrescripteur(Examen examen, Connection conn) throws SQLException {
+        Login medPrescripteur = null;
+
         // Get a statement from the connection
         Statement stmt = conn.createStatement();
         String id = null;
@@ -157,8 +164,8 @@ public class RequetesBDExamen {
         ResultSet rs = stmt.executeQuery("SELECT UNIQUE Login.proId,Login.lastName,Login.firstName,Login.function FROM Exam join Login on (Exam.proId=Login.proId) WHERE Login.proId='" + examen.getProId() + "'");
 
         while (rs.next()) {
-                      
-            medPrescripteur = new Login(rs.getString(1),rs.getString(2),rs.getString(3), rs.getString(4));
+
+            medPrescripteur = new Login(rs.getString(1).trim(), rs.getString(2).trim(), rs.getString(3).trim(), rs.getString(4).trim());
 
         }
 
@@ -167,7 +174,32 @@ public class RequetesBDExamen {
         stmt.close();
         return medPrescripteur;
     }
-   
+
+//    public static void updateCR(String examId, String report, Connection conn) throws SQLException {
+//        // create the java mysql update preparedstatement
+//        String query = "UPDATE Exam SET report=? WHERE examId=?";
+//        PreparedStatement preparedStmt = conn.prepareStatement(query);
+//        preparedStmt.setString(1, report);
+//        preparedStmt.setString(2, examId);
+//        
+//
+//        // execute the java preparedstatement
+//        preparedStmt.executeUpdate();
+//        preparedStmt.close();
+//    }
+    public static void updateCR(String examId, String report, Connection conn) throws SQLException {
+                        
+        // Get a statement from the connection
+        Statement stmt = conn.createStatement();
+        // Execute the query
+        System.out.println("query="+"UPDATE Exam SET report='"+report+"' WHERE examId='"+examId+"'");
+        ResultSet rs = stmt.executeQuery("UPDATE Exam SET report='"+report+"' WHERE examId='"+examId+"'");
+        System.out.println("query="+"UPDATE Exam SET report='"+report+"' WHERE examId='"+examId+"'");
+        // Close the resultset, statement and the connection 
+                
+        rs.close();
+        stmt.close();        
+        
+    }
 
 }
-
