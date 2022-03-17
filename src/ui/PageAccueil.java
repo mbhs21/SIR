@@ -9,6 +9,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.Connection;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -18,6 +20,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 import java.util.Date;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import nf.Login;
@@ -104,7 +107,7 @@ public class PageAccueil extends javax.swing.JFrame {
         iconeValidate = new ImageIcon(newImgValidate);
         validateButton.setIcon(iconeValidate);
 
-        ImageIcon iconeReset = new ImageIcon("src/img_icon/loading.png");
+        ImageIcon iconeReset = new ImageIcon("src/img_icon/reset.png");
         java.awt.Image imgReset = iconeReset.getImage();
         java.awt.Image newImgReset = imgReset.getScaledInstance(resetButton.getWidth(), resetButton.getHeight(), java.awt.Image.SCALE_SMOOTH);
         iconeReset = new ImageIcon(newImgReset);
@@ -137,6 +140,7 @@ public class PageAccueil extends javax.swing.JFrame {
 
         //this.setSize(screenSize.width, screenSize.height - 100);
         this.setResizable(false);
+        tipTextResetLabel.setVisible(false);
 
         try {
             // TODO add your handling code here:
@@ -164,6 +168,28 @@ public class PageAccueil extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(AccesListeExamen.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        resetButton.addMouseListener(new MouseListener() {
+
+            public void mouseClicked(MouseEvent e) {
+            }
+
+            public void mouseEntered(MouseEvent e) {
+                tipTextResetLabel.setVisible(true);
+            }
+
+            public void mouseExited(MouseEvent e) {
+                tipTextResetLabel.setVisible(false);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+        });
 
     }
 
@@ -212,6 +238,7 @@ public class PageAccueil extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         resetButton = new javax.swing.JButton();
         accessDMRButton = new javax.swing.JButton();
+        tipTextResetLabel = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -248,7 +275,6 @@ public class PageAccueil extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 255));
-        setMaximumSize(new java.awt.Dimension(1490, 794));
         setMinimumSize(new java.awt.Dimension(1490, 794));
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 255));
@@ -477,7 +503,7 @@ public class PageAccueil extends javax.swing.JFrame {
         jLabel16.setText("Health IT");
 
         jLabel18.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel18.setFont(new java.awt.Font("Big John", 0, 48)); // NOI18N
+        jLabel18.setFont(new java.awt.Font("Big John", 0, 36)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(0, 153, 153));
         jLabel18.setText("Accueil");
 
@@ -566,6 +592,8 @@ public class PageAccueil extends javax.swing.JFrame {
 
         proDetails.getAccessibleContext().setAccessibleName("");
 
+        resetButton.setBackground(new java.awt.Color(255, 255, 255));
+        resetButton.setBorder(null);
         resetButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 resetButtonActionPerformed(evt);
@@ -582,20 +610,16 @@ public class PageAccueil extends javax.swing.JFrame {
             }
         });
 
+        tipTextResetLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tipTextResetLabel.setForeground(new java.awt.Color(255, 51, 51));
+        tipTextResetLabel.setText("Réinitialisation du tableau");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(AddPatientButton, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(ResearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
-                        .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -604,7 +628,18 @@ public class PageAccueil extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 713, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(57, 57, 57)))
+                        .addGap(57, 57, 57))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(tipTextResetLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(AddPatientButton, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(ResearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(33, 33, 33)
+                                .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(33, 33, 33)))
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -619,7 +654,9 @@ public class PageAccueil extends javax.swing.JFrame {
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
+                        .addGap(11, 11, 11)
+                        .addComponent(tipTextResetLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -774,6 +811,10 @@ public class PageAccueil extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Le champ identifiant doit être complété", "", JOptionPane.PLAIN_MESSAGE);
             }
         } else {
+            String firstName1=firstNamePField.getText().substring(0, 1);
+            String firstName2=firstNamePField.getText().substring(1);
+            String firstName=firstName1.toUpperCase()+firstName2;
+            System.out.println("Test firstName:" +firstName);
             if (modeSearchComboBox.getSelectedItem().equals("Nom / prénom et date de Naissance")) {
                 if (!lastNamePField.getText().isEmpty() & !firstNamePField.getText().isEmpty() & !dayField.getText().isEmpty() & !monthField.getText().isEmpty() & !yearField.getText().isEmpty()) {
                     int day = Integer.parseInt(dayField.getText());
@@ -782,7 +823,7 @@ public class PageAccueil extends javax.swing.JFrame {
 
                     Date birthDate = new Date(year - 1900, month - 1, day);
                     try {
-                        infoPatient = RequetesBDPatient.RechercherPatientName(lastNamePField.getText().toUpperCase(), firstNamePField.getText(), birthDate, conn);
+                        infoPatient = RequetesBDPatient.RechercherPatientName(lastNamePField.getText().toUpperCase(), firstName, birthDate, conn);
                     } catch (SQLException ex) {
                         Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -860,6 +901,7 @@ public class PageAccueil extends javax.swing.JFrame {
     }//GEN-LAST:event_validateButtonActionPerformed
 
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
+
         try {
             // TODO add your handling code here:
             tableAllPatient.setModel(this.setModelJTable());
@@ -1004,6 +1046,7 @@ public class PageAccueil extends javax.swing.JFrame {
     private javax.swing.JTextField proDetails;
     private javax.swing.JButton resetButton;
     private javax.swing.JTable tableAllPatient;
+    private javax.swing.JLabel tipTextResetLabel;
     private javax.swing.JButton validateButton;
     private javax.swing.JTextField yearField;
     // End of variables declaration//GEN-END:variables

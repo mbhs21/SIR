@@ -47,6 +47,9 @@ public class BrowseImage extends JFrame {
 
         btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                String str = "Image realisée par: MR01-MARX Paul"
+                + "\n----------------------------------------------\n"
+                        +"Vue coronale";
                 JFileChooser file = new JFileChooser();
                 //file.setCurrentDirectory(new File(System.getProperty("user.home")));
                 file.setCurrentDirectory(new java.io.File("./src/img_numerisees_jpg"));
@@ -66,45 +69,45 @@ public class BrowseImage extends JFrame {
 
                     }
 
-//                    PreparedStatement ps = null;
-//                    try {
-//                        ps = conn.prepareStatement("insert into PACS values(?,?,?,?)");
-//                    } catch (SQLException ex) {
-//                        Logger.getLogger(BrowseImage.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//
-//                    try {
-//                        //id
-//
-//                        ps.setInt(1, 2);
-//                        ps.setString(2, "EX02");
-//                        ps.setBinaryStream(3, (InputStream) input, (int) selFile.length());
-//                        ps.setString(4,"Rien a signaler sur cette image");
-//                       
-//
-//                    } catch (SQLException ex) {
-//                        Logger.getLogger(BrowseImage.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//
-//                    try {
-//                        //exécution de la requête
-//                        ps.executeUpdate();
-//                    } catch (SQLException ex) {
-//                        Logger.getLogger(BrowseImage.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//                    System.out.println("Image insérée avec succès!");
-//                    try {
-//                        //fermer le preparedStatement
-//                        ps.close();
-//                    } catch (SQLException ex) {
-//                        Logger.getLogger(BrowseImage.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//                    try {
-//                        //fermer la connexion
-//                        conn.close();
-//                    } catch (SQLException ex) {
-//                        Logger.getLogger(BrowseImage.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
+                    PreparedStatement ps = null;
+                    try {
+                        ps = conn.prepareStatement("insert into PACS values(?,?,?,?)");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(BrowseImage.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                    try {
+                        //id
+
+                        ps.setInt(1, 18);
+                        ps.setString(2, "EX09");
+                        ps.setBinaryStream(3, (InputStream) input, (int) selFile.length());
+                        ps.setString(4,str);
+                       
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(BrowseImage.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                    try {
+                        //exécution de la requête
+                        ps.executeUpdate();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(BrowseImage.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    System.out.println("Image insérée avec succès!");
+                    try {
+                        //fermer le preparedStatement
+                        ps.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(BrowseImage.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    try {
+                        //fermer la connexion
+                        conn.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(BrowseImage.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     String path = selFile.getName();
                     System.out.println("path= " + path.toString());
                                

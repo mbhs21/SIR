@@ -101,13 +101,11 @@ public class Connexion extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Authentification");
-        setMaximumSize(new java.awt.Dimension(1490, 794));
         setMinimumSize(new java.awt.Dimension(1490, 794));
-        setPreferredSize(new java.awt.Dimension(1490, 794));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
-        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 204, 204), 5, true));
+        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 204, 204), 10, true));
         jPanel1.setForeground(new java.awt.Color(102, 153, 255));
         jPanel1.setToolTipText("");
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -232,14 +230,14 @@ public class Connexion extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(421, 421, 421)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(427, Short.MAX_VALUE))
+                .addContainerGap(417, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 219, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 209, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
                 .addComponent(connectionButton)

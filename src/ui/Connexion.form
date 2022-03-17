@@ -45,7 +45,7 @@
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-            <LineBorder roundedCorners="true" thickness="5">
+            <LineBorder roundedCorners="true" thickness="10">
               <Color PropertyName="color" blue="cc" green="cc" red="0" type="rgb"/>
             </LineBorder>
           </Border>
@@ -84,7 +84,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="421" max="-2" attributes="0"/>
                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="427" max="32767" attributes="0"/>
+                  <EmptySpace pref="417" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -93,7 +93,7 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="219" max="32767" attributes="0"/>
+                  <EmptySpace pref="209" max="32767" attributes="0"/>
                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                   <Component id="connectionButton" min="-2" max="-2" attributes="0"/>

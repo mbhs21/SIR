@@ -76,7 +76,7 @@ public class RequetesBDPACS {
             //fermer le preparedStatement
             ps.close();
             //fermer la connexion
-            
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -145,7 +145,7 @@ public class RequetesBDPACS {
         ResultSet rs = stmt.executeQuery("SELECT comments FROM PACS WHERE pacsId=" + pacsId);
 
         while (rs.next()) {
-            comments=rs.getString(1);
+            comments = rs.getString(1);
 
         }
         // Close the result set, statement and the connection 
@@ -154,16 +154,16 @@ public class RequetesBDPACS {
         stmt.close();
         return comments;
     }
-    
+
     public static String returnNbImgOneExam(String examId, Connection conn) throws SQLException {
-        int nbImg=0;
+        int nbImg = 0;
         Statement stmt = conn.createStatement();
 
         // Execute the 
-        ResultSet rs = stmt.executeQuery("SELECT count(*) FROM PACS WHERE examId='" + examId+"'");
+        ResultSet rs = stmt.executeQuery("SELECT count(*) FROM PACS WHERE examId='" + examId + "'");
 
         while (rs.next()) {
-            nbImg=rs.getInt(1);
+            nbImg = rs.getInt(1);
 
         }
         // Close the result set, statement and the connection 
@@ -172,5 +172,45 @@ public class RequetesBDPACS {
         stmt.close();
         return Integer.toString(nbImg);
     }
+
+    public static String initComments() {
+        String str = "Image realisée par: MR01-MARX Paul"
+                + "\n----------------------------------------------\n";
+        return str;
+    }
+
+    public static void updateComments(int pacsId, String comments, Connection conn) throws SQLException {
+
+        // Get a statement from the connection
+        Statement stmt = conn.createStatement();
+        // Execute the query
+        System.out.println("query=" + "UPDATE PACS SET comments='" + initComments().replaceAll("'", "''") + comments.replaceAll("'", "''") + "' WHERE pacsId=" + pacsId );
+        ResultSet rs = stmt.executeQuery("UPDATE PACS SET comments='" + initComments().replaceAll("'", "''") + comments.replaceAll("'", "''")+ "' WHERE pacsId=" + pacsId );
+        //System.out.println("query=" + "UPDATE Exam SET report='" + initComments()+report + "' WHERE examId='" + examId + "'");
+        // Close the resultset, statement and the connection 
+
+        rs.close();
+        stmt.close();
+
+    }
+
+//    public static void updateCRBis(String examId, String report, Connection conn) throws SQLException {
+//        Statement st = conn.createStatement();
+//        //creation de la requête
+//        PreparedStatement ps
+//                = conn.prepareStatement("UPDATE Exam SET report=? WHERE examId=?");
+//
+//        //pacsId
+//        ps.setString(1, initComments() + report);
+//        //examId
+//        ps.setString(2,examId);
+//
+//        //exécution de la requête
+//        ps.executeUpdate();
+//        System.out.println("Modif insérée avec succès!");
+//        //fermer le preparedStatement
+//        ps.close();
+//        //fermer la connexion
+//    }
 
 }
