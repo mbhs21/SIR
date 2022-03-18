@@ -35,10 +35,8 @@ public class ConnexionSGBD {
 
             // Get a connection to the database
             Connection conn = DriverManager.getConnection(dbUrl, username, password);
-            
-            RequetesBDPACS.updateComments(13, "Vue coronale",  conn);
 
-            //System.out.println("Nb image Ex01: "+RequetesBDPACS.returnNbImgOneExam("EX01", conn) );
+            System.out.println("Nb image Ex01: "+RequetesBDPACS.returnNbImgOneExam("EX01", conn) );
             
 //            String str = "02";
 //            boolean isNumeric = true;

@@ -5,12 +5,14 @@
  */
 package nf;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import ui.BrowseImage;
@@ -29,62 +31,6 @@ public class RequetesBDExamen {
 
         // Execute the query
         ResultSet rs = stmt.executeQuery("SELECT d, type, proId FROM Exam WHERE patientId='" + patientId + "' ORDER BY d");
-
-        while (rs.next()) {
-            System.out.println("OK");
-            Object[] infoOneExam = new Object[3];
-            System.out.println(rs.getTimestamp(1).toString().trim());
-            infoOneExam[0] = rs.getTimestamp(1).toString().trim();
-            infoOneExam[1] = rs.getString(2).trim();
-            System.out.println(rs.getString(2).trim());
-            infoOneExam[2] = rs.getString(3).trim();
-            System.out.println(rs.getString(3).trim());
-
-            infoExamensOnePatient.add(infoOneExam);
-        }
-
-        // Close the resultset, statement and the connection 
-        rs.close();
-        stmt.close();
-        return infoExamensOnePatient;
-    }
-    
-    public static ArrayList<Object[]> RechercherExamenPatientCurrent(String patientId, Connection conn) throws SQLException {
-        ArrayList<Object[]> infoExamensOnePatient = new ArrayList<>();
-
-        // Get a statement from the connection
-        Statement stmt = conn.createStatement();
-
-        // Execute the query
-        ResultSet rs = stmt.executeQuery("SELECT d, type, proId FROM Exam WHERE patientId='" + patientId + "' and status=0 ORDER BY d");
-
-        while (rs.next()) {
-            System.out.println("OK");
-            Object[] infoOneExam = new Object[3];
-            System.out.println(rs.getTimestamp(1).toString().trim());
-            infoOneExam[0] = rs.getTimestamp(1).toString().trim();
-            infoOneExam[1] = rs.getString(2).trim();
-            System.out.println(rs.getString(2).trim());
-            infoOneExam[2] = rs.getString(3).trim();
-            System.out.println(rs.getString(3).trim());
-
-            infoExamensOnePatient.add(infoOneExam);
-        }
-
-        // Close the resultset, statement and the connection 
-        rs.close();
-        stmt.close();
-        return infoExamensOnePatient;
-    }
-    
-    public static ArrayList<Object[]> RechercherExamenPatientCompleted(String patientId, Connection conn) throws SQLException {
-        ArrayList<Object[]> infoExamensOnePatient = new ArrayList<>();
-
-        // Get a statement from the connection
-        Statement stmt = conn.createStatement();
-
-        // Execute the query
-        ResultSet rs = stmt.executeQuery("SELECT d, type, proId FROM Exam WHERE patientId='" + patientId + "' and status=1 ORDER BY d");
 
         while (rs.next()) {
             System.out.println("OK");
@@ -242,17 +188,18 @@ public class RequetesBDExamen {
 //        preparedStmt.close();
 //    }
     public static void updateCR(String examId, String report, Connection conn) throws SQLException {
-
+                        
         // Get a statement from the connection
         Statement stmt = conn.createStatement();
         // Execute the query
-        System.out.println("query=" + "UPDATE Exam SET report='" + report.replaceAll("'", "''") + "' WHERE examId='" + examId + "'");
-        ResultSet rs = stmt.executeQuery("UPDATE Exam SET report='" + report.replaceAll("'", "''") + "' WHERE examId='" + examId + "'");
+        System.out.println("query="+"UPDATE Exam SET report='"+report+"' WHERE examId='"+examId+"'");
+        ResultSet rs = stmt.executeQuery("UPDATE Exam SET report='"+report+"' WHERE examId='"+examId+"'");
+        System.out.println("query="+"UPDATE Exam SET report='"+report+"' WHERE examId='"+examId+"'");
         // Close the resultset, statement and the connection 
-
+                
         rs.close();
-        stmt.close();
-
+        stmt.close();        
+        
     }
 
 }

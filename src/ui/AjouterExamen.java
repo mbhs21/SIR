@@ -178,12 +178,7 @@ public class AjouterExamen extends javax.swing.JFrame {
         typeExamCombo.setBackground(new java.awt.Color(204, 204, 204));
         typeExamCombo.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         typeExamCombo.setForeground(new java.awt.Color(51, 51, 51));
-        typeExamCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Radio", "Scan", "IRM", "Echo", "Scinti", "Mammo", "Angio" }));
-        typeExamCombo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                typeExamComboActionPerformed(evt);
-            }
-        });
+        typeExamCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Radio", "Scan", "IRM", "Echo" }));
 
         jTextField4.setBackground(new java.awt.Color(255, 255, 255));
         jTextField4.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
@@ -318,7 +313,6 @@ public class AjouterExamen extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(242, 236, 234));
 
-        proDetails.setEditable(false);
         proDetails.setBackground(java.awt.Color.white);
         proDetails.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         proDetails.setForeground(new java.awt.Color(51, 51, 51));
@@ -442,9 +436,9 @@ public class AjouterExamen extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(373, 373, 373)
+                        .addGap(305, 305, 305)
                         .addComponent(addExamenButton)
-                        .addGap(66, 66, 66)
+                        .addGap(104, 104, 104)
                         .addComponent(addImgButton, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -676,21 +670,17 @@ public class AjouterExamen extends javax.swing.JFrame {
 
     private void deconnexionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionButtonActionPerformed
         // TODO add your handling code here:
-        int retour = JOptionPane.showConfirmDialog(this, "Etes-vous sur de vouloir vous déconnecter ? ", "", JOptionPane.YES_NO_OPTION);
-        System.out.println("retour= " + retour);
-        if (retour == 0) {
-            Connexion connexion = null;
-            try {
-                connexion = new Connexion();
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            this.setVisible(false);
-            connexion.setVisible(true);
-            connexion.setLocationRelativeTo(null);
+        Connexion connexion = null;
+        try {
+            connexion = new Connexion();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.setVisible(false);
+        connexion.setVisible(true);
+        connexion.setLocationRelativeTo(null);
 
     }//GEN-LAST:event_deconnexionButtonActionPerformed
 
@@ -700,7 +690,7 @@ public class AjouterExamen extends javax.swing.JFrame {
 
     private void addImgButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addImgButtonActionPerformed
         // TODO add your handling code here:
-        int retour = JOptionPane.showConfirmDialog(this, "Souhaitez-vous ajouter une nouvel image à cet examen ?\nNote: En continuant, cet examen sera pré-enregistré ", "", JOptionPane.YES_NO_OPTION);
+        int retour = JOptionPane.showConfirmDialog(this, "Souhaitez-vous ajouter une nouvel image à cet examen ? ", "", JOptionPane.YES_NO_OPTION);
         if (retour == 1) {
 
             System.out.println("RENTRER");
@@ -724,7 +714,7 @@ public class AjouterExamen extends javax.swing.JFrame {
                                 this.examen = new Examen(pat.getPatientId(), phField.getText(), typeExamCombo.getSelectedItem().toString(), timestampDateExam);
 
                                 try {
-                                    this.examen = RequetesBDExamen.addExamBD(this.examen, conn);
+                                    this.examen=RequetesBDExamen.addExamBD(this.examen, conn);
                                 } catch (SQLException ex) {
                                     Logger.getLogger(AjouterExamen.class.getName()).log(Level.SEVERE, null, ex);
                                 }
@@ -735,20 +725,20 @@ public class AjouterExamen extends javax.swing.JFrame {
                                 ajouterImage.setVisible(true);
                                 ajouterImage.setLocationRelativeTo(null);
                             } else {
-                                JOptionPane.showMessageDialog(null, "La date rentrée n'est pas valide", "", JOptionPane.WARNING_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "La date rentrée n'est pas valide", "", JOptionPane.PLAIN_MESSAGE);
                             }
                         } else {
-                            JOptionPane.showMessageDialog(null, "La date n'est pas en format numérique", "", JOptionPane.WARNING_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "La date n'est pas en format numérique", "", JOptionPane.PLAIN_MESSAGE);
                         }
                     } else {
-                        JOptionPane.showMessageDialog(null, "Ce praticien hospitalier n'existe pas", "", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Ce praticien hospitalier n'exite pas", "", JOptionPane.PLAIN_MESSAGE);
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(AjouterExamen.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             } else {
-                JOptionPane.showMessageDialog(null, "Tous les champs doivent être complétés", "", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Tous les champs doivent être complétés", "", JOptionPane.PLAIN_MESSAGE);
             }
         } else {
             System.out.println("RENTRER");
@@ -772,7 +762,7 @@ public class AjouterExamen extends javax.swing.JFrame {
                                 this.examen = new Examen(pat.getPatientId(), phField.getText(), typeExamCombo.getSelectedItem().toString(), timestampDateExam);
 
                                 try {
-                                    this.examen = RequetesBDExamen.addExamBD(this.examen, conn);
+                                    this.examen=RequetesBDExamen.addExamBD(this.examen, conn);
                                 } catch (SQLException ex) {
                                     Logger.getLogger(AjouterExamen.class.getName()).log(Level.SEVERE, null, ex);
                                 }
@@ -783,28 +773,24 @@ public class AjouterExamen extends javax.swing.JFrame {
                                 ajouterImage.setVisible(true);
                                 ajouterImage.setLocationRelativeTo(null);
                             } else {
-                                JOptionPane.showMessageDialog(null, "La date rentrée n'est pas valide", "", JOptionPane.WARNING_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "La date rentrée n'est pas valide", "", JOptionPane.PLAIN_MESSAGE);
                             }
                         } else {
-                            JOptionPane.showMessageDialog(null, "La date n'est pas en format numérique", "", JOptionPane.WARNING_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "La date n'est pas en format numérique", "", JOptionPane.PLAIN_MESSAGE);
                         }
                     } else {
-                        JOptionPane.showMessageDialog(null, "Ce praticien hospitalier n'exite pas", "", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Ce praticien hospitalier n'exite pas", "", JOptionPane.PLAIN_MESSAGE);
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(AjouterExamen.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             } else {
-                JOptionPane.showMessageDialog(null, "Tous les champs doivent être complétés", "", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Tous les champs doivent être complétés", "", JOptionPane.PLAIN_MESSAGE);
             }
         }
 
     }//GEN-LAST:event_addImgButtonActionPerformed
-
-    private void typeExamComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeExamComboActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_typeExamComboActionPerformed
 
 //    /**
 //     * @param args the command line arguments
