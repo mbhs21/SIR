@@ -2,9 +2,9 @@
 #	Database	access	properties
 ################################################
 #	JDBC	driver
-jdbc.driver =	oracle.jdbc.OracleDriver
+jdbc.driver =	com.mysql.jdbc.Driver
 #	Databse	URL
-database.url =	jdbc:oracle:thin:@im2ag-oracle.e.ujf-grenoble.fr:1521:im2ag
+database.url =	jdbc:mysql://hugofarcy.ddns.net:3306/SIR?autoReconnect=true&useSSL=false
 #	Username	and	password	to	access	the	database
-database.username =	benhadjm
-database.password =	4b84c08db3
+database.username =	DEVSIR
+database.password =	D3vlop3m3ntSIR!

@@ -5,6 +5,7 @@
  */
 package ui;
 
+
 import java.awt.Font;
 import java.io.IOException;
 import javax.swing.ImageIcon;
@@ -15,6 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import nf.Examen;
 import nf.RequetesBDExamen;
@@ -26,8 +28,19 @@ import nf.RequetesBDLogin;
  */
 public class AccesListeExamen extends javax.swing.JFrame {
 
+    /**
+     *
+     */
     Connection conn;
+
+    /**
+     *
+     */
     Login login;
+
+    /**
+     *
+     */
     Patient pat;
 
     /**
@@ -36,8 +49,10 @@ public class AccesListeExamen extends javax.swing.JFrame {
      * @param login
      * @param pat
      * @param conn
+     * @throws java.sql.SQLException
      */
     public AccesListeExamen(Login login, Patient pat, Connection conn) throws SQLException {
+        
         this.login = login;
         this.pat = pat;
         this.conn = conn;
@@ -79,13 +94,19 @@ public class AccesListeExamen extends javax.swing.JFrame {
         iconeRetour = new ImageIcon(newImgRetour);
         retourButton.setIcon(iconeRetour);
 
+        ImageIcon iconeFiltre = new ImageIcon("src/img_icon/filtre.png");
+        java.awt.Image imgFiltre = iconeFiltre.getImage();
+        java.awt.Image newImgFiltre = imgFiltre.getScaledInstance(filtreIconLabel.getHeight(), filtreIconLabel.getHeight(), java.awt.Image.SCALE_SMOOTH);
+        iconeFiltre = new ImageIcon(newImgFiltre);
+        filtreIconLabel.setIcon(iconeFiltre);
+
         idPField.setText(pat.getPatientId());
         lastNamePField.setText(pat.getLastNameP());
         firstNamePField.setText(pat.getFirstNameP());
         adressField.setText(pat.getAdress());
         genderField.setText(pat.getGender());
-        birthDateField.setText(pat.getBirthDate().toString());
-        
+        birthDateField.setText(pat.getBirthDate());
+
         try {
             // TODO add your handling code here:
             if (RequetesBDLogin.idMR(login.getLogin(), conn)) {
@@ -111,12 +132,28 @@ public class AccesListeExamen extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(AccesListeExamen.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
+      
     }
 
+    /**
+     *
+     * @param pat
+     * @return
+     * @throws SQLException
+     */
     public DefaultTableModel setModelJTable(Patient pat) throws SQLException {
         ArrayList<Object[]> infoExamOnePatient = RequetesBDExamen.RechercherExamenPatientID(pat.getPatientId(), conn);
-        DefaultTableModel model = new javax.swing.table.DefaultTableModel();
+        DefaultTableModel model = new javax.swing.table.DefaultTableModel() {
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                //all cells false
+                return false;
+
+            }
+
+        };
 
         model.addColumn("Date d'examen");
         model.addColumn("Type");
@@ -143,7 +180,6 @@ public class AccesListeExamen extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         examOnePatientTable = new javax.swing.JTable();
         addExamenButton = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         proDetails = new javax.swing.JTextField();
         retourButton = new javax.swing.JButton();
@@ -173,11 +209,12 @@ public class AccesListeExamen extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         accesExamenButton = new javax.swing.JButton();
+        filtreExamCombo = new javax.swing.JComboBox<>();
+        jPanel4 = new javax.swing.JPanel();
+        filtreIconLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1490, 794));
         setMinimumSize(new java.awt.Dimension(1490, 794));
-        setPreferredSize(new java.awt.Dimension(1490, 794));
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 255));
         jPanel2.setForeground(new java.awt.Color(204, 204, 255));
@@ -209,6 +246,7 @@ public class AccesListeExamen extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        examOnePatientTable.setAutoscrolls(false);
         examOnePatientTable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         examOnePatientTable.setSelectionBackground(new java.awt.Color(0, 153, 153));
         examOnePatientTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -225,11 +263,6 @@ public class AccesListeExamen extends javax.swing.JFrame {
                 addExamenButtonActionPerformed(evt);
             }
         });
-
-        jButton2.setBackground(new java.awt.Color(255, 255, 255));
-        jButton2.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(102, 102, 102));
-        jButton2.setText("Imprimer");
 
         jPanel1.setBackground(new java.awt.Color(242, 236, 234));
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(0, 204, 204)));
@@ -259,7 +292,7 @@ public class AccesListeExamen extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(51, 51, 51));
         jLabel1.setText("Health IT");
 
-        jLabel5.setFont(new java.awt.Font("Candara", 1, 48)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Candara", 1, 36)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 153, 153));
         jLabel5.setText("Dossier Médical Radiologique");
 
@@ -312,7 +345,7 @@ public class AccesListeExamen extends javax.swing.JFrame {
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5)
-                .addGap(69, 69, 69)
+                .addGap(96, 96, 96)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -330,22 +363,23 @@ public class AccesListeExamen extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(72, 72, 72))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(proDetails)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(deconnexionButton)
-                                .addComponent(retourButton)))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(proDetails)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(deconnexionButton)
+                                        .addComponent(retourButton))))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(jLabel5)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel5)
-                .addGap(29, 29, 29))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -556,6 +590,34 @@ public class AccesListeExamen extends javax.swing.JFrame {
             }
         });
 
+        filtreExamCombo.setBackground(new java.awt.Color(255, 255, 255));
+        filtreExamCombo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        filtreExamCombo.setForeground(new java.awt.Color(51, 51, 51));
+        filtreExamCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aucun", "Examens en cours", "Examens finis" }));
+        filtreExamCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filtreExamComboActionPerformed(evt);
+            }
+        });
+
+        jPanel4.setBackground(new java.awt.Color(242, 236, 234));
+        jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.cyan, java.awt.Color.cyan));
+        jPanel4.setPreferredSize(new java.awt.Dimension(49, 49));
+
+        filtreIconLabel.setBackground(new java.awt.Color(255, 255, 255));
+        filtreIconLabel.setForeground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(filtreIconLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(filtreIconLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -572,22 +634,24 @@ public class AccesListeExamen extends javax.swing.JFrame {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(96, 96, 96)
-                        .addComponent(addExamenButton)
-                        .addGap(81, 81, 81)
-                        .addComponent(accesExamenButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)
-                        .addGap(89, 89, 89))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(61, 61, 61)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 633, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(270, 270, 270)
+                                .addGap(43, 43, 43)
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(filtreExamCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(62, 62, 62)
                                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(12, Short.MAX_VALUE))))
+                        .addContainerGap(12, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(addExamenButton)
+                        .addGap(65, 65, 65)
+                        .addComponent(accesExamenButton)
+                        .addGap(131, 131, 131))))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
@@ -601,22 +665,27 @@ public class AccesListeExamen extends javax.swing.JFrame {
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(41, 41, 41)
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(57, 57, 57)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(addExamenButton)
-                                    .addComponent(jButton2)
-                                    .addComponent(accesExamenButton))
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(73, 73, 73)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(35, 35, 35)
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                .addGap(82, 82, 82)
+                                .addComponent(filtreExamCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(34, 34, 34)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(addExamenButton)
+                            .addComponent(accesExamenButton))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -668,18 +737,20 @@ public class AccesListeExamen extends javax.swing.JFrame {
 //
 //    }
     private void deconnexionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionButtonActionPerformed
-        // TODO add your handling code here:
-        Connexion connexion = null;
-        try {
-            connexion = new Connexion();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
+        // TODO add your handling code here:        
+        int retour = JOptionPane.showConfirmDialog(this, "Etes-vous sur de vouloir vous déconnecter ? ", "", JOptionPane.YES_NO_OPTION);
+        System.out.println("retour= " + retour);
+        if (retour == 0) {
+            Connexion connexion = null;
+            try {
+                connexion = new Connexion();
+            } catch (ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.setVisible(false);
+            connexion.setVisible(true);
+            connexion.setLocationRelativeTo(null);
         }
-        this.setVisible(false);
-        connexion.setVisible(true);
-        connexion.setLocationRelativeTo(null);
     }//GEN-LAST:event_deconnexionButtonActionPerformed
 
     private void accesExamenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accesExamenButtonActionPerformed
@@ -707,22 +778,105 @@ public class AccesListeExamen extends javax.swing.JFrame {
 
     }//GEN-LAST:event_addExamenButtonActionPerformed
 
+    /**
+     *
+     * @param pat
+     * @return
+     * @throws SQLException
+     */
+    public DefaultTableModel setModelJTableCurrent(Patient pat) throws SQLException {
+        ArrayList<Object[]> infoExamOnePatient = RequetesBDExamen.RechercherExamenPatientCurrent(pat.getPatientId(), conn);
+        DefaultTableModel model = new javax.swing.table.DefaultTableModel();
+
+        model.addColumn("Date d'examen");
+        model.addColumn("Type");
+        model.addColumn("Praticien responsable");
+
+        for (Object[] infoExam : infoExamOnePatient) {
+            model.addRow(infoExam);
+
+        }
+
+        return model;
+    }
+
+    /**
+     *
+     * @param pat
+     * @return
+     * @throws SQLException
+     */
+    public DefaultTableModel setModelJTableCompleted(Patient pat) throws SQLException {
+        ArrayList<Object[]> infoExamOnePatient = RequetesBDExamen.RechercherExamenPatientCompleted(pat.getPatientId(), conn);
+        DefaultTableModel model = new javax.swing.table.DefaultTableModel();
+
+        model.addColumn("Date d'examen");
+        model.addColumn("Type");
+        model.addColumn("Praticien responsable");
+
+        for (Object[] infoExam : infoExamOnePatient) {
+            model.addRow(infoExam);
+
+        }
+
+        return model;
+    }
+
+    private void filtreExamComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtreExamComboActionPerformed
+        // TODO add your handling code here:
+        if (filtreExamCombo.getSelectedItem().equals("Examens en cours")) {
+            try {
+                examOnePatientTable.setModel(this.setModelJTableCurrent(this.pat));
+                examOnePatientTable.setRowHeight(30);
+                examOnePatientTable.getTableHeader().setFont(new Font("Candara", Font.PLAIN, 18));
+            } catch (SQLException ex) {
+                Logger.getLogger(AccesListeExamen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } else {
+            if (filtreExamCombo.getSelectedItem().equals("Examens finis")) {
+                try {
+                    examOnePatientTable.setModel(this.setModelJTableCompleted(this.pat));
+                } catch (SQLException ex) {
+                    Logger.getLogger(AccesListeExamen.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                examOnePatientTable.setRowHeight(30);
+                examOnePatientTable.getTableHeader().setFont(new Font("Candara", Font.PLAIN, 18));
+            } else {
+                try {
+                    examOnePatientTable.setModel(this.setModelJTable(this.pat));
+                } catch (SQLException ex) {
+                    Logger.getLogger(AccesListeExamen.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                examOnePatientTable.setRowHeight(30);
+                examOnePatientTable.getTableHeader().setFont(new Font("Candara", Font.PLAIN, 18));
+            }
+        }
+
+
+    }//GEN-LAST:event_filtreExamComboActionPerformed
+
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
     public Examen selectExamTable() throws SQLException {
         Object ob = examOnePatientTable.getValueAt(examOnePatientTable.getSelectedRow(), examOnePatientTable.getSelectedColumn());
-        System.out.println("examOnePatientTable.getSelectedColumn()= "+examOnePatientTable.getSelectedColumn());
+        System.out.println("examOnePatientTable.getSelectedColumn()= " + examOnePatientTable.getSelectedColumn());
         Examen exam = null;
         //for (int i = 0; i < examOnePatientTable.getColumnCount(); i++) {
-            System.out.println("YEP");
-            String dExam = examOnePatientTable.getValueAt(examOnePatientTable.getSelectedRow(), 0).toString().substring(2, 16);
-            System.out.println("dexam= "+dExam);
-            String[] dExamSplit = dExam.split(" ");
-            String dateExamen = dExamSplit[0];
-            String[] date = dateExamen.split("-");
-            String dselect = date[2] + "-" + date[1] + "-" + date[0] + " " + dExamSplit[1];
-            System.out.println("dselect= "+dselect);
-            System.out.println("");
-            exam = RequetesBDExamen.storeOneExamInfo(dselect, conn);
-            
+        System.out.println("YEP");
+        String dExam = examOnePatientTable.getValueAt(examOnePatientTable.getSelectedRow(), 0).toString();
+        System.out.println("dexam= " + dExam);
+        String[] dExamSplit = dExam.split(" ");
+        String dateExamen = dExamSplit[0];
+        String[] date = dateExamen.split("-");
+        String dselect = date[0] + "-" + date[1] + "-" + date[2] + " " + dExamSplit[1];
+        System.out.println("dselect= " + dselect);
+        System.out.println("");
+        exam = RequetesBDExamen.storeOneExamInfo(dExam, conn);
+
         //}
         //System.out.println(exam.toString());
         return exam;
@@ -771,10 +925,11 @@ public class AccesListeExamen extends javax.swing.JFrame {
     private javax.swing.JTextField birthDateField;
     private javax.swing.JButton deconnexionButton;
     private javax.swing.JTable examOnePatientTable;
+    private javax.swing.JComboBox<String> filtreExamCombo;
+    private javax.swing.JLabel filtreIconLabel;
     private javax.swing.JTextField firstNamePField;
     private javax.swing.JTextField genderField;
     private javax.swing.JTextField idPField;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -783,6 +938,7 @@ public class AccesListeExamen extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;

@@ -32,20 +32,43 @@ import nf.Patient;
  */
 public class AjouterImage extends javax.swing.JFrame {
 
+    /**
+     *
+     */
     File Img;
+
+    /**
+     *
+     */
     String pathImg;
+
+    /**
+     *
+     */
     Examen examen;
+
+    /**
+     *
+     */
     Login login;
+
+    /**
+     *
+     */
     Connection conn;
+
+    /**
+     *
+     */
     Patient pat;
 
     /**
      * Creates new form Image
      *
-     * @param pat
-     * @param examen
-     * @param login
-     * @param conn
+     * @param pat un patient
+     * @param examen un examen
+     * @param conn une connexion à la base de données
+     * @param login un login
      */
     public AjouterImage(Patient pat, Examen examen, Login login, Connection conn) {
         this.pat = pat;
@@ -76,20 +99,14 @@ public class AjouterImage extends javax.swing.JFrame {
         java.awt.Image imgDeconnection = iconeDeconnection.getImage();
         java.awt.Image newImgDeconnection = imgDeconnection.getScaledInstance(deconnexionButton.getHeight(), deconnexionButton.getHeight(), java.awt.Image.SCALE_SMOOTH);
         iconeDeconnection = new ImageIcon(newImgDeconnection);
-        deconnexionButton.setIcon(iconeDeconnection);
-
-        ImageIcon iconeRetour = new ImageIcon("src/img_icon/retour.png");
-        java.awt.Image imgRetour = iconeRetour.getImage();
-        java.awt.Image newImgRetour = imgRetour.getScaledInstance(retourButton.getHeight(), retourButton.getHeight(), java.awt.Image.SCALE_SMOOTH);
-        iconeRetour = new ImageIcon(newImgRetour);
-        retourButton.setIcon(iconeRetour);
-
-//        ImageIcon iconeAbdoTest = new ImageIcon("src/img_numerisees_jpg/cor494-i43.jpg");
-//        java.awt.Image imgAbdoTest = iconeAbdoTest.getImage();
-//        java.awt.Image newImgAbdoTest = imgAbdoTest.getScaledInstance(radioImgLabel.getHeight(), radioImgLabel.getHeight(), java.awt.Image.SCALE_SMOOTH);
-//        iconeAbdoTest = new ImageIcon(newImgAbdoTest);
-//        radioImgLabel.setIcon(iconeAbdoTest);
-
+        deconnexionButton.setIcon(iconeDeconnection);     
+        
+        ImageIcon iconeRotate = new ImageIcon("src/img_icon/rotate.png");
+        java.awt.Image imgRotate = iconeRotate.getImage();
+        java.awt.Image newImgRotate = imgRotate.getScaledInstance(rotationButton.getHeight(), rotationButton.getHeight(), java.awt.Image.SCALE_SMOOTH);
+        iconeRotate = new ImageIcon(newImgRotate);
+        rotationButton.setIcon(iconeRotate);
+        
         ImageIcon iconePlus = new ImageIcon("src/img_icon/plus.png");
         java.awt.Image imgPlus = iconePlus.getImage();
         java.awt.Image newImgPlus = imgPlus.getScaledInstance(addImgButton.getHeight(), addImgButton.getHeight(), java.awt.Image.SCALE_SMOOTH);
@@ -101,6 +118,7 @@ public class AjouterImage extends javax.swing.JFrame {
         editCommentsButton.setEnabled(false);
         commentsArea.setEditable(false);
         addImgButton.setEnabled(false);
+        commentsArea.setText(initComments());
     }
 
     /**
@@ -130,7 +148,6 @@ public class AjouterImage extends javax.swing.JFrame {
         editCommentsButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         proDetails = new javax.swing.JTextField();
-        retourButton = new javax.swing.JButton();
         deconnexionButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -140,9 +157,7 @@ public class AjouterImage extends javax.swing.JFrame {
         logoIcon = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1490, 794));
         setMinimumSize(new java.awt.Dimension(1490, 794));
-        setPreferredSize(new java.awt.Dimension(1490, 794));
         setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 255));
@@ -205,7 +220,9 @@ public class AjouterImage extends javax.swing.JFrame {
         rotationButton.setBackground(new java.awt.Color(204, 204, 204));
         rotationButton.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         rotationButton.setForeground(new java.awt.Color(0, 0, 0));
-        rotationButton.setText("Rotation");
+        rotationButton.setMaximumSize(new java.awt.Dimension(50, 50));
+        rotationButton.setMinimumSize(new java.awt.Dimension(50, 50));
+        rotationButton.setPreferredSize(new java.awt.Dimension(50, 50));
         rotationButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rotationButtonActionPerformed(evt);
@@ -234,6 +251,9 @@ public class AjouterImage extends javax.swing.JFrame {
 
         addImgButton.setBackground(new java.awt.Color(204, 204, 204));
         addImgButton.setForeground(new java.awt.Color(255, 255, 255));
+        addImgButton.setMaximumSize(new java.awt.Dimension(50, 50));
+        addImgButton.setMinimumSize(new java.awt.Dimension(50, 50));
+        addImgButton.setPreferredSize(new java.awt.Dimension(50, 50));
         addImgButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addImgButtonActionPerformed(evt);
@@ -247,31 +267,29 @@ public class AjouterImage extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(parcourirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(87, 87, 87)
+                        .addComponent(addImgButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(85, 85, 85)
+                        .addComponent(rotationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addComponent(addImgButton, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(saveButton)
-                    .addComponent(rotationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(64, 64, 64))
+                        .addGap(61, 61, 61)
+                        .addComponent(parcourirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(saveButton)))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rotationButton)
-                    .addComponent(parcourirButton))
-                .addGap(36, 36, 36)
+                .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addImgButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(saveButton)
-                        .addGap(12, 12, 12)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(addImgButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rotationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(saveButton)
+                    .addComponent(parcourirButton))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         jTextField5.setBackground(new java.awt.Color(255, 255, 255));
@@ -310,15 +328,15 @@ public class AjouterImage extends javax.swing.JFrame {
             }
         });
 
-        retourButton.setBackground(new java.awt.Color(255, 255, 255));
-        retourButton.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
-        retourButton.setForeground(new java.awt.Color(0, 153, 204));
-        retourButton.setText("Retour");
-
         deconnexionButton.setBackground(new java.awt.Color(255, 255, 255));
         deconnexionButton.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         deconnexionButton.setForeground(new java.awt.Color(0, 153, 204));
         deconnexionButton.setText("Se déconnecter");
+        deconnexionButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deconnexionButtonActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Candara", 1, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(51, 51, 51));
@@ -326,7 +344,7 @@ public class AjouterImage extends javax.swing.JFrame {
 
         jPanel5.setBackground(new java.awt.Color(242, 236, 234));
 
-        jLabel1.setFont(new java.awt.Font("Candara", 1, 48)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Candara", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 153));
         jLabel1.setText("Ajout d'une image");
 
@@ -371,12 +389,9 @@ public class AjouterImage extends javax.swing.JFrame {
                 .addGap(171, 171, 171)
                 .addComponent(userIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(deconnexionButton, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(retourButton, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(proDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(proDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deconnexionButton, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12))
         );
         jPanel3Layout.setVerticalGroup(
@@ -387,10 +402,8 @@ public class AjouterImage extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(proDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(deconnexionButton)
-                            .addComponent(retourButton))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(deconnexionButton)
+                        .addContainerGap(23, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(userIcon, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -417,72 +430,65 @@ public class AjouterImage extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(71, 71, 71)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(26, 26, 26)
-                                .addComponent(editCommentsButton))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(132, 132, 132)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(132, 132, 132)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(270, 270, 270)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(249, 249, 249)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(49, 49, 49)
+                                .addComponent(editCommentsButton))
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGap(270, 270, 270)
+                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGap(78, 78, 78)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 446, Short.MAX_VALUE))))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(211, 211, 211)
                 .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel2)
                 .addGap(27, 27, 27)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(editCommentsButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(53, 53, 53)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 204, Short.MAX_VALUE)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(284, Short.MAX_VALUE))
+                        .addGap(53, 53, 53)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(editCommentsButton))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1496, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1502, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1045, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 719, Short.MAX_VALUE)
         );
 
         pack();
@@ -493,7 +499,7 @@ public class AjouterImage extends javax.swing.JFrame {
     }//GEN-LAST:event_proDetailsActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        // TODO add your handling code here:
+        
         if (editCommentsButton.isEnabled()) {
             int retour = JOptionPane.showConfirmDialog(this, "Etes-vous sur de vouloir ajouter cet examen sans commentaire ? ", "", JOptionPane.YES_NO_OPTION);
             if (retour == 0) {
@@ -529,7 +535,7 @@ public class AjouterImage extends javax.swing.JFrame {
     private void parcourirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_parcourirButtonActionPerformed
         // TODO add your handling code here:
         JFileChooser file = new JFileChooser();
-        //file.setCurrentDirectory(new File(System.getProperty("user.home")));
+        
         file.setCurrentDirectory(new java.io.File("./src/img_numerisees_jpg"));
         //filtrer les fichiers
         FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images", "jpg", "png");
@@ -559,6 +565,7 @@ public class AjouterImage extends javax.swing.JFrame {
 
             rotationButton.setEnabled(true);
             editCommentsButton.setEnabled(true);
+            saveButton.setEnabled(true);
             addImgButton.setEnabled(true);
             this.Img = selFile;
         }
@@ -604,8 +611,7 @@ public class AjouterImage extends javax.swing.JFrame {
 
     private void editCommentsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCommentsButtonActionPerformed
         // TODO add your handling code here:
-        commentsArea.setEditable(true);
-        commentsArea.setText(initComments());
+        commentsArea.setEditable(true);        
         editCommentsButton.setEnabled(false);
 
     }//GEN-LAST:event_editCommentsButtonActionPerformed
@@ -624,12 +630,39 @@ public class AjouterImage extends javax.swing.JFrame {
 
     }//GEN-LAST:event_addImgButtonActionPerformed
 
+    private void deconnexionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionButtonActionPerformed
+        // TODO add your handling code here:
+        int retour = JOptionPane.showConfirmDialog(this, "Etes-vous sur de vouloir vous déconnecter ? ", "", JOptionPane.YES_NO_OPTION);
+        System.out.println("retour= " + retour);
+        if (retour == 0) {
+            Connexion connexion = null;
+            try {
+                connexion = new Connexion();
+            } catch (ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.setVisible(false);
+            connexion.setVisible(true);
+            connexion.setLocationRelativeTo(null);
+        }
+        
+    }//GEN-LAST:event_deconnexionButtonActionPerformed
+
+    /**
+     *
+     * @return
+     */
     public String initComments() {
         String str = "Image realisée par: " + login.getLogin().trim() + "-" + login.getLastName().trim().toUpperCase() + " " + login.getFirstName().trim()
                 + "\n----------------------------------------------";
         return str;
     }
 
+    /**
+     *
+     * @param nameFileSelected
+     * @return
+     */
     public String relativePath(String nameFileSelected) {
         System.out.println(nameFileSelected);
         //[] nameFile = nameFileSelected.split(".");
@@ -706,7 +739,6 @@ public class AjouterImage extends javax.swing.JFrame {
     private javax.swing.JButton parcourirButton;
     private javax.swing.JTextField proDetails;
     private javax.swing.JLabel radioImgLabel;
-    private javax.swing.JButton retourButton;
     private javax.swing.JButton rotationButton;
     private javax.swing.JButton saveButton;
     private javax.swing.JLabel userIcon;

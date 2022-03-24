@@ -17,6 +17,11 @@ import javax.imageio.ImageIO;
  */
 public class RotationImage {
 
+    /**
+     *
+     * @param imageToRotate
+     * @return
+     */
     public static BufferedImage rotateImage(BufferedImage imageToRotate) {
         int widthOfImage = imageToRotate.getWidth();
         int heightOfImage = imageToRotate.getHeight();
@@ -32,6 +37,12 @@ public class RotationImage {
         return newImageFromBuffer;
     }
 
+    /**
+     *
+     * @param originalImage
+     * @param nameOriginalImage
+     * @throws IOException
+     */
     public static void writeRotateImage(BufferedImage originalImage, String nameOriginalImage) throws IOException {
         
         BufferedImage subImage = rotateImage(originalImage);
@@ -43,6 +54,10 @@ public class RotationImage {
         System.out.println("New Rotated Image File Path: " + rotatedImageFile.getPath());
     }
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
 
         try {

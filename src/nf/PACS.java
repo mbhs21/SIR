@@ -11,11 +11,36 @@ package nf;
  */
 public class PACS {
     
+    /**
+     *
+     */
     private String pacsId;
+
+    /**
+     *
+     */
     private String examId;
+
+    /**
+     *
+     */
     private byte[] image;
+
+    /**
+     *
+     */
     private String comments;
 
+    
+    /**
+     * 
+     * Constructeur PACS
+     * 
+     * 
+     * @param pacsId identifiant Pacs
+     * @param examId identifiant d'un examen
+     * @param comments commentaires associès à l'image
+     */
     public PACS (String pacsId, String examId, String comments){
         this.pacsId=pacsId;
         this.examId=examId;

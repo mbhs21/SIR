@@ -6,11 +6,9 @@
 package ui;
 
 import java.sql.Connection;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -26,14 +24,26 @@ import nf.RequetesBDPatient;
  */
 public class CreationDMR extends javax.swing.JFrame {
 
+    /**
+     *
+     */
     Login login;
+
+    /**
+     *
+     */
     Connection conn;
+
+    /**
+     *
+     */
     Patient pat;
 
     /**
      * Creates new form listePatients
      *
-     * @param login
+     * @param login 
+     * @param conn Connexion à la base de données
      */
     public CreationDMR(Login login, Connection conn) {
         this.login = login;
@@ -41,10 +51,8 @@ public class CreationDMR extends javax.swing.JFrame {
         this.pat = null;
 
         initComponents();
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
         this.pack();
-        this.setSize(screenSize.width - 100, screenSize.height - 50);
-        jPanel2.setSize(screenSize.width - 100, screenSize.height - 50);
         this.setResizable(false);
 
         proDetails.setText(login.getLogin().strip()
@@ -104,7 +112,6 @@ public class CreationDMR extends javax.swing.JFrame {
         addExamenButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         retourButton = new javax.swing.JButton();
-        proDetails = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         deconnexionButton = new javax.swing.JButton();
@@ -112,6 +119,7 @@ public class CreationDMR extends javax.swing.JFrame {
         userIcon = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         logoIcon = new javax.swing.JLabel();
+        proDetails = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jTextField5 = new javax.swing.JTextField();
         jTextField6 = new javax.swing.JTextField();
@@ -133,6 +141,8 @@ public class CreationDMR extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 255));
         jPanel2.setForeground(new java.awt.Color(204, 204, 255));
+        jPanel2.setMaximumSize(new java.awt.Dimension(1490, 794));
+        jPanel2.setMinimumSize(new java.awt.Dimension(1490, 794));
 
         validateButton.setBackground(new java.awt.Color(255, 255, 255));
         validateButton.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
@@ -167,23 +177,11 @@ public class CreationDMR extends javax.swing.JFrame {
             }
         });
 
-        proDetails.setBackground(new java.awt.Color(255, 255, 255));
-        proDetails.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
-        proDetails.setForeground(new java.awt.Color(0, 0, 0));
-        proDetails.setAlignmentX(0);
-        proDetails.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, java.awt.Color.blue, null, null));
-        proDetails.setEnabled(false);
-        proDetails.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                proDetailsActionPerformed(evt);
-            }
-        });
-
         jLabel3.setFont(new java.awt.Font("Candara", 1, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(51, 51, 51));
         jLabel3.setText("Health IT");
 
-        jLabel5.setFont(new java.awt.Font("Candara", 1, 48)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Candara", 1, 36)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 153, 153));
         jLabel5.setText("Création d'un DMR");
 
@@ -233,6 +231,14 @@ public class CreationDMR extends javax.swing.JFrame {
             .addComponent(logoIcon, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
+        proDetails.setEditable(false);
+        proDetails.setBackground(new java.awt.Color(255, 255, 255));
+        proDetails.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        proDetails.setForeground(new java.awt.Color(51, 51, 51));
+        proDetails.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, java.awt.Color.blue, null, null));
+        proDetails.setMinimumSize(new java.awt.Dimension(64, 55));
+        proDetails.setPreferredSize(new java.awt.Dimension(64, 55));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -242,20 +248,18 @@ public class CreationDMR extends javax.swing.JFrame {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(291, 291, 291)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 362, Short.MAX_VALUE)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 173, Short.MAX_VALUE)
+                .addGap(105, 105, 105)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(proDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(deconnexionButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(retourButton, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(15, 15, 15))))
+                        .addGap(26, 26, 26)
+                        .addComponent(retourButton, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(proDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(24, 24, 24))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -265,23 +269,26 @@ public class CreationDMR extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(21, 21, 21)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(proDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(retourButton)
-                                    .addComponent(deconnexionButton))
-                                .addGap(11, 11, 11))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(89, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(proDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(19, 19, 19)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(deconnexionButton)
+                                    .addComponent(retourButton))
+                                .addGap(22, 22, 22))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -319,6 +326,12 @@ public class CreationDMR extends javax.swing.JFrame {
         lastNameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lastNameFieldActionPerformed(evt);
+            }
+        });
+
+        dayField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dayFieldActionPerformed(evt);
             }
         });
 
@@ -380,7 +393,7 @@ public class CreationDMR extends javax.swing.JFrame {
                                 .addComponent(monthField, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(yearField, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(HCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -461,7 +474,7 @@ public class CreationDMR extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(validateButton)
                     .addComponent(addExamenButton))
-                .addContainerGap(155, Short.MAX_VALUE))
+                .addContainerGap(153, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -477,10 +490,6 @@ public class CreationDMR extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void proDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proDetailsActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_proDetailsActionPerformed
 
     private void retourButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retourButtonActionPerformed
         // TODO add your handling code here:
@@ -516,44 +525,56 @@ public class CreationDMR extends javax.swing.JFrame {
 
     private void deconnexionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionButtonActionPerformed
         // TODO add your handling code here:
-        Connexion connexion = null;
-        try {
-            connexion = new Connexion();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
+        int retour = JOptionPane.showConfirmDialog(this, "Etes-vous sur de vouloir vous déconnecter ? ", "", JOptionPane.YES_NO_OPTION);
+        System.out.println("retour= " + retour);
+        if (retour == 0) {
+            Connexion connexion = null;
+            try {
+                connexion = new Connexion();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.setVisible(false);
+            connexion.setVisible(true);
+            connexion.setLocationRelativeTo(null);
         }
-        this.setVisible(false);
-        connexion.setVisible(true);
-        connexion.setLocationRelativeTo(null);
     }//GEN-LAST:event_deconnexionButtonActionPerformed
 
     private void lastNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastNameFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_lastNameFieldActionPerformed
 
+    /**
+     *
+     * @return
+     */
     public Patient createPatient() {
         Patient pat = null;
         if (checkAllFieldCompleted()) {
-            Date birthDate;
-            int year = Integer.parseInt(yearField.getText());
-            int month = Integer.parseInt(monthField.getText());
-            int day = Integer.parseInt(dayField.getText());
-            birthDate = new Date(year - 1900, month - 1, day);
-            try {
-                if (!RequetesBDPatient.patientExist(lastNameField.getText(), firstNameField.getText(), birthDate, conn)) {
-                    if (FCheckBox.isSelected()) {
-                        pat = new Patient(lastNameField.getText(), firstNameField.getText(), adressField.getText(), "F", birthDate);
-                    } else {
-                        pat = new Patient(lastNameField.getText(), firstNameField.getText(), adressField.getText(), "M", birthDate);
-                    }
+            if (checkDateNumeric(dayField.getText()) && checkDateNumeric(monthField.getText()) && checkDateNumeric(yearField.getText())) {
+                String birthDate;
+                birthDate = yearField.getText()+"-"+monthField.getText()+"-"+dayField.getText();
+                String firstName1 = firstNameField.getText().substring(0, 1);
+                String firstName2 = firstNameField.getText().substring(1);
+                String firstName = firstName1.toUpperCase() + firstName2;
+                try {
+                    if (!RequetesBDPatient.patientExist(lastNameField.getText().toUpperCase(), firstName, birthDate, conn)) {
+                        if (FCheckBox.isSelected()) {
+                            pat = new Patient(lastNameField.getText().toUpperCase(), firstName, adressField.getText(), "F", birthDate);
+                        } else {
+                            pat = new Patient(lastNameField.getText().toUpperCase(), firstName, adressField.getText(), "M", birthDate);
+                        }
 
-                } else {
-                    JOptionPane.showMessageDialog(null, "Ce patient possède déjà un DMR", "", JOptionPane.PLAIN_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Ce patient possède déjà un DMR", "", JOptionPane.PLAIN_MESSAGE);
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CreationDMR.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(CreationDMR.class.getName()).log(Level.SEVERE, null, ex);
+            } else {
+                JOptionPane.showMessageDialog(null, "La date saisie n'est pas au format numérique", "", JOptionPane.PLAIN_MESSAGE);
             }
 
         }
@@ -562,27 +583,36 @@ public class CreationDMR extends javax.swing.JFrame {
     }
     private void validateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validateButtonActionPerformed
         // TODO add your handling code here:
-        int retour = JOptionPane.showConfirmDialog(this, "Etes-vous sur de vouloir créer ce DMR ? ", "", JOptionPane.YES_NO_OPTION);
-        if (retour == 0) {
-            Patient pat = createPatient();
-            if (pat != null) {
-                try {
-                    RequetesBDPatient.addPatientBD(pat, conn);
-                } catch (SQLException ex) {
-                    Logger.getLogger(CreationDMR.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                try {
-                    PageAccueil pgAccueil = new PageAccueil(login, conn);
-                    this.setVisible(false);
-                    pgAccueil.setVisible(true);
-                    //pgAccueil.setLocationRelativeTo(null);
-                } catch (IOException | SQLException ex) {
-                    Logger.getLogger(CreationDMR.class.getName()).log(Level.SEVERE, null, ex);
+
+        Patient pat = createPatient();
+
+        if (pat != null) {
+
+            if (checkDayValid(dayField.getText(), monthField.getText(), yearField.getText())) {
+
+                int retour = JOptionPane.showConfirmDialog(this, "Etes-vous sur de vouloir créer ce DMR ? ", "", JOptionPane.YES_NO_OPTION);
+                if (retour == 0) {
+                    try {
+                        RequetesBDPatient.addPatientBD(pat, conn);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(CreationDMR.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    try {
+                        PageAccueil pgAccueil = new PageAccueil(login, conn);
+                        this.setVisible(false);
+                        pgAccueil.setVisible(true);
+                        //pgAccueil.setLocationRelativeTo(null);
+                    } catch (IOException | SQLException ex) {
+                        Logger.getLogger(CreationDMR.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Tous les champs doivent être complétés", "", JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog(null, "La date saisie n'est pas valide", "", JOptionPane.PLAIN_MESSAGE);
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "Une erreur a été détectée dans votre saisie", "", JOptionPane.PLAIN_MESSAGE);
         }
+
 
     }//GEN-LAST:event_validateButtonActionPerformed
 
@@ -604,12 +634,141 @@ public class CreationDMR extends javax.swing.JFrame {
     }//GEN-LAST:event_addExamenButtonActionPerformed
 
     /**
+     *
+     * @param str
+     * @return
+     */
+    public boolean checkDateNumeric(String str) {
+        boolean isNumeric = true;
+        for (int i = 0; i < str.length(); i++) {
+            if (!Character.isDigit(str.charAt(i))) {
+                isNumeric = false;
+            }
+        }
+        System.out.println(isNumeric);
+        return isNumeric;
+    }
+
+    /**
+     *
+     * @param year
+     * @return
+     */
+    public boolean checkYearValid(String year) {
+        boolean isValid = true;
+        int y = Integer.parseInt(yearField.getText());
+        LocalDate currentdate = LocalDate.now();
+        System.out.println("Current date: " + currentdate);
+        //Getting the current day
+        int currentDay = currentdate.getDayOfMonth();
+        System.out.println("Current day: " + currentDay);
+        int currentY = currentdate.getYear();        
+        if (y > currentY) {
+            isValid = false;
+        }
+        return isValid;
+    }
+
+    /**
+     *
+     * @param month
+     * @param year
+     * @return
+     */
+    public static boolean checkMonthValid(String month, String year) {
+        boolean isValid = true;
+
+        int m = Integer.parseInt(month);
+        int y = Integer.parseInt(year);
+        LocalDate currentdate = LocalDate.now();
+        System.out.println("Current date: " + currentdate);
+        //Getting the current day
+        int currentDay = currentdate.getDayOfMonth();
+        System.out.println("Current day: " + currentDay);
+        int currentY = currentdate.getYear();
+        int currentM = currentdate.getMonthValue();
+
+        if (currentY==y) {
+            if (currentM < m) {
+
+                isValid = false;
+
+            }
+        }
+
+        if (m < 1 || m > 12) {
+            isValid = false;
+        }
+        return isValid;
+    }
+
+    /**
+     *
+     * @param day
+     * @param m
+     * @param y
+     * @return
+     */
+    public boolean checkDayValid(String day, String m, String y) {
+        boolean isValid = true;
+
+        if (checkMonthValid(m, y)) {
+            int d = Integer.parseInt(day);
+            int month = Integer.parseInt(m);
+            if (d < 1 || d > 31) {
+                isValid = false;
+            } else {
+                if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
+                    isValid = (d > 0 && d < 32);
+                } else {
+                    if (month == 2) {
+                        isValid = (d > 0 && d < 30);
+                    } else {
+                        if (month == 4 || month == 6 || month == 9 || month == 11) {
+                            isValid = (d > 0 && d < 31);
+                        } else {
+                            isValid = false;
+                        }
+                    }
+                }
+            }
+        } else {
+            isValid = false;
+        }
+
+        LocalDate currentdate = LocalDate.now();
+        System.out.println("Current date: " + currentdate);
+        //Getting the current day
+        int currentDay = currentdate.getDayOfMonth();
+        System.out.println("Current day: " + currentDay);
+        int currentY = currentdate.getYear();
+        int currentM = currentdate.getMonthValue();
+
+        if (currentY == Integer.parseInt(y)) {
+            if (Integer.parseInt(m) == currentM) {
+                if (Integer.parseInt(day) > currentDay) {
+                    isValid = false;
+                }
+            }
+        } else {
+            if (currentY < Integer.parseInt(y)) {
+                isValid = false;
+            }
+        }
+        return isValid;
+    }
+
+    private void dayFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dayFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dayFieldActionPerformed
+
+    /**
      * verifie si tous les champs nécéssaires à la création du DMR sont remplis
      *
      * @return
      */
     public boolean checkAllFieldCompleted() {
-        return !lastNameField.getText().isEmpty() && !firstNameField.getText().isEmpty() && !adressField.getText().isEmpty() && !dayField.getText().isEmpty() && !monthField.getText().isEmpty() && !yearField.getText().isEmpty() && (FCheckBox.isSelected() ^ HCheckBox.isSelected());
+        return !lastNameField.getText().isEmpty() && !firstNameField.getText().isEmpty() && !adressField.getText().isEmpty() && !dayField.getText().isEmpty() && !monthField.getText().isEmpty() && !yearField.getText().isEmpty() && (yearField.getText().length() == 4) && (FCheckBox.isSelected() ^ HCheckBox.isSelected());
     }
 
 //    /**

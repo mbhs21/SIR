@@ -14,13 +14,43 @@ import java.util.Date;
  */
 public class Patient {
 
+    /**
+     *
+     */
     private String patientId;
-    private String lastNameP;
-    private String firstNameP;
-    private String adress;
-    private String gender;
-    private Date birthDate;
 
+    /**
+     *
+     */
+    private String lastNameP;
+
+    /**
+     *
+     */
+    private String firstNameP;
+
+    /**
+     *
+     */
+    private String adress;
+
+    /**
+     *
+     */
+    private String gender;
+
+    /**
+     *
+     */
+    private String birthDate;
+
+    
+    /**
+     * 
+     * Constructeur Patient
+     * Initialise le patient à null
+     * 
+     */
     public Patient() {
         this.patientId = null;
         this.lastNameP = null;
@@ -30,7 +60,19 @@ public class Patient {
         this.birthDate = null;
     }
 
-    public Patient(String patientId, String lastNameP, String firstNameP, String adress, String gender, Date birthDate) {
+    /**
+     * 
+     * Constructeur Patient
+     * Initiale le patient à null
+     * 
+     * @param patientId identifiant du patient
+     * @param lastNameP nom du patient
+     * @param firstNameP prénom du patient
+     * @param adress adresse du patient
+     * @param gender sexe du patient
+     * @param birthDate date de naissance du patient YYYY-MM-DD
+     */
+    public Patient(String patientId, String lastNameP, String firstNameP, String adress, String gender, String birthDate) {
         this.patientId = patientId;
         this.lastNameP = lastNameP;
         this.firstNameP = firstNameP;
@@ -39,14 +81,37 @@ public class Patient {
         this.birthDate = birthDate;
     }
 
-    public Patient(String patientId, String lastNameP, String firstNameP, Date birthDate) {
+    
+    /**
+     * 
+     * Constructeur Patient
+     * Initiale le patient à null
+     * 
+     * @param patientId identifiant du patient
+     * @param lastNameP nom du patient
+     * @param firstNameP prénom du patient
+     * @param birthDate date de naissance du patient YYYY-MM-DD
+     */
+    public Patient(String patientId, String lastNameP, String firstNameP, String birthDate) {
         this.patientId = patientId;
         this.lastNameP = lastNameP;
         this.firstNameP = firstNameP;
         this.birthDate = birthDate;
     }
 
-    public Patient(String lastNameP, String firstNameP, String adress, String gender, Date birthDate) {
+    
+    /**
+     * 
+     * Constructeur Patient
+     * Initiale le patient à null
+     * 
+     * @param lastNameP nom du patient
+     * @param firstNameP prénom du patient
+     * @param adress adresse du patient
+     * @param gender sexe du patient
+     * @param birthDate date de naissance du patient YYYY-MM-DD
+     */
+    public Patient(String lastNameP, String firstNameP, String adress, String gender, String birthDate) {
         this.lastNameP = lastNameP;
         this.firstNameP = firstNameP;
         this.adress = adress;
@@ -162,14 +227,14 @@ public class Patient {
     /**
      * @return the birthDate
      */
-    public Date getBirthDate() {
+    public String getBirthDate() {
         return birthDate;
     }
 
     /**
      * @param birthDate the birthDate to set
      */
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
     }
 

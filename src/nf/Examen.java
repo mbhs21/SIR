@@ -5,24 +5,59 @@
  */
 package nf;
 
-import java.sql.Timestamp;
-import java.util.Date;
-
 /**
  *
  * @author Benhadj
  */
 public class Examen {
 
+    /**
+     *
+     */
     private String examId;
+
+    /**
+     *
+     */
     private String patientId;
+
+    /**
+     *
+     */
     private String proId;
+
+    /**
+     *
+     */
     private String typeExamen;
+
+    /**
+     *
+     */
     private String report;
-    private Timestamp dateExam;
+
+    /**
+     *
+     */
+    private String dateExam;
+
+    /**
+     *
+     */
     private int status;
 
-    public Examen(String examId, String patientId, String proId, String typeExamen, String report, Timestamp dateExam) {
+    /**
+     * 
+     * Constructeur Examen
+     * 
+     * @param examId identifiant de l'examen
+     * @param patientId identifiant du patient 
+     * @param proId identifiant du professionnel de santé
+     * @param typeExamen type d'examen [Radio,Scan,Echo,Scint,Mammo]
+     * @param dateExam Date de réalisation de l'examen
+     * @param report Compte-rendu de l'examen
+     */
+    public Examen(String examId, String patientId, String proId, String typeExamen, String report, String dateExam) {
         this.examId = examId;
         this.patientId = patientId;
         this.proId = proId;
@@ -31,7 +66,15 @@ public class Examen {
         this.dateExam = dateExam;
     }
 
-    public Examen(String patientId, String proId, String typeExamen, Timestamp dateExam) {
+    /**
+     * Constructeur Examen
+     * 
+     * @param patientId identifiant du patient 
+     * @param proId identifiant du professionnel de santé
+     * @param typeExamen type d'examen [Radio,Scan,Echo,Scint,Mammo]
+     * @param dateExam Date de réalisation de l'examen
+     */
+    public Examen(String patientId, String proId, String typeExamen, String dateExam) {
         this.patientId = patientId;
         this.proId = proId;
         this.typeExamen = typeExamen;
@@ -39,6 +82,14 @@ public class Examen {
         this.dateExam = dateExam;
     }
 
+    /**
+     * 
+     * Vérfie que la date est en format numérique
+     * 
+     * @param str une chaine de caractère représentative d'une date
+     * @return vrai si la date est numérique sinon faux
+     * 
+     */
     public boolean checkDateNumeric(String str) {
         boolean isNumeric = true;
         for (int i = 0; i < str.length(); i++) {
@@ -126,14 +177,14 @@ public class Examen {
     /**
      * @return the d
      */
-    public Timestamp getDateExam() {
+    public String getDateExam() {
         return dateExam;
     }
 
     /**
      * @param d the d to set
      */
-    public void setDateExam(Timestamp d) {
+    public void setDateExam(String d) {
         this.dateExam = d;
     }
 

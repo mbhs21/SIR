@@ -25,10 +25,24 @@ import java.util.Optional;
  */
 public class Encryption {
 
-    
+    /**
+     *
+     */
     private static final SecureRandom RAND = new SecureRandom();
+
+    /**
+     *
+     */
     private static final int ITERATIONS = 100;
+
+    /**
+     *
+     */
     private static final int KEY_LENGTH = 128;
+
+    /**
+     *
+     */
     private static final String ALGORITHM = "PBKDF2WithHmacSHA512";
 
     
@@ -96,12 +110,12 @@ public class Encryption {
         return optEncrypted.get().equals(key);
     }
 
-    /**
-     * @param args the command line arguments
-     */
+//    /**
+//     * @param args the command line arguments
+//     */
 //    public static void main(String[] args) throws ClassNotFoundException, SQLException {
 ////        String salt = generateSalt(512).get();
-//        String pw = "PR01test";
+//        String pw = "SE02test";
 //        String key = hashPassword(pw, Salt.SALT).get();
 //        System.out.println(key);
 ////        System.out.println(verifyPassword("toto", key, Salt.SALT));
@@ -131,9 +145,9 @@ public class Encryption {
 //        }
 //        System.out.println("");
 //
-//        RequetesBDLogin.updatePWproId("PR01", key, conn);
+//        RequetesBDLogin.updatePWproId("SE02", key, conn);
 //
-//        String PWencrypt = RequetesBDLogin.returnPWproId("PR01", conn);
+//        String PWencrypt = RequetesBDLogin.returnPWproId("SE02", conn);
 //        System.out.println("PW encrypt =" + PWencrypt);
 //        System.out.println(verifyPassword(pw, key, Salt.SALT));
 //

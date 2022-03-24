@@ -10,8 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
-import java.sql.*;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,8 +27,9 @@ public class RequetesBDLogin {
     /**
      * récupère les infos d'un professionnel donné dans une liste.
      *
-     * @param conn connexion a la base de donnees
-     * @return
+     * @param proId identifiant du professionnel
+     * @param conn connexion a la base de données
+     * @return une liste avec les infos d'un professionnel [login,mot de passe, nom, prénom]
      * @throws SQLException en cas d'erreur d'acces a la base de donnees
      */
     public static HashMap returnInfoIdPro(String proId, Connection conn) throws
@@ -40,15 +39,14 @@ public class RequetesBDLogin {
         Statement stmt = conn.createStatement();
 
         // Execute the 
-        ResultSet rs = stmt.executeQuery("SELECT * FROM login WHERE proId='" + proId + "'");
+        ResultSet rs = stmt.executeQuery("SELECT * FROM LOGIN WHERE proId='" + proId + "'");
 
         while (rs.next()) {
             infoId.put("login", rs.getString(1));
             infoId.put("password", rs.getString(2));
             infoId.put("lastName", rs.getString(3));
             infoId.put("firstName", rs.getString(4));
-            infoId.put("function", rs.getString(5));
-
+            
         }
         // Close the result set, statement and the connection 
 
@@ -60,10 +58,10 @@ public class RequetesBDLogin {
     /**
      * retourne l'identifiant d'un professionnel precis
      *
-     * @param proId
-     * @param conn connexion a la base de donnees
-     * @return
-     * @throws SQLException en cas d'erreur d'acces a la base de donnees
+     * @param proId identifiant du professionnel en question
+     * @param conn connexion a la base de données
+     * @return l'identifiant du professionnel
+     * @throws SQLException en cas d'erreur d'acces a la base de données
      */
     public static String returnProId(String proId, Connection conn) throws
             SQLException {
@@ -71,7 +69,7 @@ public class RequetesBDLogin {
         // Get a statement from the connection
         Statement stmt = conn.createStatement();
         // Execute the 
-        ResultSet rs = stmt.executeQuery("SELECT proId FROM login WHERE proId='" + proId + "'");
+        ResultSet rs = stmt.executeQuery("SELECT proId FROM LOGIN WHERE proId='" + proId + "'");
         while (rs.next()) {
             System.out.println("id des professionels : "
                     + rs.getString(1));
@@ -88,9 +86,9 @@ public class RequetesBDLogin {
     /**
      * stocke les identifiants des professionnels dans une liste.
      *
-     * @param conn connexion a la base de donnees
-     * @return
-     * @throws SQLException en cas d'erreur d'acces a la base de donnees
+     * @param conn connexion a la base de données
+     * @return Liste contenant tous les identifiants des professionnels contenus dans la base de données
+     * @throws SQLException en cas d'erreur d'acces a la base de données
      */
     public static List<String> storeProId(Connection conn) throws
             SQLException {
@@ -98,7 +96,7 @@ public class RequetesBDLogin {
         // Get a statement from the connection
         Statement stmt = conn.createStatement();
         // Execute the 
-        ResultSet rs = stmt.executeQuery("SELECT proId FROM login");
+        ResultSet rs = stmt.executeQuery("SELECT proId FROM LOGIN");
         System.out.println("ok");
         while (rs.next()) {
             System.out.println("id des professionels : "
@@ -114,12 +112,12 @@ public class RequetesBDLogin {
     }
 
     /**
-     * retourne si l'identifiant en paramètre est un manipulateur Radio.
+     * retourne vrai si l'identifiant en paramètre est un manipulateur Radio.
      *
-     * @param proId
+     * @param proId identifiant du professionnel
      * @param conn connexion a la base de donnees
      * @return true s'il s'agit bien d'un manipulateur Radio
-     * @throws SQLException en cas d'erreur d'acces a la base de donnees
+     * @throws SQLException en cas d'erreur d'acces a la base de données
      */
     public static boolean idMR(String proId, Connection conn) throws
             SQLException {
@@ -127,7 +125,7 @@ public class RequetesBDLogin {
         Statement stmt = conn.createStatement();
         boolean mr = false;
         // Execute the 
-        ResultSet rs = stmt.executeQuery("SELECT proId FROM login WHERE SUBSTR (proId, 1, 2)='MR' and proId = '" + proId + "'");
+        ResultSet rs = stmt.executeQuery("SELECT proId FROM LOGIN WHERE SUBSTR(proId, 1, 2)='MR' and proId = '" + proId + "'");
         while (rs.next()) {
             mr = true;
         }
@@ -136,13 +134,13 @@ public class RequetesBDLogin {
     }
 
     /**
-     * retourne si l'identifiant en paramètre est un praticien hospitalier
+     * retourne vrai si l'identifiant en paramètre est un praticien hospitalier
      * lambda.
      *
-     * @param proId
-     * @param conn connexion a la base de donnees
+     * @param proId identifiant du professionnel
+     * @param conn connexion a la base de données
      * @return true s'il s'agit bien d'un praticien hospitalier lambda
-     * @throws SQLException en cas d'erreur d'acces a la base de donnees
+     * @throws SQLException en cas d'erreur d'acces a la base de données
      */
     public static boolean idPH(String proId, Connection conn) throws
             SQLException {
@@ -150,7 +148,7 @@ public class RequetesBDLogin {
         Statement stmt = conn.createStatement();
         boolean ph = false;
         // Execute the 
-        ResultSet rs = stmt.executeQuery("SELECT proId FROM login WHERE SUBSTR (proId, 1, 2)='PH' and proId = '" + proId.toUpperCase() + "'");
+        ResultSet rs = stmt.executeQuery("SELECT proId FROM LOGIN WHERE SUBSTR(proId, 1, 2)='PH' and proId = '" + proId.toUpperCase() + "'");
         while (rs.next()) {
             ph = true;
         }
@@ -159,13 +157,13 @@ public class RequetesBDLogin {
     }
 
     /**
-     * retourne si l'identifiant en paramètre est un praticien hospitalier
+     * retourne vrai si l'identifiant en paramètre est un praticien hospitalier
      * Radio.
      *
-     * @param proId
-     * @param conn connexion a la base de donnees
+     * @param proId identifiant du professionnel
+     * @param conn connexion a la base de données
      * @return true s'il s'agit bien d'un praticien hospitalier Radio
-     * @throws SQLException en cas d'erreur d'acces a la base de donnees
+     * @throws SQLException en cas d'erreur d'acces a la base de données
      */
     public static boolean idPR(String proId, Connection conn) throws
             SQLException {
@@ -173,7 +171,7 @@ public class RequetesBDLogin {
         Statement stmt = conn.createStatement();
         boolean pr = false;
         // Execute the 
-        ResultSet rs = stmt.executeQuery("SELECT proId FROM login WHERE SUBSTR (proId, 1, 2)='PR' and proId = '" + proId.toUpperCase() + "'");
+        ResultSet rs = stmt.executeQuery("SELECT proId FROM LOGIN WHERE SUBSTR(proId, 1, 2)='PR' and proId = '" + proId.toUpperCase() + "'");
         while (rs.next()) {
             pr = true;
         }
@@ -182,13 +180,13 @@ public class RequetesBDLogin {
     }
 
     /**
-     * retourne si l'identifiant en paramètre est un(e) secrétaire
+     * retourne vrai si l'identifiant en paramètre est un(e) secrétaire
      * Radio.
      *
-     * @param proId
-     * @param conn connexion a la base de donnees
+     * @param proId identifiant du professionnel
+     * @param conn connexion a la base de données
      * @return true s'il s'agit bien d'un(e) secrétaire
-     * @throws SQLException en cas d'erreur d'acces a la base de donnees
+     * @throws SQLException en cas d'erreur d'acces a la base de données
      */
     public static boolean idSE(String proId, Connection conn) throws
             SQLException {
@@ -196,7 +194,7 @@ public class RequetesBDLogin {
         Statement stmt = conn.createStatement();
         boolean se = false;
         // Execute the 
-        ResultSet rs = stmt.executeQuery("SELECT proId FROM login WHERE SUBSTR (proId, 1, 2)='SE' and proId = '" + proId.toUpperCase() + "'");
+        ResultSet rs = stmt.executeQuery("SELECT proId FROM LOGIN WHERE SUBSTR(proId, 1, 2)='SE' and proId = '" + proId.toUpperCase() + "'");
         while (rs.next()) {
             se = true;
         }
@@ -207,9 +205,9 @@ public class RequetesBDLogin {
     /**
      * stocke les mots de passe des professionnels dans une liste.
      *
-     * @param conn connexion a la base de donnees
+     * @param conn connexion a la base de données
      * @return liste contenant les mots de passes
-     * @throws SQLException en cas d'erreur d'acces a la base de donnees
+     * @throws SQLException en cas d'erreur d'acces a la base de données
      */
     public static ArrayList<String> storePassword(Connection conn) throws
             SQLException {
@@ -217,7 +215,7 @@ public class RequetesBDLogin {
         // Get a statement from the connection
         Statement stmt = conn.createStatement();
         // Execute the 
-        ResultSet rs = stmt.executeQuery("SELECT password FROM login");
+        ResultSet rs = stmt.executeQuery("SELECT password FROM LOGIN");
         System.out.println("ok");
         while (rs.next()) {
             System.out.println("MP professionels : "
@@ -234,9 +232,9 @@ public class RequetesBDLogin {
     /**
      * stocke les id et mots de passe des professionnels dans une liste.
      *
-     * @param conn connexion a la base de donnees
+     * @param conn connexion a la base de données
      * @return dictionnaire {key = id ; value= MP}
-     * @throws SQLException en cas d'erreur d'acces a la base de donnees
+     * @throws SQLException en cas d'erreur d'acces a la base de données
      */
     public static HashMap<String, String> storeIdPassword(Connection conn) throws
             SQLException {
@@ -244,7 +242,7 @@ public class RequetesBDLogin {
         // Get a statement from the connection
         Statement stmt = conn.createStatement();
         // Execute the 
-        ResultSet rs = stmt.executeQuery("SELECT proId,password FROM login");
+        ResultSet rs = stmt.executeQuery("SELECT proId,password FROM LOGIN");
         System.out.println("ok");
         while (rs.next()) {
             System.out.println("id et MP professionels : "
@@ -262,9 +260,9 @@ public class RequetesBDLogin {
      * retourne le mot de passe d'un professionnel précis.
      *
      * @param proId identifiant du professionnel en question
-     * @param conn connexion a la base de donnees
+     * @param conn connexion a la base de données
      * @return le mot de passe du professionel voulu
-     * @throws SQLException en cas d'erreur d'acces a la base de donnees
+     * @throws SQLException en cas d'erreur d'acces a la base de données
      */
     public static String returnPWproId(String proId, Connection conn) throws
             SQLException {
@@ -272,7 +270,7 @@ public class RequetesBDLogin {
         // Get a statement from the connection
         Statement stmt = conn.createStatement();
         // Execute the query
-        ResultSet rs = stmt.executeQuery("SELECT password FROM login WHERE proId= '" + proId + "'");
+        ResultSet rs = stmt.executeQuery("SELECT password FROM LOGIN WHERE proId= '" + proId + "'");
         System.out.println("ok");
         while (rs.next()) {
             System.out.println("MP de " + proId + " : " + rs.getString(1));
@@ -290,8 +288,8 @@ public class RequetesBDLogin {
      *
      * @param proId identifiant du professionnel en question
      * @param encryptPW le mot de passe crypté à mettre à jour
-     * @param conn connexion a la base de donnees
-     * @throws SQLException en cas d'erreur d'acces a la base de donnees
+     * @param conn connexion a la base de données
+     * @throws SQLException en cas d'erreur d'acces a la base de données
      */
     public static void updatePWproId(String proId, String encryptPW, Connection conn) throws
             SQLException {
@@ -299,12 +297,8 @@ public class RequetesBDLogin {
 
         // Get a statement from the connection
         Statement st = conn.createStatement();
-//        PreparedStatement st = conn.prepareStatement("UPDATE login SET password=? WHERE proId=?");
-//                
-//        System.out.println("ok");
-//        st.setString(1,encryptPW);
-//        st.setString(2,proId);
-        int count = st.executeUpdate("UPDATE login SET password= '" + encryptPW + "' WHERE proId= '" + proId + "'");
+
+        int count = st.executeUpdate("UPDATE LOGIN SET password= '" + encryptPW + "' WHERE proId= '" + proId + "'");
         System.out.println("count=" + count);
 
         // Close the result set, statement and the connection 

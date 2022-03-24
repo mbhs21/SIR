@@ -8,8 +8,7 @@ package ui;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -19,7 +18,7 @@ import nf.Login;
 import nf.Patient;
 import nf.RequetesBDExamen;
 import nf.RequetesBDLogin;
-import nf.RequetesBDPatient;
+
 
 /**
  *
@@ -27,13 +26,31 @@ import nf.RequetesBDPatient;
  */
 public class AjouterExamen extends javax.swing.JFrame {
 
+    /**
+     *
+     */
     Examen examen;
+
+    /**
+     *
+     */
     Login login;
+
+    /**
+     *
+     */
     Connection conn;
+
+    /**
+     *
+     */
     Patient pat;
 
     /**
      * Creates new form AjouterExamen
+     * @param login un login
+     * @param pat un patient
+     * @param conn une connexion à la base de données
      */
     public AjouterExamen(Login login, Patient pat, Connection conn) {
         this.conn = conn;
@@ -83,7 +100,6 @@ public class AjouterExamen extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         addImgButton = new javax.swing.JButton();
-        addExamenButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jTextField5 = new javax.swing.JTextField();
         jTextField12 = new javax.swing.JTextField();
@@ -128,16 +144,6 @@ public class AjouterExamen extends javax.swing.JFrame {
             }
         });
 
-        addExamenButton.setBackground(new java.awt.Color(255, 255, 255));
-        addExamenButton.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
-        addExamenButton.setForeground(new java.awt.Color(51, 51, 51));
-        addExamenButton.setText("Ajouter l'examen");
-        addExamenButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addExamenButtonActionPerformed(evt);
-            }
-        });
-
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setForeground(new java.awt.Color(0, 0, 0));
 
@@ -178,7 +184,12 @@ public class AjouterExamen extends javax.swing.JFrame {
         typeExamCombo.setBackground(new java.awt.Color(204, 204, 204));
         typeExamCombo.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         typeExamCombo.setForeground(new java.awt.Color(51, 51, 51));
-        typeExamCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Radio", "Scan", "IRM", "Echo" }));
+        typeExamCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Radio", "Scan", "IRM", "Echo", "Scinti", "Mammo", "Angio" }));
+        typeExamCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                typeExamComboActionPerformed(evt);
+            }
+        });
 
         jTextField4.setBackground(new java.awt.Color(255, 255, 255));
         jTextField4.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
@@ -313,6 +324,7 @@ public class AjouterExamen extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(242, 236, 234));
 
+        proDetails.setEditable(false);
         proDetails.setBackground(java.awt.Color.white);
         proDetails.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         proDetails.setForeground(new java.awt.Color(51, 51, 51));
@@ -436,9 +448,7 @@ public class AjouterExamen extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(305, 305, 305)
-                        .addComponent(addExamenButton)
-                        .addGap(104, 104, 104)
+                        .addGap(583, 583, 583)
                         .addComponent(addImgButton, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -459,9 +469,7 @@ public class AjouterExamen extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 178, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addExamenButton)
-                    .addComponent(addImgButton))
+                .addComponent(addImgButton)
                 .addContainerGap(135, Short.MAX_VALUE))
         );
 
@@ -470,8 +478,7 @@ public class AjouterExamen extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1205, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -518,62 +525,11 @@ public class AjouterExamen extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField12ActionPerformed
 
-    private void addExamenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addExamenButtonActionPerformed
-        // TODO add your handling code here:
-        System.out.println("RENTRER");
-
-        if (checkAllFieldCompleted()) {
-            System.out.println();
-            System.out.println("RENTRERcheckField");
-            System.out.println(checkDateNumeric(yearField.getText()) + " " + checkDateNumeric(monthField.getText()) + " " + checkDateNumeric(dayField.getText()) + " " + checkDateNumeric(hourField.getText()) + " " + checkDateNumeric(minField.getText()));
-            System.out.println();
-
-            try {
-                System.out.println("PH entre: " + phField.getText());
-                System.out.println("ph EXist ?" + checkExistPH(phField.getText()));
-                if (checkExistPH(phField.getText()) == true) {
-                    if (checkDateNumeric(yearField.getText()) && checkDateNumeric(monthField.getText()) && checkDateNumeric(dayField.getText()) && checkDateNumeric(hourField.getText()) && checkDateNumeric(minField.getText())) {
-                        if (checkYearValid(yearField.getText()) && checkMonthValid(monthField.getText()) && checkDayValid(monthField.getText(), dayField.getText()) && checkHourValid(hourField.getText()) && checkMinValid(minField.getText())) {
-                            System.out.println("RENTRERcheckDate");
-                            String dateExam = yearField.getText() + "-" + monthField.getText() + "-" + dayField.getText() + " " + hourField.getText() + ":" + minField.getText() + ":00";
-                            Timestamp timestampDateExam = Timestamp.valueOf(dateExam);
-                            System.out.println("dateExam to add: " + timestampDateExam);
-                            this.examen = new Examen(pat.getPatientId(), phField.getText(), typeExamCombo.getSelectedItem().toString(), timestampDateExam);
-
-                            try {
-                                RequetesBDExamen.addExamBD(examen, conn);
-                            } catch (SQLException ex) {
-                                Logger.getLogger(AjouterExamen.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-
-                            try {
-                                // TODO add your handling code here:
-                                AccesListeExamen accesListeExamen = new AccesListeExamen(login, pat, conn);
-                                this.setVisible(false);
-                                accesListeExamen.setVisible(true);
-                                accesListeExamen.setLocationRelativeTo(null);
-                            } catch (SQLException ex) {
-                                Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                            //pgAccueil.setLocationRelativeTo(null);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "La date rentrée n'est pas valide", "", JOptionPane.PLAIN_MESSAGE);
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "La date n'est pas en format numérique", "", JOptionPane.PLAIN_MESSAGE);
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Ce praticien hospitalier n'exite pas", "", JOptionPane.PLAIN_MESSAGE);
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(AjouterExamen.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Tous les champs doivent être complétés", "", JOptionPane.PLAIN_MESSAGE);
-        }
-    }//GEN-LAST:event_addExamenButtonActionPerformed
-
+    /**
+     *
+     * @param str
+     * @return
+     */
     public boolean checkDateNumeric(String str) {
         boolean isNumeric = true;
         for (int i = 0; i < str.length(); i++) {
@@ -585,17 +541,31 @@ public class AjouterExamen extends javax.swing.JFrame {
         return isNumeric;
     }
 
+    /**
+     *
+     * @param year
+     * @return
+     */
     public boolean checkYearValid(String year) {
         boolean isValid = true;
         int y = Integer.parseInt(yearField.getText());
-        Date currentYear = new Date();
-        int currentY = currentYear.getYear() + 1900;
+        LocalDate currentdate = LocalDate.now();
+        System.out.println("Current date: " + currentdate);
+        //Getting the current day
+        int currentDay = currentdate.getDayOfMonth();
+        System.out.println("Current day: " + currentDay);
+        int currentY = currentdate.getYear();        
         if (y > currentY) {
             isValid = false;
         }
         return isValid;
     }
-
+    
+    /**
+     *
+     * @param year
+     * @return
+     */
     public boolean checkMonthValid(String year) {
         boolean isValid = true;
 
@@ -607,6 +577,12 @@ public class AjouterExamen extends javax.swing.JFrame {
         return isValid;
     }
 
+    /**
+     *
+     * @param day
+     * @param m
+     * @return
+     */
     public boolean checkDayValid(String day, String m) {
         boolean isValid = true;
         if (checkMonthValid(m)) {
@@ -633,6 +609,11 @@ public class AjouterExamen extends javax.swing.JFrame {
         return isValid;
     }
 
+    /**
+     *
+     * @param hour
+     * @return
+     */
     public boolean checkHourValid(String hour) {
         boolean isValid = true;
         int h = Integer.parseInt(hourField.getText());
@@ -642,6 +623,11 @@ public class AjouterExamen extends javax.swing.JFrame {
         return isValid;
     }
 
+    /**
+     *
+     * @param min
+     * @return
+     */
     public boolean checkMinValid(String min) {
         boolean isValid = true;
         int mn = Integer.parseInt(minField.getText());
@@ -651,6 +637,12 @@ public class AjouterExamen extends javax.swing.JFrame {
         return isValid;
     }
 
+    /**
+     *
+     * @param ph
+     * @return
+     * @throws SQLException
+     */
     public boolean checkExistPH(String ph) throws SQLException {
         if (ph.substring(0, 2).toUpperCase().equals("PH")) {
             return RequetesBDLogin.returnProId(ph, this.conn) != null;
@@ -670,17 +662,21 @@ public class AjouterExamen extends javax.swing.JFrame {
 
     private void deconnexionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionButtonActionPerformed
         // TODO add your handling code here:
-        Connexion connexion = null;
-        try {
-            connexion = new Connexion();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
+        int retour = JOptionPane.showConfirmDialog(this, "Etes-vous sur de vouloir vous déconnecter ? ", "", JOptionPane.YES_NO_OPTION);
+        System.out.println("retour= " + retour);
+        if (retour == 0) {
+            Connexion connexion = null;
+            try {
+                connexion = new Connexion();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.setVisible(false);
+            connexion.setVisible(true);
+            connexion.setLocationRelativeTo(null);
         }
-        this.setVisible(false);
-        connexion.setVisible(true);
-        connexion.setLocationRelativeTo(null);
 
     }//GEN-LAST:event_deconnexionButtonActionPerformed
 
@@ -690,7 +686,7 @@ public class AjouterExamen extends javax.swing.JFrame {
 
     private void addImgButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addImgButtonActionPerformed
         // TODO add your handling code here:
-        int retour = JOptionPane.showConfirmDialog(this, "Souhaitez-vous ajouter une nouvel image à cet examen ? ", "", JOptionPane.YES_NO_OPTION);
+        int retour = JOptionPane.showConfirmDialog(this, "Souhaitez-vous ajouter une nouvel image à cet examen ?\nNote: En continuant, cet examen sera pré-enregistré ", "", JOptionPane.YES_NO_OPTION);
         if (retour == 1) {
 
             System.out.println("RENTRER");
@@ -707,14 +703,14 @@ public class AjouterExamen extends javax.swing.JFrame {
                     if (checkExistPH(phField.getText()) == true) {
                         if (checkDateNumeric(yearField.getText()) && checkDateNumeric(monthField.getText()) && checkDateNumeric(dayField.getText()) && checkDateNumeric(hourField.getText()) && checkDateNumeric(minField.getText())) {
                             if (checkYearValid(yearField.getText()) && checkMonthValid(monthField.getText()) && checkDayValid(monthField.getText(), dayField.getText()) && checkHourValid(hourField.getText()) && checkMinValid(minField.getText())) {
-                                System.out.println("RENTRERcheckDate");
+                                //System.out.println("RENTRERcheckDate");
                                 String dateExam = yearField.getText() + "-" + monthField.getText() + "-" + dayField.getText() + " " + hourField.getText() + ":" + minField.getText() + ":00";
-                                Timestamp timestampDateExam = Timestamp.valueOf(dateExam);
-                                System.out.println("dateExam to add: " + timestampDateExam);
-                                this.examen = new Examen(pat.getPatientId(), phField.getText(), typeExamCombo.getSelectedItem().toString(), timestampDateExam);
+                                //Timestamp timestampDateExam = Timestamp.valueOf(dateExam);
+                                //System.out.println("dateExam to add: " + timestampDateExam);
+                                this.examen = new Examen(pat.getPatientId(), phField.getText(), typeExamCombo.getSelectedItem().toString(), dateExam);
 
                                 try {
-                                    this.examen=RequetesBDExamen.addExamBD(this.examen, conn);
+                                    this.examen = RequetesBDExamen.addExamBD(this.examen, conn);
                                 } catch (SQLException ex) {
                                     Logger.getLogger(AjouterExamen.class.getName()).log(Level.SEVERE, null, ex);
                                 }
@@ -725,20 +721,20 @@ public class AjouterExamen extends javax.swing.JFrame {
                                 ajouterImage.setVisible(true);
                                 ajouterImage.setLocationRelativeTo(null);
                             } else {
-                                JOptionPane.showMessageDialog(null, "La date rentrée n'est pas valide", "", JOptionPane.PLAIN_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "La date rentrée n'est pas valide", "", JOptionPane.WARNING_MESSAGE);
                             }
                         } else {
-                            JOptionPane.showMessageDialog(null, "La date n'est pas en format numérique", "", JOptionPane.PLAIN_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "La date n'est pas en format numérique", "", JOptionPane.WARNING_MESSAGE);
                         }
                     } else {
-                        JOptionPane.showMessageDialog(null, "Ce praticien hospitalier n'exite pas", "", JOptionPane.PLAIN_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Ce praticien hospitalier n'existe pas", "", JOptionPane.WARNING_MESSAGE);
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(AjouterExamen.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             } else {
-                JOptionPane.showMessageDialog(null, "Tous les champs doivent être complétés", "", JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Tous les champs doivent être complétés", "", JOptionPane.WARNING_MESSAGE);
             }
         } else {
             System.out.println("RENTRER");
@@ -755,14 +751,14 @@ public class AjouterExamen extends javax.swing.JFrame {
                     if (checkExistPH(phField.getText()) == true) {
                         if (checkDateNumeric(yearField.getText()) && checkDateNumeric(monthField.getText()) && checkDateNumeric(dayField.getText()) && checkDateNumeric(hourField.getText()) && checkDateNumeric(minField.getText())) {
                             if (checkYearValid(yearField.getText()) && checkMonthValid(monthField.getText()) && checkDayValid(monthField.getText(), dayField.getText()) && checkHourValid(hourField.getText()) && checkMinValid(minField.getText())) {
-                                System.out.println("RENTRERcheckDate");
+                                //System.out.println("RENTRERcheckDate");
                                 String dateExam = yearField.getText() + "-" + monthField.getText() + "-" + dayField.getText() + " " + hourField.getText() + ":" + minField.getText() + ":00";
-                                Timestamp timestampDateExam = Timestamp.valueOf(dateExam);
-                                System.out.println("dateExam to add: " + timestampDateExam);
-                                this.examen = new Examen(pat.getPatientId(), phField.getText(), typeExamCombo.getSelectedItem().toString(), timestampDateExam);
+                                //Timestamp timestampDateExam = Timestamp.valueOf(dateExam);
+                                //System.out.println("dateExam to add: " + timestampDateExam);
+                                this.examen = new Examen(pat.getPatientId(), phField.getText(), typeExamCombo.getSelectedItem().toString(), dateExam);
 
                                 try {
-                                    this.examen=RequetesBDExamen.addExamBD(this.examen, conn);
+                                    this.examen = RequetesBDExamen.addExamBD(this.examen, conn);
                                 } catch (SQLException ex) {
                                     Logger.getLogger(AjouterExamen.class.getName()).log(Level.SEVERE, null, ex);
                                 }
@@ -773,24 +769,28 @@ public class AjouterExamen extends javax.swing.JFrame {
                                 ajouterImage.setVisible(true);
                                 ajouterImage.setLocationRelativeTo(null);
                             } else {
-                                JOptionPane.showMessageDialog(null, "La date rentrée n'est pas valide", "", JOptionPane.PLAIN_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "La date rentrée n'est pas valide", "", JOptionPane.WARNING_MESSAGE);
                             }
                         } else {
-                            JOptionPane.showMessageDialog(null, "La date n'est pas en format numérique", "", JOptionPane.PLAIN_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "La date n'est pas en format numérique", "", JOptionPane.WARNING_MESSAGE);
                         }
                     } else {
-                        JOptionPane.showMessageDialog(null, "Ce praticien hospitalier n'exite pas", "", JOptionPane.PLAIN_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Ce praticien hospitalier n'exite pas", "", JOptionPane.WARNING_MESSAGE);
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(AjouterExamen.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             } else {
-                JOptionPane.showMessageDialog(null, "Tous les champs doivent être complétés", "", JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Tous les champs doivent être complétés", "", JOptionPane.WARNING_MESSAGE);
             }
         }
 
     }//GEN-LAST:event_addImgButtonActionPerformed
+
+    private void typeExamComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeExamComboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_typeExamComboActionPerformed
 
 //    /**
 //     * @param args the command line arguments
@@ -828,7 +828,6 @@ public class AjouterExamen extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addExamenButton;
     private javax.swing.JButton addImgButton;
     private javax.swing.JTextField dayField;
     private javax.swing.JButton deconnexionButton;

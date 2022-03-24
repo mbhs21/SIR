@@ -5,22 +5,29 @@
  */
 package ui;
 
+import HL7.FrameClient_SIR_SIH;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.io.IOException;
+
 import javax.swing.ImageIcon;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import nf.Examen;
 import nf.Login;
 import nf.Patient;
 import nf.RequetesBDExamen;
 import nf.RequetesBDLogin;
 import nf.RequetesBDPACS;
-import nf.RequetesBDPatient;
+import static nf.RequetesBDPACS.returnPACSoneExamBis;
+
 
 /**
  *
@@ -28,20 +35,39 @@ import nf.RequetesBDPatient;
  */
 public class AffichageExamen extends javax.swing.JFrame {
 
+    /**
+     *
+     */
     Patient pat;
+
+    /**
+     *
+     */
     Connection conn;
+
+    /**
+     *
+     */
     Login login;
+
+    /**
+     *
+     */
     Login medPrescripteur;
 
+    /**
+     *
+     */
     Examen examen;
 
     /**
      * Creates new form CompteRendu
      *
-     * @param examen
-     * @param pat
-     * @param login
-     * @param conn
+     * @param examen un examen
+     * @param pat un patient
+     * @param login un login
+     * @param conn Connexion à la base de données
+     * @throws java.sql.SQLException
      */
     public AffichageExamen(Examen examen, Patient pat, Login login, Connection conn) throws SQLException {
         this.pat = pat;
@@ -89,22 +115,16 @@ public class AffichageExamen extends javax.swing.JFrame {
         patientIdField.setText(pat.getPatientId());
         lastNamePField.setText(pat.getLastNameP());
         firstNamePField.setText(pat.getFirstNameP());
-        birthDateField.setText(pat.getBirthDate().toString());
+        birthDateField.setText(pat.getBirthDate());
         genderCheckBox.setSelected(true);
         genderCheckBox.setText(pat.getGender());
-        examDateField.setText(examen.getDateExam().toString().substring(0, 16));
-        typeExamField.setText(examen.getTypeExamen());
+        examDateField.setText(this.examen.getDateExam().substring(0, 16));
+        typeExamField.setText(this.examen.getTypeExamen());
         this.medPrescripteur = null;
-        try {
-            // TODO add your handling code here:
 
-            this.medPrescripteur = RequetesBDExamen.returnMedPrescripteur(examen, conn);
-        } catch (SQLException ex) {
-            Logger.getLogger(AffichageExamen.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        //CRTextArea.setText(this.initializeReport(this.medPrescripteur, login)+examen.getReport());
         CRTextArea.setText("");
-        listImg.setListData(RequetesBDPACS.returnPACSoneExam(examen.getExamId(), conn));
+        String[] idPACS = RequetesBDPACS.returnPACSoneExam(examen.getExamId(), conn);
+        listImg.setListData(idPACS);
 
         saveCRButton.setVisible(false);
         CRTextArea.setEditable(false);
@@ -113,11 +133,13 @@ public class AffichageExamen extends javax.swing.JFrame {
             // TODO add your handling code here:
             if (RequetesBDLogin.idPH(login.getLogin(), conn)) {
                 editionCRButton.setVisible(false);
+                CRTextArea.setText(examen.getReport());
             }
         } catch (SQLException ex) {
             Logger.getLogger(AccesListeExamen.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
+        System.out.println("Date1: "+this.examen.getDateExam());
     }
 
     /**
@@ -173,6 +195,7 @@ public class AffichageExamen extends javax.swing.JFrame {
         observationArea = new javax.swing.JTextArea();
         jTextField2 = new javax.swing.JTextField();
         saveCRButton = new javax.swing.JButton();
+        viewAllImg = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -243,7 +266,7 @@ public class AffichageExamen extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Candara", 1, 48)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Candara", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 153));
         jLabel1.setText("Détails examen");
 
@@ -404,6 +427,7 @@ public class AffichageExamen extends javax.swing.JFrame {
             .addComponent(patientIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
+        patientIdField.setEditable(false);
         patientIdField.setBackground(new java.awt.Color(255, 255, 255));
         patientIdField.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         patientIdField.setForeground(new java.awt.Color(51, 51, 51));
@@ -415,6 +439,7 @@ public class AffichageExamen extends javax.swing.JFrame {
             }
         });
 
+        lastNamePField.setEditable(false);
         lastNamePField.setBackground(new java.awt.Color(255, 255, 255));
         lastNamePField.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         lastNamePField.setForeground(new java.awt.Color(51, 51, 51));
@@ -426,12 +451,14 @@ public class AffichageExamen extends javax.swing.JFrame {
             }
         });
 
+        firstNamePField.setEditable(false);
         firstNamePField.setBackground(new java.awt.Color(255, 255, 255));
         firstNamePField.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         firstNamePField.setForeground(new java.awt.Color(51, 51, 51));
         firstNamePField.setText("Jean");
         firstNamePField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        examDateField.setEditable(false);
         examDateField.setBackground(new java.awt.Color(255, 255, 255));
         examDateField.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         examDateField.setForeground(new java.awt.Color(51, 51, 51));
@@ -447,11 +474,14 @@ public class AffichageExamen extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(102, 102, 102));
         jLabel5.setText("Date de naissance :");
 
+        birthDateField.setEditable(false);
         birthDateField.setBackground(new java.awt.Color(255, 255, 255));
         birthDateField.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         birthDateField.setForeground(new java.awt.Color(51, 51, 51));
+        birthDateField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         genderCheckBox.setText("jCheckBox1");
+        genderCheckBox.setEnabled(false);
 
         typeExamField.setEditable(false);
         typeExamField.setBackground(new java.awt.Color(0, 153, 153));
@@ -588,6 +618,16 @@ public class AffichageExamen extends javax.swing.JFrame {
             }
         });
 
+        viewAllImg.setBackground(new java.awt.Color(255, 255, 255));
+        viewAllImg.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        viewAllImg.setForeground(new java.awt.Color(0, 0, 0));
+        viewAllImg.setText("Visionner toutes les images");
+        viewAllImg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewAllImgActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -603,7 +643,9 @@ public class AffichageExamen extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addComponent(showImgButton)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(viewAllImg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(showImgButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(editionCRButton)
                         .addGap(27, 27, 27)))
@@ -622,7 +664,7 @@ public class AffichageExamen extends javax.swing.JFrame {
                                         .addGap(132, 132, 132)
                                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(178, 178, 178)
@@ -646,7 +688,7 @@ public class AffichageExamen extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(36, 36, 36)
                                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(117, 277, Short.MAX_VALUE))
+                                .addGap(117, 279, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -667,9 +709,11 @@ public class AffichageExamen extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(showImgButton)
                             .addComponent(editionCRButton))
-                        .addGap(41, 41, 41)
+                        .addGap(7, 7, 7)
+                        .addComponent(viewAllImg)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 121, Short.MAX_VALUE))))
+                        .addGap(0, 117, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -696,17 +740,18 @@ public class AffichageExamen extends javax.swing.JFrame {
 
     private void retourButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retourButtonActionPerformed
         // TODO add your handling code here:
-        PageAccueil pgAccueil = null;
+        AccesListeExamen accesListeExamen = null;
+
         try {
-            pgAccueil = new PageAccueil(this.login, conn);
-        } catch (IOException ex) {
-            Logger.getLogger(CreationDMR.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Date2: "+this.examen.getDateExam());
+            accesListeExamen = new AccesListeExamen(this.login, this.pat, conn);
         } catch (SQLException ex) {
-            Logger.getLogger(CreationDMR.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AffichageExamen.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         this.setVisible(false);
-        pgAccueil.setVisible(true);
-        pgAccueil.setLocationRelativeTo(null);
+        accesListeExamen.setVisible(true);
+        accesListeExamen.setLocationRelativeTo(null);
     }//GEN-LAST:event_retourButtonActionPerformed
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
@@ -715,15 +760,20 @@ public class AffichageExamen extends javax.swing.JFrame {
 
     private void deconnexionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionButtonActionPerformed
         // TODO add your handling code here:
-        Connexion connexion = null;
-        try {
-            connexion = new Connexion();
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
+        int retour = JOptionPane.showConfirmDialog(this, "Etes-vous sur de vouloir vous déconnecter ? ", "", JOptionPane.YES_NO_OPTION);
+        System.out.println("retour= " + retour);
+        if (retour == 0) {
+            Connexion connexion = null;
+            try {
+                System.out.println("Date3: "+this.examen.getDateExam());
+                connexion = new Connexion();
+            } catch (ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.setVisible(false);
+            connexion.setVisible(true);
+            connexion.setLocationRelativeTo(null);
         }
-        this.setVisible(false);
-        connexion.setVisible(true);
-        connexion.setLocationRelativeTo(null);
     }//GEN-LAST:event_deconnexionButtonActionPerformed
 
     private void patientIdFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientIdFieldActionPerformed
@@ -739,34 +789,45 @@ public class AffichageExamen extends javax.swing.JFrame {
     }//GEN-LAST:event_examDateFieldActionPerformed
 
     private void editionCRButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editionCRButtonActionPerformed
-//        Login medPrescripteur = null;
-//        try {
-//            // TODO add your handling code here:
-//
-//            medPrescripteur = RequetesBDExamen.returnMedPrescripteur(examen, conn);
-//        } catch (SQLException ex) {
-//            Logger.getLogger(AffichageExamen.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        try {
-//            CRTextArea.setText(this.initializeReport(medPrescripteur, login));
-//        } catch (SQLException ex) {
-//            Logger.getLogger(AffichageExamen.class.getName()).log(Level.SEVERE, null, ex);
-//        }
         CRTextArea.setEditable(true);
         saveCRButton.setVisible(true);
         editionCRButton.setVisible(false);
+        try {
+            System.out.println("Date4: "+this.examen.getDateExam());
+            RequetesBDExamen.updateStatusExam(this.examen.getExamId(), this.conn);
+        } catch (SQLException ex) {
+            Logger.getLogger(AffichageExamen.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }//GEN-LAST:event_editionCRButtonActionPerformed
 
+    /**
+     *
+     * @param medPrescripteur
+     * @param realisationMedecin
+     * @return
+     * @throws SQLException
+     */
     public String initializeReport(Login medPrescripteur, Login realisationMedecin) throws SQLException {
-        String str = pat.getPatientId() + "------------------------------------------- \n"
-                + "\t" + Login.infoMedCR(medPrescripteur)
-                + "\n\tNombre d'images enregistrees: " + RequetesBDPACS.returnNbImgOneExam(examen.getExamId(), conn)
+        String str = this.examen.getTypeExamen() + "------------------------------------------- \n"
+                + "\tCompte-rendu rédigé par " + this.login.getLastName().trim() + " - " + this.login.getFirstName().trim()
+                + "\n\tNombre d'images enregistree(s): " + RequetesBDPACS.returnNbImgOneExam(examen.getExamId(), conn)
+                + "\n\tDate de l'examen: " + this.examen.getDateExam().substring(0, 16)
                 + "\n------------------------------------------------------"
-                + "\n COMPTE RENDU:";
+                + "\n COMPTE RENDU:\n";
+        System.out.println("Date5: "+this.examen.getDateExam());
         return str;
 
     }
+//    public String initializeReport(Login medPrescripteur, Login realisationMedecin) throws SQLException {
+//        String str = "------------------------------------------- \n"
+//                + "\t" + Login.infoMedCR(medPrescripteur)
+//                + "\n\tNombre d'images enregistrees: " + RequetesBDPACS.returnNbImgOneExam(examen.getExamId(), conn)
+//                + "\n------------------------------------------------------"
+//                + "\n COMPTE RENDU:\n";
+//        return str;
+//
+//    }
 
     private void showImgButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showImgButtonActionPerformed
         // TODO add your handling code here:
@@ -793,25 +854,85 @@ public class AffichageExamen extends javax.swing.JFrame {
     }//GEN-LAST:event_showImgButtonActionPerformed
 
     private void saveCRButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveCRButtonActionPerformed
-        try {
-            // TODO add your handling code here:
-            this.examen.setReport(CRTextArea.getText());
-            System.out.println("report to save:  " + CRTextArea.getText());
-            RequetesBDExamen.updateCR(this.examen.getExamId(), CRTextArea.getText().trim(), conn);
+        int retour = JOptionPane.showConfirmDialog(this, "Etes-vous sur de vouloir enregistrer ce compte-rendu ? ", "", JOptionPane.YES_NO_OPTION);
+        System.out.println("retour= " + retour);
+        if (retour == 0) {
 
-        } catch (SQLException ex) {
-            Logger.getLogger(AffichageExamen.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                // TODO add your handling code here:
+                //this.examen.setReport(CRTextArea.getText());
+                System.out.println("Date6: "+this.examen.getDateExam());
+                System.out.println("report to save:  " + CRTextArea.getText());
+                this.examen.setReport(this.initializeReport(this.medPrescripteur, login) + CRTextArea.getText().trim());
+                RequetesBDExamen.updateCR(this.examen.getExamId(), this.examen.getReport(), conn);
+                if (RequetesBDExamen.isPatientSIH(this.pat.getPatientId(), conn)) {
+                    FrameClient_SIR_SIH clientSIH = new FrameClient_SIR_SIH(this.examen, this.pat, this.conn);
+                    clientSIH.setVisible(true);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AffichageExamen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            CRTextArea.setText(examen.getReport());
+            saveCRButton.setVisible(false);
         }
-        try {
-            CRTextArea.setText(this.initializeReport(this.medPrescripteur, login) + examen.getReport());
-        } catch (SQLException ex) {
-            Logger.getLogger(AffichageExamen.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        saveCRButton.setVisible(false);
-
     }//GEN-LAST:event_saveCRButtonActionPerformed
 
+    private void viewAllImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAllImgActionPerformed
+        System.out.println("Date6: "+this.examen.getDateExam());
+        int nbImg = 0;
+        String[] idPacs = null;
+        try {
+            idPacs = returnPACSoneExamBis(this.examen.getExamId(), conn);
+        } catch (SQLException ex) {
+            Logger.getLogger(AffichageExamen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        nbImg = idPacs.length;
+
+        JFrame allImg = new JFrame(this.examen.getDateExam() + this.pat.getLastNameP() + " " + this.pat.getFirstNameP());
+        allImg.setSize(800, 800);
+        allImg.setResizable(false);
+        JPanel panelImg = new JPanel();
+
+        int height = 0;
+        if (nbImg % 2 != 0) {
+            height = (nbImg + 1) / 2;
+            panelImg.setLayout(new GridLayout(((nbImg + 1) / 2), 2, 3, 3));
+        } else {
+            height = (nbImg) / 2;
+            panelImg.setLayout(new GridLayout((nbImg / 2), 2, 3, 3));
+        }
+
+        for (int i = 0; i < nbImg; i++) {
+            JLabel temp = new JLabel();
+            try {
+
+                byte[] imgSelected = RequetesBDPACS.showImage(Integer.parseInt(idPacs[i]), conn);
+                Image img = Toolkit.getDefaultToolkit().createImage(imgSelected);
+                ImageIcon icone = new ImageIcon(img);
+                java.awt.Image imgIcone = icone.getImage();
+                java.awt.Image newImg = imgIcone.getScaledInstance(allImg.getWidth() / 2, allImg.getHeight() / 2, java.awt.Image.SCALE_SMOOTH);
+                icone = new ImageIcon(newImg);
+                temp.setIcon(icone);
+
+            } catch (SQLException ex) {
+                Logger.getLogger(AffichageExamen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            panelImg.add(temp);
+        }
+        JScrollPane jsp = new JScrollPane(panelImg);
+        allImg.add(jsp);
+        allImg.setVisible(true);
+        allImg.setLocationRelativeTo(null);
+
+    }//GEN-LAST:event_viewAllImgActionPerformed
+
+    /**
+     *
+     * @return
+     */
     public int selectImgList() {
+        System.out.println("Date7: "+this.examen.getDateExam());
         String selectedImg = listImg.getSelectedValue();
         System.out.println("listImg.getSelectedValue()=" + listImg.getSelectedValue());
         String[] selectedImgSplit = selectedImg.split(" ");
@@ -903,5 +1024,6 @@ public class AffichageExamen extends javax.swing.JFrame {
     private javax.swing.JTextField typeExamField;
     private javax.swing.JLabel userIcon;
     private javax.swing.JPanel userPanel;
+    private javax.swing.JButton viewAllImg;
     // End of variables declaration//GEN-END:variables
 }

@@ -13,14 +13,48 @@ import java.util.List;
  * @author Benhadj
  */
 public class Login {
+
+    /**
+     *
+     */
     private String login;
+
+    /**
+     *
+     */
     private String passeword;
+
+    /**
+     *
+     */
     private String lastName;
+
+    /**
+     *
+     */
     private String firstName;
+
+    /**
+     *
+     */
     private String function;
+
+    /**
+     *
+     */
     Connection conn;
         
-    
+    /**
+     * 
+     * Constructeur Login
+     * 
+     * 
+     * @param login Identifiant du professionel
+     * @param passeword Mot de passe du pro
+     * @param lastName nom du pro
+     * @param firstName prénom du pro
+     * @param function fonction du pro 
+     */
     public Login(String login, String passeword,String lastName,String firstName,String function){
         this.login=login;
         this.passeword=passeword;
@@ -29,6 +63,16 @@ public class Login {
         this.function=function;
     }
     
+    /**
+     * 
+     * Constructeur Login
+     * 
+     * 
+     * @param login Identifiant du professionel
+     * @param lastName nom du pro
+     * @param firstName prénom du pro
+     * @param function fonction du pro 
+     */
     public Login(String login,String lastName,String firstName, String function){
         this.login=login;
         this.passeword=null;
@@ -37,14 +81,30 @@ public class Login {
         this.function=function;
     }
     
+    /**
+     * 
+     * Constructeur Login
+     * 
+     * 
+     * @param login Identifiant du professionel
+     * @param lastName nom du pro
+     * @param function fonction du pro 
+     */
     public Login(String login,String lastName,String function){
         this.login=login;
         this.passeword=null;
         this.lastName=lastName;
-        this.firstName=firstName;
         this.function=function;
     }
     
+    /**
+     * 
+     * Permet de savoir si un pro identifiable par son id est contenu dans la liste de professionnels existante
+     *  
+     * @param proIdList Liste contenant tous les identifiants des professionnels
+     * @param id Identifiant du professionnel en question
+     * @return vrai s'il est contenu dans la liste et faux sinon
+     */
     public static boolean containsId (List<String> proIdList,String id){
         int i=0;
         boolean cont=false;
@@ -55,6 +115,14 @@ public class Login {
         return i!=proIdList.size();
     }
 
+    /**
+     * 
+     * Met en format textuel les informations d'un médecin
+     * 
+     * 
+     * @param medPrescripteur
+     * @return une chaine de caractères avec les infos du médecin en question
+     */
     public static String infoMedCR(Login medPrescripteur){
         String str="Médecin prescripteur : "+medPrescripteur.login+"-"+medPrescripteur.lastName.toUpperCase()+" "+medPrescripteur.firstName;
                 

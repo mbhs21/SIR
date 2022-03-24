@@ -5,12 +5,9 @@
  */
 package ui;
 
+import HL7.ServeurSIR;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Toolkit;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.sql.Connection;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -19,9 +16,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
-import java.util.Date;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import nf.Login;
 import nf.Patient;
@@ -34,16 +28,27 @@ import nf.RequetesBDPatient;
  */
 public class PageAccueil extends javax.swing.JFrame {
 
+    /**
+     *
+     */
     Login login;
+
+    /**
+     *
+     */
     Connection conn;
+
+    /**
+     *
+     */
     Patient pat;
 
     /**
      * Creates new form PageAccueil
      *
      *
-     * @param login
-     * @param conn
+     * @param login un login
+     * @param conn connexion à la base de données
      * @throws java.io.IOException
      * @throws java.sql.SQLException
      */
@@ -53,19 +58,10 @@ public class PageAccueil extends javax.swing.JFrame {
 
         initComponents();
 
-//        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-//        this.pack();
-//        this.setSize(screenSize.width - 100, screenSize.height - 50);
-//        jPanel2.setSize(screenSize.width - 100, screenSize.height - 50);
-        //this.setResizable(false);
         proDetails.setText(login.getLogin().strip()
                 + " - " + login.getLastName().strip()
                 + " " + login.getFirstName().strip()
         );
-//        System.out.println("pgConnexion.login.getLastName().strip() " + pgConnexion.login.getLastName().strip());
-//        System.out.println("pgConnexion.login.getFirstName().strip() " + pgConnexion.login.getFirstName().strip());
-//        FirstNameLogin.setText("Prénom: " + pgConnexion.login.getFirstName().strip());
-//        IdLogin.setText("identifiant: " + pgConnexion.login.getLogin().strip());
 
         tableAllPatient.setModel(this.setModelJTable());
         tableAllPatient.setRowHeight(30);
@@ -140,12 +136,11 @@ public class PageAccueil extends javax.swing.JFrame {
 
         //this.setSize(screenSize.width, screenSize.height - 100);
         this.setResizable(false);
-        tipTextResetLabel.setVisible(false);
 
         try {
-            // TODO add your handling code here:
+
             if (RequetesBDLogin.idSE(login.getLogin(), conn)) {
-                ResearchButton.setVisible(false);
+                accessDMRButton.setVisible(false);
             }
         } catch (SQLException ex) {
             Logger.getLogger(AccesListeExamen.class.getName()).log(Level.SEVERE, null, ex);
@@ -169,27 +164,7 @@ public class PageAccueil extends javax.swing.JFrame {
             Logger.getLogger(AccesListeExamen.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        resetButton.addMouseListener(new MouseListener() {
-
-            public void mouseClicked(MouseEvent e) {
-            }
-
-            public void mouseEntered(MouseEvent e) {
-                tipTextResetLabel.setVisible(true);
-            }
-
-            public void mouseExited(MouseEvent e) {
-                tipTextResetLabel.setVisible(false);
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-            }
-        });
+        resetButton.setToolTipText("Réinitialisation du tableau");
 
     }
 
@@ -238,7 +213,6 @@ public class PageAccueil extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         resetButton = new javax.swing.JButton();
         accessDMRButton = new javax.swing.JButton();
-        tipTextResetLabel = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -610,10 +584,6 @@ public class PageAccueil extends javax.swing.JFrame {
             }
         });
 
-        tipTextResetLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tipTextResetLabel.setForeground(new java.awt.Color(255, 51, 51));
-        tipTextResetLabel.setText("Réinitialisation du tableau");
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -631,14 +601,11 @@ public class PageAccueil extends javax.swing.JFrame {
                         .addGap(57, 57, 57))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(tipTextResetLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(AddPatientButton, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(ResearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(33, 33, 33)
-                                .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(AddPatientButton, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(ResearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33)))
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -654,9 +621,7 @@ public class PageAccueil extends javax.swing.JFrame {
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(tipTextResetLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(39, 39, 39)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -811,17 +776,17 @@ public class PageAccueil extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Le champ identifiant doit être complété", "", JOptionPane.PLAIN_MESSAGE);
             }
         } else {
-            String firstName1=firstNamePField.getText().substring(0, 1);
-            String firstName2=firstNamePField.getText().substring(1);
-            String firstName=firstName1.toUpperCase()+firstName2;
-            System.out.println("Test firstName:" +firstName);
+            String firstName1 = firstNamePField.getText().substring(0, 1);
+            String firstName2 = firstNamePField.getText().substring(1);
+            String firstName = firstName1.toUpperCase() + firstName2;
+            System.out.println("Test firstName:" + firstName);
             if (modeSearchComboBox.getSelectedItem().equals("Nom / prénom et date de Naissance")) {
                 if (!lastNamePField.getText().isEmpty() & !firstNamePField.getText().isEmpty() & !dayField.getText().isEmpty() & !monthField.getText().isEmpty() & !yearField.getText().isEmpty()) {
-                    int day = Integer.parseInt(dayField.getText());
-                    int month = Integer.parseInt(monthField.getText());
-                    int year = Integer.parseInt(yearField.getText());
+//                    int day = Integer.parseInt(dayField.getText());
+//                    int month = Integer.parseInt(monthField.getText());
+//                    int year = Integer.parseInt(yearField.getText());
 
-                    Date birthDate = new Date(year - 1900, month - 1, day);
+                    String birthDate = yearField.getText() + "-" + monthField.getText() + "-" + dayField.getText();
                     try {
                         infoPatient = RequetesBDPatient.RechercherPatientName(lastNamePField.getText().toUpperCase(), firstName, birthDate, conn);
                     } catch (SQLException ex) {
@@ -847,11 +812,12 @@ public class PageAccueil extends javax.swing.JFrame {
             } else {
                 if (modeSearchComboBox.getSelectedItem().equals("Tout")) {
                     if (!idPField.getText().isEmpty() & !lastNamePField.getText().isEmpty() & !firstNamePField.getText().isEmpty() & !dayField.getText().isEmpty() & !monthField.getText().isEmpty() & !yearField.getText().isEmpty()) {
-                        int day = Integer.parseInt(dayField.getText());
-                        int month = Integer.parseInt(monthField.getText());
-                        int year = Integer.parseInt(yearField.getText());
+//                        int day = Integer.parseInt(dayField.getText());
+//                        int month = Integer.parseInt(monthField.getText());
+//                        int year = Integer.parseInt(yearField.getText());
 
-                        Date birthDate = new Date(year - 1900, month - 1, day);
+//                        Date birthDate = new Date(year - 1900, month - 1, day);
+                        String birthDate = yearField.getText() + "-" + monthField.getText() + "-" + dayField.getText();
                         try {
                             infoPatient = RequetesBDPatient.RechercherPatient(idPField.getText(), lastNamePField.getText(), firstNamePField.getText(), birthDate, conn);
                         } catch (SQLException ex) {
@@ -908,17 +874,40 @@ public class PageAccueil extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
         }
-        tableAllPatient.getTableHeader().setFont(new Font("Candara", Font.PLAIN, 18));
+        try {
+            tableAllPatient.setModel(this.setModelJTable());
+        } catch (SQLException ex) {
+            Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        tableAllPatient.setRowHeight(30);
+        tableAllPatient.setPreferredSize(new java.awt.Dimension(300, 30 * tableAllPatient.getRowCount()));
 
     }//GEN-LAST:event_resetButtonActionPerformed
 
     private void AddPatientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddPatientButtonActionPerformed
         // TODO add your handling code here:
-        CreationDMR dmr = null;
-        dmr = new CreationDMR(login, this.conn);
-        this.setVisible(false);
-        dmr.setVisible(true);
-        dmr.setLocationRelativeTo(null);
+        int retour = JOptionPane.showConfirmDialog(this, "Voulez-vous le saisir manuellement ? ", "", JOptionPane.YES_NO_OPTION);
+        System.out.println("retour= " + retour);
+        if (retour == 0) {
+            CreationDMR dmr = null;
+            dmr = new CreationDMR(login, this.conn);
+            this.setVisible(false);
+            dmr.setVisible(true);
+            dmr.setLocationRelativeTo(null);
+        }else{
+            try {
+                ServeurSIR serveurSIR=new ServeurSIR(this.conn);
+                serveurSIR.setVisible(true);
+            } catch (ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                tableAllPatient.setModel(this.setModelJTable());
+            } catch (SQLException ex) {
+                Logger.getLogger(PageAccueil.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
     }//GEN-LAST:event_AddPatientButtonActionPerformed
 
     private void accessDMRButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accessDMRButtonActionPerformed
@@ -936,6 +925,11 @@ public class PageAccueil extends javax.swing.JFrame {
 
     }//GEN-LAST:event_accessDMRButtonActionPerformed
 
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
     public Patient selectPatTable() throws SQLException {
         Object ob = tableAllPatient.getValueAt(tableAllPatient.getSelectedRow(), tableAllPatient.getSelectedColumn());
         Patient pat = null;
@@ -947,6 +941,11 @@ public class PageAccueil extends javax.swing.JFrame {
 
     }
 
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
     public DefaultTableModel setModelJTable() throws SQLException {
         ArrayList<Object[]> infosPatients = RequetesBDPatient.returnInfoPatients(conn);
         DefaultTableModel model = new javax.swing.table.DefaultTableModel() {
@@ -974,9 +973,9 @@ public class PageAccueil extends javax.swing.JFrame {
         return model;
     }
 
-    /**
-     * @param args the command line arguments
-     */
+//    /**
+//     * @param args the command line arguments
+//     */
 //    public static void main(String args[]) {
 //        /* Set the Nimbus look and feel */
 //        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1046,7 +1045,6 @@ public class PageAccueil extends javax.swing.JFrame {
     private javax.swing.JTextField proDetails;
     private javax.swing.JButton resetButton;
     private javax.swing.JTable tableAllPatient;
-    private javax.swing.JLabel tipTextResetLabel;
     private javax.swing.JButton validateButton;
     private javax.swing.JTextField yearField;
     // End of variables declaration//GEN-END:variables

@@ -11,6 +11,9 @@ package nf;
  */
 public class Salt {
 
+    /**
+     *
+     */
     public static final String SALT = "s3u2ImO+LwZipIlSGVpU0RnYvtTTbKY2FzZlnRFHP1y5LrJ+LdTPc=";
 
 }
